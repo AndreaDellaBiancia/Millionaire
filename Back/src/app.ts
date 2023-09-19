@@ -36,7 +36,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 
 
-app.use("/api/", home);
+app.use("/api", home);
 
 
 // Exportation de l'application Express
