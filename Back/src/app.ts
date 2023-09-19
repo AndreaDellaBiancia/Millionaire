@@ -1,19 +1,23 @@
 import { NextFunction, Request, Response } from "express";
-
+import { dataSource } from "./dataSource/data-source";
 // Importation des modules requis
 const express = require("express");
-const path = require('path');
-
-
-
-
+const path = require("path");
 
 // Importation de la route pour home
 const home = require("./routes/home");
 
+// CONNEXION BDD
+dataSource
+  .initialize()
+  .then(() => {
+    console.log("Data Source has been initialized!");
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization:", err);
+  });
 
-// CONNEXION BDD  
-
+  
 // Initialisation de l'application Express
 const app = express();
 
@@ -34,10 +38,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-
-
 app.use("/api", home);
-
 
 // Exportation de l'application Express
 module.exports = app;
