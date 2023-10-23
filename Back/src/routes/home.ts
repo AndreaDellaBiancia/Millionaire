@@ -3,7 +3,7 @@ const MainController = require('../controllers/MainController');
 
 const router = express.Router();
 
-router.get('/', MainController.home);
+router.get('/', MainController.getRanking);
  
 
 
