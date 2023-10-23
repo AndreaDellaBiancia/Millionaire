@@ -3,8 +3,8 @@ services:
   front:
     build:
       dockerfile: "Dockerfile"
-      context: "."  
-    volumes: 
-      - ./:/app:rw,cached
+      context: "."
+    volumes:
+      - .:/app  # Assurez-vous que le chemin correspond à celui dans le Dockerfile
     ports:
       - 3000:3000
