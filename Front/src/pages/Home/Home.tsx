@@ -1,17 +1,17 @@
-import { HomeContainer, LogoContainer, LogoHome, Start, Title } from "./CssHome";
+import { HomeContainer, LogoContainer, LogoHome, StartBtn, Title } from "./CssHome";
 import logo from "../../assets/images/milionLogo.png";
+
 
 function Home() {
 
   return (
     <HomeContainer>
-      <Title>Milionaire</Title>
+      <Title>Le Millionaire</Title>
       <LogoContainer>
         <LogoHome src={logo} alt="Qui veut gagner des milions"/>
-      </LogoContainer>
-      <Start>
-        <p>djsddddddddddddddfgggd</p>
-      </Start>
+      </LogoContainer> 
+      <StartBtn type="button" className="btn btn-outline-light">JOUER</StartBtn>
+     
     </HomeContainer>
   );
 }
