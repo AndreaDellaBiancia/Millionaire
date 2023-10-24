@@ -54,7 +54,7 @@ function Navbar() {
               </Link>
             </NavItem>
             <NavSelect className="nav-item">
-              <p style={{marginRight: "1rem"}}>Niveau:</p>
+              <p style={{marginRight: "1rem"}}>Niveau :</p>
               <select
                 className="form-select"
                 aria-label="Default select example"
