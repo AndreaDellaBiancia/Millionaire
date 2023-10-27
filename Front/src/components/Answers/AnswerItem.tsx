@@ -2,7 +2,6 @@ import AnswerItemI from "../../interfaces/AnswerItemInterface";
 import {
   AnswerContainer,
   Line,
-  RankingName,
   TriangleLeft,
   TriangleLeft2,
   TriangleRight,
