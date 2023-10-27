@@ -3,8 +3,14 @@ import Answers from "../../components/Answers/Answers";
 import Awards from "../../components/Awards/Awards";
 import Question from "../../components/Question/Question";
 import { HelpContainer, HelpItem } from "./CssGame";
+import { setQuestions } from "../../store/questionsReducer";
+import { useDispatch } from "react-redux";
 
 function Game() {
+  const dispatch = useDispatch(); 
+  useEffect(() =>{
+    dispatch(setQuestions(["question1", "question2", "question3"]));
+  }, [])
   return (
     <div
       className="row justify-content-center align-items-center"

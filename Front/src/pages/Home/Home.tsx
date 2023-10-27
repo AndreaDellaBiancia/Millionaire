@@ -1,10 +1,16 @@
 import { HomeContainer, LogoContainer, LogoHome, StartBtn, Title } from "./CssHome";
 import logo from "../../assets/images/milionLogo.png";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 
 function Home() {
+  const questio = useSelector((state: RootState) => state.questions.questions)
 
+  console.log('====================================');
+  console.log(questio);
+  console.log('====================================');
   return (
     <HomeContainer>
       <Title>Le Millionaire</Title>
