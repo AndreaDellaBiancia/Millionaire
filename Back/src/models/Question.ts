@@ -21,13 +21,13 @@ export default class Question {
   title: string;
 
   @Column({ type: "int" })
-  numberLevel: number;
+  price: number; 
 
   @ManyToOne(
     () => LevelDifficulty,
     (levelDifficulty) => levelDifficulty.questions
   )
-  @JoinColumn({ name: "levelDifficulty_id" })
+  @JoinColumn({ name: "level_difficulty_id" })
   levelDifficulty: LevelDifficulty;
 
   @ManyToMany(() => Match)

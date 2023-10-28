@@ -7,8 +7,16 @@ import {
   RankingContainer,
 } from "./CssRanking";
 import UserRanking from "../../components/UserRanking/UserRanking";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 function Ranking() {
+
+  const level = useSelector((state: RootState) => state.game.level)
+
+  console.log('=============RANKING================');
+  console.log(level);
+  console.log('====================================');
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {

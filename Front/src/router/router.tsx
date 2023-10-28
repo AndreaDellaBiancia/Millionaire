@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         element: <Ranking />,
       },
       {
-        path: "jeux",
+        path: "jeu",
         element: <Game />,
       },
     ],

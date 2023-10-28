@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { questionsSlice } from './questionsReducer'
+import { configureStore } from "@reduxjs/toolkit";
+import { gameSlice } from "./gameReducer";
 
 export const store = configureStore({
   reducer: {
-    questions: questionsSlice.reducer,
+    game: gameSlice.reducer,
   },
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
