@@ -1,12 +1,36 @@
-import { Link } from "react-router-dom";
-import { Nav, NavItem, NavProfile, NavSelect } from "./CssNav";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { Nav, NavItem, NavItemLevelSelected, NavItemNiveau, NavProfile, NavSelect } from "./CssNav";
 
 import logo from "../../assets/images/milionLogo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setLevel } from "../../store/gameReducer";
+import { RootState } from "../../store/store";
 
 function Navbar() {
   const [isHoveredProfile, setIsHoveredProfile] = useState<boolean>(false);
+  const [isPageGame, setIsPageGame] = useState<boolean>(false);
+  const [levelName, setLevelName] = useState<string>("FACILE");
 
+  const pathname = useLocation().pathname;
+
+  useEffect(() => {
+    // Si on est dans la page du Jeu on empeche de changer le niveau.
+    pathname === "/jeu" ? setIsPageGame(true) : setIsPageGame(false);
+  }, [pathname]);
+
+  const dispatch = useDispatch();
+  const handleLevel = (levelSelected: string) => {
+    dispatch(setLevel(levelSelected));
+    if (levelSelected === "easy") {
+      setLevelName("FACILE");
+    } else if (levelSelected === "medium") {
+      setLevelName("NORMAL");
+    } else {
+      setLevelName("DIFFICILE");
+    }
+  };
+  
   const handleMouseEnterProfile = () => {
     setIsHoveredProfile(true);
   };
@@ -53,20 +77,27 @@ function Navbar() {
                 Classement
               </Link>
             </NavItem>
-            <NavSelect className="nav-item">
-              <p style={{marginRight: "1rem"}}>Niveau:</p>
-              <select
-                className="form-select"
-                aria-label="Default select example"
-              >
-                <option value="1">Facile</option>
-                <option value="2">Normal</option>
-                <option value="3">Difficile</option>
-              </select>
+            <NavItemNiveau className="nav-item">Niveau :</NavItemNiveau>
+            <NavSelect className="nav-item" style={{ margin: 0 }}>
+              {!isPageGame ? (
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={(e) => handleLevel(e.target.value)}
+                >
+                  <option value="easy" selected={levelName === "FACILE"} >Facile</option>
+                  <option value="medium"selected={levelName === "NORMAL"}>Normal</option>
+                  <option value="hard" selected={levelName === "DIFFICILE"}>Difficile</option>
+                </select>
+              ) : (
+                <NavItemLevelSelected>{levelName}</NavItemLevelSelected>
+              )}
             </NavSelect>
           </ul>
 
-          <ul className="navbar-nav">
+          <ul className="navbar-nav d-flex align-items-center">
+          {!isPageGame && <li style={{marginRight: "2rem"}}><Link to="/jeu" ><button type="button" className="btn btn-outline-primary">JOUER</button></Link></li>}
+
             <NavProfile
               className="nav-item"
               onMouseEnter={handleMouseEnterProfile}

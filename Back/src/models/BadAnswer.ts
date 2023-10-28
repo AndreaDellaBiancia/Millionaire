@@ -10,7 +10,7 @@ export default class BadAnswer {
   title: string;
 
   @Column({ type: "int" })
-  helpPercentage: number;
+  help_percentage: number;
 
   @ManyToOne(() => Question, (question) => question.badAnswers)
   @JoinColumn({ name: "question_id" })

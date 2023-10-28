@@ -5,16 +5,10 @@ import Question from "./Question";
 @Entity()
 export default class LevelDifficulty {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number; 
 
   @Column({ type: "varchar" })
-  easy: string;
-
-  @Column({ type: "varchar" })
-  medium: string;
-
-  @Column({ type: "varchar" })
-  hard: string;
+  level: string;
 
   @OneToMany(() => Question, (question) => question.levelDifficulty)
   questions: Question[];

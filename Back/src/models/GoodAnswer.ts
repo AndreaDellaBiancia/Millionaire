@@ -16,7 +16,7 @@ export default class GoodAnswer {
   title: string;
 
   @Column({ type: "int" })
-  helpPercentage: number;
+  help_percentage: number;
 
   @OneToOne(() => Question)
   @JoinColumn()
