@@ -1,15 +1,16 @@
 // Fichier où vous utilisez ExpressInterface
-import { ExpressInterface } from "../interfaces/ExpressInterface";
+import { NextFunction, Request, Response } from "express";
 import { dataSource } from "../dataSource/data-source";
 import User from "../models/User";
+import { log } from "console";
 
 const userRepository = dataSource.getRepository(User);
 
-const getRanking = async ({
-  req,
-  res,
-  next,
-}: ExpressInterface): Promise<User[] | any> => {
+const getRanking = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<User[] | any> => {
   try {
     const users = await userRepository.find({
       order: {

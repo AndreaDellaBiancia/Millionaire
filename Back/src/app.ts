@@ -5,7 +5,7 @@ const express = require("express");
 const path = require("path");
 
 // Importation de la route pour home
-const home = require("./routes/home");
+const routes = require("./routes/routes");
 
 // CONNEXION BDD
 dataSource
@@ -38,7 +38,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use("/api", home);
+app.use("/api", routes);
 
 // Exportation de l'application Express
 module.exports = app;
