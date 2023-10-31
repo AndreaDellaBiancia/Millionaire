@@ -11,12 +11,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
 function Ranking() {
-
-  const level = useSelector((state: RootState) => state.game.level)
-
-  console.log('=============RANKING================');
-  console.log(level);
-  console.log('====================================');
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
@@ -31,7 +25,7 @@ function Ranking() {
       <RankingList>
         <RankingTitle>Classement</RankingTitle>
         {users?.map((user: User, index: number) => (
-          <UserRanking  index={index} user={user} />
+          <UserRanking key={user.id} index={index} user={user} />
         ))}
       </RankingList>
     </RankingContainer>

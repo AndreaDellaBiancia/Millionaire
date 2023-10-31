@@ -7,10 +7,12 @@ import {
   JoinTable,
   JoinColumn,
   ManyToOne,
+  OneToOne,
 } from "typeorm";
 import Match from "./Match";
 import LevelDifficulty from "./LevelDifficulty";
 import BadAnswer from "./BadAnswer";
+import GoodAnswer from "./GoodAnswer";
 
 @Entity()
 export default class Question {
@@ -45,4 +47,5 @@ export default class Question {
 
   @OneToMany(() => BadAnswer, (badAnswer) => badAnswer.question)
   badAnswers: BadAnswer[];
+
 }
