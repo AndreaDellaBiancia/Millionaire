@@ -1,6 +1,13 @@
-interface AnswerItemI {
-  letter : string,
-  answer: string,
-  }
- 
-  export default AnswerItemI;
+
+export interface AnswerItemI {
+    title?: string;
+    isTrue?: boolean;
+}
+
+
+export interface AnswerItemProps {
+  letter?: string;
+  answer: AnswerItemI,
+}
+
+
