@@ -4,12 +4,14 @@ import { AnswerItemI } from '../interfaces/AnswerItemInterface';
 
 export interface GameState {
   questions: string[];
+  questionNb: number;
   level: string;
   choosedAnswer: AnswerItemI;
   isAnswerSelected: boolean;
 }
 const initialState: GameState = {
-  questions: [] ,
+  questions: [],
+  questionNb: 0,
   level: "easy",
   choosedAnswer: {},
   isAnswerSelected: false,
@@ -21,6 +23,9 @@ export const gameSlice = createSlice({
   reducers: {
     setQuestions: (state , action:  PayloadAction<string[]>) => {
       state.questions = action.payload;
+    },
+    setQuestionNb: (state , action:  PayloadAction<number>) => {
+      state.questionNb = action.payload;
     },
     setLevel: (state , action:  PayloadAction<string>) => {
       state.level = action.payload;
@@ -34,4 +39,4 @@ export const gameSlice = createSlice({
   },
 })
 
-export const { setQuestions, setLevel, setChoosedAnswer, setIsAnswerSelected } = gameSlice.actions;
+export const { setQuestions, setQuestionNb, setLevel, setChoosedAnswer, setIsAnswerSelected } = gameSlice.actions;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AnswersPropsInterface from "../../interfaces/AnswersPropsInterface";
 
-import { randomize } from "../../Outils/randomItems";
+import { randomize } from "../../outils/randomItems";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import AnswerItem from "./AnswerItem";

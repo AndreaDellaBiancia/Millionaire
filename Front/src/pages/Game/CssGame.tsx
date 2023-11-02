@@ -20,3 +20,14 @@ export const HelpItem = styled.div`
     color: gold;
   }
 `;
+
+export const QuestionAward = styled.div`
+display: flex;
+justify-content: center;
+p{
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  color: black;
+  background-color: gold;
+}
+`;
