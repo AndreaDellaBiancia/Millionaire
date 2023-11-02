@@ -9,7 +9,7 @@ export const QuestionContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  max-width: 1000px;
+  width: 1000px;
   height: 150px;
   font-weight: bold;
   border-top: 4px solid #e2bd00;

@@ -13,8 +13,8 @@ export const AnswerContainer = styled.div`
   border-bottom: 2.8px solid #e2bd00;
   margin: 0 2.5rem;
   margin-bottom: 1rem;
-  background-color: white;
-  
+  background-color: ${(props) => props.color};
+ 
   p{
     width: 100%;
     margin: 0;
@@ -43,7 +43,7 @@ export const TriangleLeft2 = styled.div`
   width: 0;
   height: 0;
   border-top: 2.20rem solid transparent;
-  border-right: 2.1rem solid white;
+  border-right: 2.1rem solid  ${(props) => props.color};
   border-bottom: 2.20rem solid transparent;
 `;
 
@@ -64,7 +64,7 @@ export const TriangleRight2 = styled.div`
   width: 0;
   height: 0;
   border-top: 2.20rem solid transparent;
-  border-left: 2.1rem solid white;
+  border-left: 2.1rem solid ${(props) => props.color};
   border-bottom: 2.20rem solid transparent;
 `;
 

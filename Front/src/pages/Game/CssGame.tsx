@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
 export const HelpContainer = styled.div`
- position: absolute;
- top: 8rem;
- left: 10rem;
  display: flex;
 `;
 export const HelpItem = styled.div`
