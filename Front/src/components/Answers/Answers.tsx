@@ -10,8 +10,6 @@ import { AnswerItemI } from "../../interfaces/AnswerItemInterface";
 function Answers({ goodAnswer, badAnswers }: AnswersPropsInterface) {
   const [AnswerItems, setAnswerItems] = useState<AnswerItemI[]>([]);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     let answers: AnswerItemI[] = [];
 

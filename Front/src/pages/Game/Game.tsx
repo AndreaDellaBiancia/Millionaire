@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import Answers from "../../components/Answers/Answers";
 import Awards from "../../components/Awards/Awards";
 import Question from "../../components/Question/Question";
-import { HelpContainer, HelpItem, QuestionAward } from "./CssGame";
+import {
+  MenuContainer,
+  NextQuestion,
+  QuestionAward,
+  Timer,
+  TimerContainer,
+} from "./CssGame";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { getQuestions } from "../../fetch/fetchQuestions";
@@ -10,6 +16,8 @@ import QuestionsAnswers from "../../interfaces/QuestionsAnswersInterface";
 import GoodAnsw from "../../interfaces/GoodAnswInterface";
 import BadAnsw from "../../interfaces/BadAnswInterface";
 import { setQuestionNb } from "../../store/gameReducer";
+import PointsGameCounter from "../../components/PointsGameCounter/PointsGameCounter";
+import HelpContainer from "../../components/HelpContainer/HelpContainer";
 
 function Game() {
   const [questions, setQuestions] = useState<QuestionsAnswers[]>([]);
@@ -21,7 +29,11 @@ function Game() {
 
   const level = useSelector((state: RootState) => state.game.level);
   const questionNb = useSelector((state: RootState) => state.game.questionNb);
+  const isGoodAnswer = useSelector(
+    (state: RootState) => state.game.isGoodAnswer
+  );
   const awards = useSelector((state: RootState) => state.awards.awards);
+  const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
 
   let answers: string[] = [];
 
@@ -51,7 +63,7 @@ function Game() {
     }
   }, [questionNb]);
 
-  function nextQuestion(s: any) {
+  function nextQuestion() {
     if (questionNb < 14) {
       dispatch(setQuestionNb(questionNb + 1));
       setQuestionToPlay(questions[questionNb + 1]);
@@ -64,21 +76,13 @@ function Game() {
       style={{ width: "95%", margin: "0 auto" }}
     >
       <div className="row col-12 col-lg-8 ">
-        <HelpContainer className="col-12">
-          <HelpItem>
-            <i className="fa-sharp fa-solid fa-phone-volume"></i>
-          </HelpItem>
-          <HelpItem style={{ display: "flex", flexDirection: "column" }}>
-            <i
-              className="fa-sharp fa-solid fa-star-half-stroke"
-              style={{ display: "flex", flexDirection: "column" }}
-            ></i>
-            50 : 50
-          </HelpItem>
-          <HelpItem>
-            <i className="fa-sharp fa-solid fa-people-group"></i>
-          </HelpItem>
-        </HelpContainer>
+        <MenuContainer>
+          <HelpContainer />
+          <TimerContainer>
+            <Timer>timer</Timer>
+          </TimerContainer>
+          <PointsGameCounter points={pointsGame} />
+        </MenuContainer>
         <div>
           <QuestionAward>
             <p>
@@ -91,7 +95,16 @@ function Game() {
           </QuestionAward>
           <Question {...questionToPlay} />
           <Answers goodAnswer={goodAnswer} badAnswers={badAnswers} />
-          <button onClick={nextQuestion}>next</button>
+          {isGoodAnswer && (
+            <div className="d-flex justify-content-center mt-2">
+              <NextQuestion
+                className="btn btn-outline-warning"
+                onClick={nextQuestion}
+              >
+                Question suivante
+              </NextQuestion>
+            </div>
+          )}
         </div>
       </div>
       <Awards />

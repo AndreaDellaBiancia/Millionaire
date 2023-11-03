@@ -11,7 +11,7 @@ function Awards() {
   return (
     <ul className="col-12 col-md-3 d-flex flex-column align-items-center">
       {reversedAwards.map((award: number, index: number) =>
-         awards[questionNb -1] >= award ? (
+        awards[questionNb - 1] >= award ? (
           <AwardItemWin key={index}>
             {award === 1000000 ? "1 MILLION" : award} €
           </AwardItemWin>
