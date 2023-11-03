@@ -1,18 +1,26 @@
 import { useState } from "react";
-import { AwardItem } from "./CssAward";
+import { AwardItem, AwardItemWin } from "./CssAward";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 function Awards() {
-  const [priceList, setPriceList] = useState<number[]>([
-    500, 1000, 1500, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 30000, 70000,
-    150000, 300000, 1000000,
-  ]);
+  const questionNb = useSelector((state: RootState) => state.game.questionNb);
+  const awards = useSelector((state: RootState) => state.awards.awards);
+  const reversedAwards = [...awards].reverse();
+
   return (
     <ul className="col-12 col-md-3 d-flex flex-column align-items-center">
-      {priceList.reverse().map((price: number, index: number) => (
-        <AwardItem className="" key={index}>
-          {price === 1000000 ? "1 MILLION" : price} €
-        </AwardItem>
-      ))}
+      {reversedAwards.map((award: number, index: number) =>
+        awards[questionNb - 1] >= award ? (
+          <AwardItemWin key={index}>
+            {award === 1000000 ? "1 MILLION" : award} €
+          </AwardItemWin>
+        ) : (
+          <AwardItem key={index}>
+            {award === 1000000 ? "1 MILLION" : award} €
+          </AwardItem>
+        )
+      )}
     </ul>
   );
 }
