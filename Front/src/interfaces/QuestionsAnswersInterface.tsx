@@ -1,5 +1,6 @@
 import BadAnsw from "./BadAnswInterface";
 import GoodAnsw from "./GoodAnswInterface";
+import HomeHelpInterface from "./HomeHelpInterface";
 import levelDifficulty from "./LevelDifficultyInterface";
 
 interface QuestionsAnswers {
@@ -9,6 +10,7 @@ interface QuestionsAnswers {
   levelDifficulty?: levelDifficulty;
   goodAnsw? : GoodAnsw,
   badAnsw? : BadAnsw[],
+  homeHelp? : HomeHelpInterface,
 }
 
 export default QuestionsAnswers;

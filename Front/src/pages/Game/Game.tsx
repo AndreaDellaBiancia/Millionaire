@@ -77,7 +77,7 @@ function Game() {
     >
       <div className="row col-12 col-lg-8 ">
         <MenuContainer>
-          <HelpContainer />
+          <HelpContainer  {...questionToPlay}/>
           <TimerContainer>
             <Timer>timer</Timer>
           </TimerContainer>
