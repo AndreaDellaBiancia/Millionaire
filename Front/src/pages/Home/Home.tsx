@@ -1,11 +1,13 @@
 import { HomeContainer, LogoContainer, LogoHome, StartBtn, Title } from "./CssHome";
 import logo from "../../assets/images/milionLogo.png";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { setPointsGame } from "../../store/awardsReducer";
 
 
 function Home() {
+  const dispatch = useDispatch();
+  dispatch(setPointsGame(0));
 
   return (
     <HomeContainer>

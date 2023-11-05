@@ -7,7 +7,7 @@ export interface AnswerItemI {
 
 export interface AnswerItemProps {
   letter?: string;
-  answer: AnswerItemI,
+  answer?: AnswerItemI,
 }
 
 

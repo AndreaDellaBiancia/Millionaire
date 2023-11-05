@@ -6,9 +6,10 @@ export interface GameState {
   questions: string[];
   questionNb: number;
   level: string;
-  choosedAnswer: AnswerItemI;
+  choosedAnswer: AnswerItemI | undefined;
   isAnswerSelected: boolean;
   isGoodAnswer: boolean;
+  isHalfPossibility: boolean;
 }
 const initialState: GameState = {
   questions: [],
@@ -17,6 +18,7 @@ const initialState: GameState = {
   choosedAnswer: {},
   isAnswerSelected: false,
   isGoodAnswer: false,
+  isHalfPossibility: false,
 };
 
 export const gameSlice = createSlice({
@@ -32,7 +34,7 @@ export const gameSlice = createSlice({
     setLevel: (state, action: PayloadAction<string>) => {
       state.level = action.payload;
     },
-    setChoosedAnswer: (state, action: PayloadAction<AnswerItemI>) => {
+    setChoosedAnswer: (state, action: PayloadAction<AnswerItemI | undefined>) => {
       state.choosedAnswer = action.payload;
     },
     setIsAnswerSelected: (state, action: PayloadAction<boolean>) => {
@@ -40,6 +42,9 @@ export const gameSlice = createSlice({
     },
     setIsGoodAnswer: (state, action: PayloadAction<boolean>) => {
       state.isGoodAnswer = action.payload;
+    },
+    setIsHalfPossibility: (state, action: PayloadAction<boolean>) => {
+      state.isHalfPossibility = action.payload;
     },
   },
 });
@@ -51,4 +56,5 @@ export const {
   setChoosedAnswer,
   setIsAnswerSelected,
   setIsGoodAnswer,
+  setIsHalfPossibility,
 } = gameSlice.actions;

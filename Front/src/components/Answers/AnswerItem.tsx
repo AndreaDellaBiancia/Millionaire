@@ -69,7 +69,7 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
       const intervalIdWait = setInterval(toggleColorWaiting, 500);
       setTimeout(() => {
         dispatch(setChoosedAnswer(answer));
-        if (answer.isTrue === true) {
+        if (answer?.isTrue === true) {
           const intervalIdGood = setInterval(toggleColorIsGood, 150);
           dispatch(setPointsQuestion(pointsGame + (questionNb + 1) * indexPoints));
           setTimeout(() => {
@@ -105,9 +105,14 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
     <AnswerContainer
       color={color}
       onClick={() => {
-        if (!isAnswerSelected) {
-          selectAnswer();
+        if (answer?.title === "") {
+          return null;
+        }else{
+          if (!isAnswerSelected) {
+            selectAnswer();
+          }
         }
+       
       }}
     >
       <TriangleLeft color={color}></TriangleLeft>

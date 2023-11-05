@@ -8,7 +8,10 @@ import AnswerItem from "./AnswerItem";
 import { AnswerItemI } from "../../interfaces/AnswerItemInterface";
 
 function Answers({ goodAnswer, badAnswers }: AnswersPropsInterface) {
-  const [AnswerItems, setAnswerItems] = useState<AnswerItemI[]>([]);
+  const [answerItems, setAnswerItems] = useState<(AnswerItemI | undefined)[]>([]);
+  const isHalfPossibility = useSelector(
+    (state: RootState) => state.game.isHalfPossibility
+  );
 
   useEffect(() => {
     let answers: AnswerItemI[] = [];
@@ -20,19 +23,43 @@ function Answers({ goodAnswer, badAnswers }: AnswersPropsInterface) {
       });
     }
 
-
     setAnswerItems(randomize(answers));
   }, [goodAnswer, badAnswers]);
+
+  useEffect(() => {
+    if (isHalfPossibility) {
+      let itemsDeleted = 0;
+      const triedAnswers = answerItems?.map((item) => {
+        if (item?.isTrue) {
+          return item;
+        } else if (!item?.isTrue && itemsDeleted  < 2 ) {
+          itemsDeleted++;
+          return {"title": "", isTrue: false}
+        }else{
+          itemsDeleted++;
+          return item;
+        }
+      });
+      if (triedAnswers) {
+        setAnswerItems(triedAnswers)
+      }
+     
+    }
+  }, [isHalfPossibility]);
+
+  console.log("====================================");
+  console.log(answerItems);
+  console.log("====================================");
 
   return (
     <div
       className="row col-12 d-flex justify-content-center m-0"
       style={{ height: "fit-content" }}
     >
-      <AnswerItem letter={"A"} answer={AnswerItems[0]} />
-      <AnswerItem letter={"B"} answer={AnswerItems[1]} />
-      <AnswerItem letter={"C"} answer={AnswerItems[2]} />
-      <AnswerItem letter={"D"} answer={AnswerItems[3]} />
+      <AnswerItem letter={"A"} answer={answerItems[0]} />
+      <AnswerItem letter={"B"} answer={answerItems[1]} />
+      <AnswerItem letter={"C"} answer={answerItems[2]} />
+      <AnswerItem letter={"D"} answer={answerItems[3]} />
     </div>
   );
 }

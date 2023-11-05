@@ -39,7 +39,7 @@ function PointsGameCounter(points: { points: number }) {
         setIsPointsAdded(false);
       }, 2000);
     }
-  }, [pointsGame]);
+  }, [pointsGame, pointsQuestion]);
 
   return (
     <PointsContainer>

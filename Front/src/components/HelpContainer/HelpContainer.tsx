@@ -3,13 +3,17 @@ import Swal from "sweetalert2";
 import "./helpAlert.css";
 import QuestionsAnswers from "../../interfaces/QuestionsAnswersInterface";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { setIsHalfPossibility } from "../../store/gameReducer";
 
 function HelpContainer(questionToPlay: QuestionsAnswers) {
 const [isCallHome, setIsCallHome] = useState<boolean>(false);
 const [isAskPublic, setIsAskPublic] = useState<boolean>(false);
-const [is5050, setIs5050] = useState<boolean>(false);
 
+const isHalfPossibility = useSelector((state: RootState) => state.game.isHalfPossibility);
 
+const dispatch = useDispatch();
 
   function callHome() {
     setIsCallHome(true);
@@ -25,19 +29,20 @@ const [is5050, setIs5050] = useState<boolean>(false);
     });
   }
 
+
   return (
     <Container>
       <HelpItem onClick={() => !isCallHome ? callHome() : null} isUsed={isCallHome}>
         <i className="fa-sharp fa-solid fa-phone-volume"></i>
       </HelpItem>
-      <HelpItem isUsed={isAskPublic}>
+      <HelpItem onClick={() =>  dispatch(setIsHalfPossibility(true)) } isUsed={isHalfPossibility} >
         <i
           className="fa-sharp fa-solid fa-star-half-stroke"
           
         ></i>
         <span>50 : 50</span>
       </HelpItem>
-      <HelpItem isUsed={is5050}>
+      <HelpItem isUsed={isAskPublic}>
         <i className="fa-sharp fa-solid fa-people-group"></i>
       </HelpItem>
     </Container>
