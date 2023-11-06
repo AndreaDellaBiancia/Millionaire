@@ -2,6 +2,7 @@
 export interface AnswerItemI {
     title?: string;
     isTrue?: boolean;
+    publicHelp?: number;
 }
 
 

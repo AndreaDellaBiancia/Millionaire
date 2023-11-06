@@ -35,40 +35,43 @@ function Game() {
   const awards = useSelector((state: RootState) => state.awards.awards);
   const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
 
-  let answers: string[] = [];
+  let answers: string[] = []; // Tableau pour stocker les réponses
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    async function fetchData() {
-      const questionsDatas = await getQuestions(level);
-      setQuestions(questionsDatas);
-      setQuestionToPlay(questionsDatas[0]);
-      dispatch(setQuestionNb(0));
-      setGoodAnswer(questionsDatas[0].goodAnsw);
-      setBadAnswers(questionsDatas[0].badAnsw);
-    }
-    fetchData();
-  }, []);
+const dispatch = useDispatch();
 
-  useEffect(() => {
-    setGoodAnswer(questionToPlay?.goodAnsw);
-    setBadAnswers(questionToPlay?.badAnsw);
-    if (goodAnswer) {
-      answers?.push(goodAnswer.title);
-    }
-    if (badAnswers) {
-      badAnswers.forEach((answer) => {
-        answers?.push(answer.title);
-      });
-    }
-  }, [questionNb]);
-
-  function nextQuestion() {
-    if (questionNb < 14) {
-      dispatch(setQuestionNb(questionNb + 1));
-      setQuestionToPlay(questions[questionNb + 1]);
-    }
+// On récupére les données au chargement du composant
+useEffect(() => {
+  async function fetchData() {
+    const questionsDatas = await getQuestions(level);
+    setQuestions(questionsDatas);
+    setQuestionToPlay(questionsDatas[0]);
+    dispatch(setQuestionNb(0));
+    setGoodAnswer(questionsDatas[0].goodAnsw);
+    setBadAnswers(questionsDatas[0].badAnsw);
   }
+  fetchData();
+}, []);
+
+// Mise à jour des réponses en fonction du numéro de question
+useEffect(() => {
+  setGoodAnswer(questionToPlay?.goodAnsw);
+  setBadAnswers(questionToPlay?.badAnsw);
+  if (goodAnswer) {
+    answers?.push(goodAnswer.title); // Ajoute la bonne réponse au tableau des réponses
+  }
+  if (badAnswers) {
+    badAnswers.forEach((answer) => {
+      answers?.push(answer.title); // Ajoute les mauvaises réponses au tableau des réponses
+    });
+  }
+}, [questionNb]);
+
+function nextQuestion() {
+  if (questionNb < 14) {
+    dispatch(setQuestionNb(questionNb + 1)); // Passer à la question suivante
+    setQuestionToPlay(questions[questionNb + 1]);
+  }
+}
 
   return (
     <div

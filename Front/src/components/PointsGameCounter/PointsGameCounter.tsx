@@ -12,6 +12,8 @@ function PointsGameCounter(points: { points: number }) {
   const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
 
   const dispatch = useDispatch();
+
+  // Fonction pour augmenter progressivement les points du jeu
   const incrementPointsGame = () => {
     if (pointsGame < pointsQuestion) {
       for (let index = pointsGame; index < pointsQuestion; index++) {
@@ -21,17 +23,20 @@ function PointsGameCounter(points: { points: number }) {
       dispatch(setPointsQuestion(0));
     }
   };
-
+  
+  // Utilisation d'un intervalle pour appeler incrementPointsGame 
   useEffect(() => {
     const intervalId = setInterval(() => {
       incrementPointsGame();
     }, 1);
-
+  
+    // Nettoyer l'intervalle lorsque le composant est démonté
     return () => {
-      clearInterval(intervalId); // Nettoie l'intervalle lorsque le composant est démonté
+      clearInterval(intervalId);
     };
   }, [pointsQuestion, pointsGame]);
-
+  
+  // Gérer l'affichage des points ajoutés
   useEffect(() => {
     if (pointsGame !== 0) {
       setIsPointsAdded(true);
@@ -40,6 +45,7 @@ function PointsGameCounter(points: { points: number }) {
       }, 2000);
     }
   }, [pointsGame, pointsQuestion]);
+  
 
   return (
     <PointsContainer>

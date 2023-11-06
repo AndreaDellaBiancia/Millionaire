@@ -24,9 +24,8 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
   const level = useSelector((state: RootState) => state.game.level);
   const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
 
-  
-
   useEffect(() => {
+    //Selon le niveau choisi on augmente les points pour chaque bonne réponse
     if (level === "easy") {
       setIndexPoints(5);
     } else if (level === "medium") {
@@ -34,7 +33,7 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
     } else {
       setIndexPoints(15);
     }
-  }, [])
+  }, []);
 
   const dispatch = useDispatch();
   const choosedAnswer = useSelector(
@@ -44,6 +43,8 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
   const isAnswerSelected = useSelector(
     (state: RootState) => state.game.isAnswerSelected
   );
+
+  //Clignottement reponse cliquée.
   let isWaiting = true;
   function toggleColorWaiting() {
     if (isWaiting) {
@@ -54,6 +55,7 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
     isWaiting = !isWaiting;
   }
 
+  //Clignottement bonne reponse.
   let isGood = true;
   function toggleColorIsGood() {
     if (isGood) {
@@ -63,22 +65,36 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
     }
     isGood = !isGood;
   }
+
   function selectAnswer() {
+    // Définir l'état "isAnswerSelected" sur true.
     dispatch(setIsAnswerSelected(true));
+    // Vérifier si une réponse n'a pas déjà été sélectionnée.
     if (!isAnswerSelected) {
+      // Mettre en place un intervalle pour basculer la couleur en attente "jaune".
       const intervalIdWait = setInterval(toggleColorWaiting, 500);
+      // Après un délai de 2,5 secondes, effectuer les actions suivantes.
       setTimeout(() => {
+        // Définir la réponse choisie.
         dispatch(setChoosedAnswer(answer));
+        // Si la réponse est correcte (isTrue === true).
         if (answer?.isTrue === true) {
+          // Mettre en place un intervalle pour basculer la couleur en "verte".
           const intervalIdGood = setInterval(toggleColorIsGood, 150);
-          dispatch(setPointsQuestion(pointsGame + (questionNb + 1) * indexPoints));
+          // Mettre à jour les points de jeu en ajoutant un certain nombre de points.
+          dispatch(
+            setPointsQuestion(pointsGame + (questionNb + 1) * indexPoints)
+          );
+          // Après 2 secondes, arrêter l'intervalle "bonne répnse(verte)" et définir "isGoodAnswer" sur true.
           setTimeout(() => {
             clearInterval(intervalIdGood);
             dispatch(setIsGoodAnswer(true));
           }, 2000);
         } else {
+          // Si la réponse est incorrecte, définir la couleur sur "rouge".
           setColor("red");
         }
+        // Arrêter l'intervalle "en attente".
         clearInterval(intervalIdWait);
       }, 2500);
     }
@@ -91,10 +107,13 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
   }, [letter, answer]);
 
   useEffect(() => {
+    //Si la reponse choisie est la mauvaise on affiche egalmentla bonne
     if (choosedAnswer && answer) {
       if (answer.isTrue) {
+        // Active un intervalle pour basculer la couleur pour une réponse correcte
         const intervalIdGood = setInterval(toggleColorIsGood, 150);
         setTimeout(() => {
+          // Arrête l'intervalle après 2 secondes
           clearInterval(intervalIdGood);
         }, 2000);
       }
@@ -107,12 +126,11 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
       onClick={() => {
         if (answer?.title === "") {
           return null;
-        }else{
+        } else {
           if (!isAnswerSelected) {
             selectAnswer();
           }
         }
-       
       }}
     >
       <TriangleLeft color={color}></TriangleLeft>
