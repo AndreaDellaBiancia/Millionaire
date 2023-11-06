@@ -23,7 +23,10 @@ export const AnswerContainer = styled.div`
 
   &:hover{
     cursor: pointer;
+    }
   }
+
+
 `;
 
 export const TriangleLeft = styled.div`

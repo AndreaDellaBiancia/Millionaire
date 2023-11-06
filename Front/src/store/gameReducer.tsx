@@ -6,9 +6,11 @@ export interface GameState {
   questions: string[];
   questionNb: number;
   level: string;
-  choosedAnswer: AnswerItemI;
+  choosedAnswer: AnswerItemI | undefined;
   isAnswerSelected: boolean;
   isGoodAnswer: boolean;
+  isHalfPossibility: boolean;
+  isAskPublic: boolean;
 }
 const initialState: GameState = {
   questions: [],
@@ -17,6 +19,8 @@ const initialState: GameState = {
   choosedAnswer: {},
   isAnswerSelected: false,
   isGoodAnswer: false,
+  isHalfPossibility: false,
+  isAskPublic : false,
 };
 
 export const gameSlice = createSlice({
@@ -32,7 +36,7 @@ export const gameSlice = createSlice({
     setLevel: (state, action: PayloadAction<string>) => {
       state.level = action.payload;
     },
-    setChoosedAnswer: (state, action: PayloadAction<AnswerItemI>) => {
+    setChoosedAnswer: (state, action: PayloadAction<AnswerItemI | undefined>) => {
       state.choosedAnswer = action.payload;
     },
     setIsAnswerSelected: (state, action: PayloadAction<boolean>) => {
@@ -40,6 +44,12 @@ export const gameSlice = createSlice({
     },
     setIsGoodAnswer: (state, action: PayloadAction<boolean>) => {
       state.isGoodAnswer = action.payload;
+    },
+    setIsHalfPossibility: (state, action: PayloadAction<boolean>) => {
+      state.isHalfPossibility = action.payload;
+    },
+    setIsAskPublic: (state, action: PayloadAction<boolean>) => {
+      state.isAskPublic = action.payload;
     },
   },
 });
@@ -51,4 +61,6 @@ export const {
   setChoosedAnswer,
   setIsAnswerSelected,
   setIsGoodAnswer,
+  setIsHalfPossibility,
+  setIsAskPublic,
 } = gameSlice.actions;
