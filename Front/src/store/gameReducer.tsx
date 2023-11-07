@@ -3,30 +3,33 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { AnswerItemI } from "../interfaces/AnswerItemInterface";
 
 export interface GameState {
+  isNewGame: boolean;
   questions: string[];
   questionNb: number;
   level: string;
   choosedAnswer: AnswerItemI | undefined;
   isAnswerSelected: boolean;
   isGoodAnswer: boolean;
-  isHalfPossibility: boolean;
-  isAskPublic: boolean;
+  isStartTimer: boolean;
 }
 const initialState: GameState = {
+  isNewGame: false,
   questions: [],
   questionNb: 0,
   level: "easy",
   choosedAnswer: {},
   isAnswerSelected: false,
   isGoodAnswer: false,
-  isHalfPossibility: false,
-  isAskPublic : false,
+  isStartTimer: false,
 };
 
 export const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
+    setIsNewGame: (state, action: PayloadAction<boolean>) => {
+      state.isNewGame = action.payload;
+    },
     setQuestions: (state, action: PayloadAction<string[]>) => {
       state.questions = action.payload;
     },
@@ -36,7 +39,10 @@ export const gameSlice = createSlice({
     setLevel: (state, action: PayloadAction<string>) => {
       state.level = action.payload;
     },
-    setChoosedAnswer: (state, action: PayloadAction<AnswerItemI | undefined>) => {
+    setChoosedAnswer: (
+      state,
+      action: PayloadAction<AnswerItemI | undefined>
+    ) => {
       state.choosedAnswer = action.payload;
     },
     setIsAnswerSelected: (state, action: PayloadAction<boolean>) => {
@@ -45,22 +51,19 @@ export const gameSlice = createSlice({
     setIsGoodAnswer: (state, action: PayloadAction<boolean>) => {
       state.isGoodAnswer = action.payload;
     },
-    setIsHalfPossibility: (state, action: PayloadAction<boolean>) => {
-      state.isHalfPossibility = action.payload;
-    },
-    setIsAskPublic: (state, action: PayloadAction<boolean>) => {
-      state.isAskPublic = action.payload;
+    setIsStartTimer: (state, action: PayloadAction<boolean>) => {
+      state.isStartTimer = action.payload;
     },
   },
 });
 
 export const {
+  setIsNewGame,
   setQuestions,
   setQuestionNb,
   setLevel,
   setChoosedAnswer,
   setIsAnswerSelected,
   setIsGoodAnswer,
-  setIsHalfPossibility,
-  setIsAskPublic,
+  setIsStartTimer,
 } = gameSlice.actions;

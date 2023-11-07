@@ -1,26 +1,29 @@
 import { useEffect, useState } from "react";
 import AnswersPropsInterface from "../../interfaces/AnswersPropsInterface";
-
 import { randomize } from "../../outils/randomItems";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import AnswerItem from "./AnswerItem";
 import { AnswerItemI } from "../../interfaces/AnswerItemInterface";
-import Swal from "sweetalert2";
+import { setIsStartTimer } from "../../store/gameReducer";
+import { setAnswerElements } from "../../store/helpReducer";
 
 function Answers({ goodAnswer, badAnswers }: AnswersPropsInterface) {
   const [answerItems, setAnswerItems] = useState<(AnswerItemI | undefined)[]>(
     []
   );
   const isHalfPossibility = useSelector(
-    (state: RootState) => state.game.isHalfPossibility
+    (state: RootState) => state.help.isHalfPossibility
+  );
+  const isStartTimer = useSelector(
+    (state: RootState) => state.game.isStartTimer
   );
 
-  const isAskPublic = useSelector((state: RootState) => state.game.isAskPublic);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let answers: AnswerItemI[] = [];
-  
+
     // Si goodAnswer et badAnswers sont définis, on prépare un tableau de réponses pour les afficher.
     if (goodAnswer && badAnswers) {
       answers.push({
@@ -36,11 +39,11 @@ function Answers({ goodAnswer, badAnswers }: AnswersPropsInterface) {
         });
       });
     }
-  
+    dispatch(setIsStartTimer(!isStartTimer));
     // On mélangez les réponses.
     setAnswerItems(randomize(answers));
   }, [goodAnswer, badAnswers]);
-  
+
   useEffect(() => {
     if (isHalfPossibility) {
       let itemsDeleted = 0;
@@ -61,35 +64,11 @@ function Answers({ goodAnswer, badAnswers }: AnswersPropsInterface) {
       }
     }
   }, [isHalfPossibility]);
-  
+
   useEffect(() => {
-    if (isAskPublic) {
-      // Si l'indice 50 : 50 "isAskPublic" est vrai, on affiche une boîte de dialogue avec l'aide du public.
-      const answerA = answerItems[0]?.title !== "" ? `${answerItems[0]?.title} : ${answerItems[0]?.publicHelp}%<br><br>`: "";
-      const answerB = answerItems[1]?.title !== "" ? `${answerItems[1]?.title} : ${answerItems[1]?.publicHelp}%<br><br>`: "";
-      const answerC = answerItems[2]?.title !== "" ? `${answerItems[2]?.title} : ${answerItems[2]?.publicHelp}%<br><br>`: "";
-      const answerD = answerItems[3]?.title !== "" ? `${answerItems[3]?.title} : ${answerItems[3]?.publicHelp}%<br><br>`: "";
-  
-      Swal.fire({
-        title: "AIDE DU PUBLIC",
-        html:  `${answerA} ${answerB} ${answerC} ${answerD}`,
-        timer: 10000,
-        timerProgressBar: true,
-        customClass: {
-          timerProgressBar: "timerProgressBar",
-          popup: "container-alert",
-          title: "title-alert",
-        },
-        showClass: {
-          popup: "animate__animated animate__fadeInDown",
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutUp",
-        },
-      });
-    }
-  }, [isAskPublic]);
-  
+    //Quand les reponses sont chargées, on les stock egalment dans redux pour pouvoir utiliser l'aide du public
+    dispatch(setAnswerElements(answerItems));
+  }, [answerItems]);
 
   return (
     <div

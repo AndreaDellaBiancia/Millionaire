@@ -2,23 +2,27 @@ import { Container, HelpItem } from "./CssHelpContainer";
 import Swal from "sweetalert2";
 import "./helpAlert.css";
 import QuestionsAnswers from "../../interfaces/QuestionsAnswersInterface";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setIsAskPublic, setIsHalfPossibility } from "../../store/gameReducer";
+import { setIsAskPublic, setIsCallHome, setIsHalfPossibility } from "../../store/helpReducer";
+import { useEffect } from "react";
 
 function HelpContainer(questionToPlay: QuestionsAnswers) {
-  const [isCallHome, setIsCallHome] = useState<boolean>(false);
-
-  const isHalfPossibility = useSelector(
-    (state: RootState) => state.game.isHalfPossibility
+  
+  const isCallHome = useSelector(
+    (state: RootState) => state.help.isCallHome
   );
-  const isAskPublic = useSelector((state: RootState) => state.game.isAskPublic);
-
+  const isHalfPossibility = useSelector(
+    (state: RootState) => state.help.isHalfPossibility
+  );
+  const isAskPublic = useSelector((state: RootState) => state.help.isAskPublic);
+  const answerItems = useSelector(
+    (state: RootState) => state.help.answerElements
+  );
   const dispatch = useDispatch();
 
   function callHome() {
-    setIsCallHome(true);
+    dispatch(setIsCallHome(true));
     Swal.fire({
       title: questionToPlay.homeHelp?.description,
       timer: 10000,
@@ -36,6 +40,47 @@ function HelpContainer(questionToPlay: QuestionsAnswers) {
       },
     });
   }
+
+  useEffect(() => {
+    if (isAskPublic) {
+      // Si l'indice 50 : 50 "isAskPublic" est vrai, on affiche une boîte de dialogue avec l'aide du public.
+      const answerA =
+        answerItems[0]?.title !== ""
+          ? `${answerItems[0]?.title} : ${answerItems[0]?.publicHelp}%<br><br>`
+          : "";
+      const answerB =
+        answerItems[1]?.title !== ""
+          ? `${answerItems[1]?.title} : ${answerItems[1]?.publicHelp}%<br><br>`
+          : "";
+      const answerC =
+        answerItems[2]?.title !== ""
+          ? `${answerItems[2]?.title} : ${answerItems[2]?.publicHelp}%<br><br>`
+          : "";
+      const answerD =
+        answerItems[3]?.title !== ""
+          ? `${answerItems[3]?.title} : ${answerItems[3]?.publicHelp}%<br><br>`
+          : "";
+
+      Swal.fire({
+        title: "AIDE DU PUBLIC",
+        html: `${answerA} ${answerB} ${answerC} ${answerD}`,
+        timer: 10000,
+        timerProgressBar: true,
+        customClass: {
+          timerProgressBar: "timerProgressBar",
+          popup: "container-alert",
+          title: "title-alert",
+        },
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+    }
+  }, [isAskPublic]);
+
 
   return (
     <Container>

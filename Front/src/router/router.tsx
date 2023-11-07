@@ -28,6 +28,10 @@ const router = createBrowserRouter([
         path: "jeu",
         element: <Game />,
       },
+      {
+        path: "*", // Route catch-all
+        element: <ErrorPage />,
+      },
     ],
   },
 ]);

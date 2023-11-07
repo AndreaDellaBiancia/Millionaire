@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import QuestionsAnswers from "../../interfaces/QuestionsAnswersInterface";
 import {
   QuestionContainer,
@@ -7,8 +8,15 @@ import {
   TriangleRight,
   TriangleRight2,
 } from "./CssQuestion";
+import { useDispatch } from "react-redux";
+import { setIsAnswerSelected } from "../../store/gameReducer";
 
 function Question({ title }: QuestionsAnswers) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setIsAnswerSelected(false));
+  }, [title]);
+
   return (
     <div className="col-12 d-flex justify-content-center">
       <QuestionContainer>

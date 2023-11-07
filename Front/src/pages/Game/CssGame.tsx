@@ -8,23 +8,6 @@ export const MenuContainer = styled.div`
   padding: 0 4rem;
 `;
 
-export const TimerContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 33%;
-`;
-
-
-export const Timer = styled.div`
-  background-color: white;
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 
 export const QuestionAward = styled.div`
   display: flex;
@@ -41,7 +24,5 @@ export const NextQuestion = styled.button`
   padding: 0.5rem 1rem;
   text-transform: uppercase;
   font-weight: bold;
- // background-color: black;
- // color: gold;
   position: absolute;
 `;

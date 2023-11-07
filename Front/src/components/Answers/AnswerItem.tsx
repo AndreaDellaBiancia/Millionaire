@@ -16,6 +16,8 @@ import {
 import { useEffect, useState } from "react";
 import { RootState } from "../../store/store";
 import { setPointsQuestion } from "../../store/awardsReducer";
+import { endGame } from "../../outils/endGame";
+import { useNavigate } from "react-router-dom";
 
 function AnswerItem({ letter, answer }: AnswerItemProps) {
   const [color, setColor] = useState("white");
@@ -23,6 +25,20 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
   const questionNb = useSelector((state: RootState) => state.game.questionNb);
   const level = useSelector((state: RootState) => state.game.level);
   const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
+  const isStartTimer = useSelector(
+    (state: RootState) => state.game.isStartTimer
+  );
+  const isNewGame = useSelector((state: RootState) => state.game.isNewGame);
+  const choosedAnswer = useSelector(
+    (state: RootState) => state.game.choosedAnswer
+  );
+
+  const isAnswerSelected = useSelector(
+    (state: RootState) => state.game.isAnswerSelected
+  );
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     //Selon le niveau choisi on augmente les points pour chaque bonne réponse
@@ -34,15 +50,6 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
       setIndexPoints(15);
     }
   }, []);
-
-  const dispatch = useDispatch();
-  const choosedAnswer = useSelector(
-    (state: RootState) => state.game.choosedAnswer
-  );
-
-  const isAnswerSelected = useSelector(
-    (state: RootState) => state.game.isAnswerSelected
-  );
 
   //Clignottement reponse cliquée.
   let isWaiting = true;
@@ -92,6 +99,9 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
           }, 2000);
         } else {
           // Si la réponse est incorrecte, définir la couleur sur "rouge".
+          setTimeout(() => {
+            endGame(navigate, dispatch, isNewGame, isStartTimer);
+          }, 2000);
           setColor("red");
         }
         // Arrêter l'intervalle "en attente".

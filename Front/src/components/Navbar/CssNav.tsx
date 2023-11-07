@@ -12,6 +12,7 @@ export const NavItem = styled.li`
   &:hover {
     border-bottom: 3px solid blue;
     font-weight: bold;
+    cursor: pointer;
   }
 `;
 
