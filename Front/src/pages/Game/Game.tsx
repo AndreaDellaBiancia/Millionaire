@@ -2,22 +2,18 @@ import { useEffect, useState } from "react";
 import Answers from "../../components/Answers/Answers";
 import Awards from "../../components/Awards/Awards";
 import Question from "../../components/Question/Question";
-import {
-  MenuContainer,
-  NextQuestion,
-  QuestionAward,
-  Timer,
-  TimerContainer,
-} from "./CssGame";
+import { MenuContainer, NextQuestion, QuestionAward } from "./CssGame";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { getQuestions } from "../../fetch/fetchQuestions";
 import QuestionsAnswers from "../../interfaces/QuestionsAnswersInterface";
 import GoodAnsw from "../../interfaces/GoodAnswInterface";
 import BadAnsw from "../../interfaces/BadAnswInterface";
-import { setQuestionNb } from "../../store/gameReducer";
+import { setIsStartTimer, setQuestionNb } from "../../store/gameReducer";
 import PointsGameCounter from "../../components/PointsGameCounter/PointsGameCounter";
 import HelpContainer from "../../components/HelpContainer/HelpContainer";
+import Timer from "../../components/Timer/Timer";
+import { setIsAskPublic, setIsCallHome, setIsHalfPossibility } from "../../store/helpReducer";
 
 function Game() {
   const [questions, setQuestions] = useState<QuestionsAnswers[]>([]);
@@ -34,44 +30,50 @@ function Game() {
   );
   const awards = useSelector((state: RootState) => state.awards.awards);
   const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
+  const isNewGame = useSelector((state: RootState) => state.game.isNewGame);
+  const isStartTimer = useSelector((state: RootState) => state.game.isStartTimer);
 
   let answers: string[] = []; // Tableau pour stocker les réponses
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-// On récupére les données au chargement du composant
-useEffect(() => {
-  async function fetchData() {
-    const questionsDatas = await getQuestions(level);
-    setQuestions(questionsDatas);
-    setQuestionToPlay(questionsDatas[0]);
-    dispatch(setQuestionNb(0));
-    setGoodAnswer(questionsDatas[0].goodAnsw);
-    setBadAnswers(questionsDatas[0].badAnsw);
-  }
-  fetchData();
-}, []);
+  // On récupére les données au chargement du composant
+  useEffect(() => {
+    async function fetchData() {
+      const questionsDatas = await getQuestions(level);
+      setQuestions(questionsDatas);
+      setGoodAnswer(questionsDatas[0].goodAnsw);
+      setBadAnswers(questionsDatas[0].badAnsw);
+      setQuestionToPlay(questionsDatas[0]);
+      dispatch(setQuestionNb(0));
+      dispatch(setIsAskPublic(false));
+      dispatch(setIsCallHome(false));
+      dispatch(setIsHalfPossibility(false));
+      dispatch(setIsStartTimer(!isStartTimer))
+    }
+    fetchData();
+  }, [isNewGame]);
 
-// Mise à jour des réponses en fonction du numéro de question
-useEffect(() => {
-  setGoodAnswer(questionToPlay?.goodAnsw);
-  setBadAnswers(questionToPlay?.badAnsw);
-  if (goodAnswer) {
-    answers?.push(goodAnswer.title); // Ajoute la bonne réponse au tableau des réponses
-  }
-  if (badAnswers) {
-    badAnswers.forEach((answer) => {
-      answers?.push(answer.title); // Ajoute les mauvaises réponses au tableau des réponses
-    });
-  }
-}, [questionNb]);
+  // Mise à jour des réponses en fonction du numéro de question
+  useEffect(() => {
+    setGoodAnswer(questionToPlay?.goodAnsw);
+    setBadAnswers(questionToPlay?.badAnsw);
+    if (goodAnswer) {
+      answers?.push(goodAnswer.title); // Ajoute la bonne réponse au tableau des réponses
+    }
+    if (badAnswers) {
+      badAnswers.forEach((answer) => {
+        answers?.push(answer.title); // Ajoute les mauvaises réponses au tableau des réponses
+      });
+    }
+  }, [questionNb]);
 
-function nextQuestion() {
-  if (questionNb < 14) {
-    dispatch(setQuestionNb(questionNb + 1)); // Passer à la question suivante
-    setQuestionToPlay(questions[questionNb + 1]);
+  function nextQuestion() {
+    if (questionNb < 14) {
+      dispatch(setQuestionNb(questionNb + 1)); // Passer à la question suivante
+      setQuestionToPlay(questions[questionNb + 1]);
+    }
   }
-}
 
   return (
     <div
@@ -80,10 +82,8 @@ function nextQuestion() {
     >
       <div className="row col-12 col-lg-8 ">
         <MenuContainer>
-          <HelpContainer  {...questionToPlay}/>
-          <TimerContainer>
-            <Timer>timer</Timer>
-          </TimerContainer>
+          <HelpContainer {...questionToPlay} />
+          <Timer />
           <PointsGameCounter points={pointsGame} />
         </MenuContainer>
         <div>

@@ -1,25 +1,34 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { Nav, NavItem, NavItemLevelSelected, NavItemNiveau, NavProfile, NavSelect } from "./CssNav";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  Nav,
+  NavItem,
+  NavItemLevelSelected,
+  NavItemNiveau,
+  NavProfile,
+  NavSelect,
+} from "./CssNav";
 
 import logo from "../../assets/images/milionLogo.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setLevel } from "../../store/gameReducer";
-import { RootState } from "../../store/store";
+import { setChoosedAnswer, setIsAnswerSelected, setLevel, setQuestionNb, setQuestions } from "../../store/gameReducer";
+import Swal from "sweetalert2";
+import { setPointsGame } from "../../store/awardsReducer";
+import { setIsAskPublic, setIsCallHome, setIsHalfPossibility } from "../../store/helpReducer";
 
 function Navbar() {
   const [isHoveredProfile, setIsHoveredProfile] = useState<boolean>(false);
   const [isPageGame, setIsPageGame] = useState<boolean>(false);
   const [levelName, setLevelName] = useState<string>("FACILE");
-
-  const pathname = useLocation().pathname;
-
+  const dispatch = useDispatch();
+  const pathname: string = useLocation().pathname;
+  const navigate = useNavigate();
   useEffect(() => {
     // Si on est dans la page du Jeu on empeche de changer le niveau.
     pathname === "/jeu" ? setIsPageGame(true) : setIsPageGame(false);
   }, [pathname]);
-
-  const dispatch = useDispatch();
+ 
+ 
   const handleLevel = (levelSelected: string) => {
     dispatch(setLevel(levelSelected));
     if (levelSelected === "easy") {
@@ -30,7 +39,7 @@ function Navbar() {
       setLevelName("DIFFICILE");
     }
   };
-  
+
   const handleMouseEnterProfile = () => {
     setIsHoveredProfile(true);
   };
@@ -38,15 +47,51 @@ function Navbar() {
     setIsHoveredProfile(false);
   };
 
+  function changePage(path: string) {
+    if (pathname === "/jeu") {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        },
+        buttonsStyling: true,
+      });
+      swalWithBootstrapButtons
+        .fire({
+          title: "Tu veux quitter la partie?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "OUI",
+          cancelButtonText: "NON",
+          reverseButtons: false,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            dispatch(setIsAnswerSelected(false));
+            dispatch(setPointsGame(0));
+            dispatch(setQuestions([]));
+            dispatch(setQuestionNb(0));
+            dispatch(setChoosedAnswer({}));
+            dispatch(setIsHalfPossibility(false));
+            dispatch(setIsAskPublic(false));
+            dispatch(setIsCallHome(false));
+            navigate(path, { replace: true });
+          }
+        });
+    } else {
+      navigate(path, { replace: true });
+    }
+  }
+
   const normalIcon = <i className="fa-solid fa-user fa-lg"></i>;
   const hoverIcon = <i className="fa-solid fa-user fa-bounce fa-lg"></i>;
 
   return (
     <Nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <Link to="/">
+      <div className="container-fluid" style={{cursor: "pointer"}}>
+        <div onClick={() => changePage("/")}>
           <img src={logo} alt="logo milionaire" height="75px" />
-        </Link>
+        </div>
         <button
           className="navbar-toggler"
           type="button"
@@ -64,18 +109,22 @@ function Navbar() {
         >
           <ul className="navbar-nav ">
             <NavItem className="nav-item">
-              <Link to="/" className="nav-link active" aria-current="page">
-                Home
-              </Link>
-            </NavItem>
-            <NavItem className="nav-item">
-              <Link
-                to="/classement"
+              <div
                 className="nav-link active"
                 aria-current="page"
+                onClick={() => changePage("/")}
+              >
+                Home
+              </div>
+            </NavItem>
+            <NavItem className="nav-item">
+              <div
+                className="nav-link active"
+                aria-current="page"
+                onClick={() => changePage("/classement")}
               >
                 Classement
-              </Link>
+              </div>
             </NavItem>
             <NavItemNiveau className="nav-item">Niveau :</NavItemNiveau>
             <NavSelect className="nav-item" style={{ margin: 0 }}>
@@ -85,9 +134,15 @@ function Navbar() {
                   aria-label="Default select example"
                   onChange={(e) => handleLevel(e.target.value)}
                 >
-                  <option value="easy" selected={levelName === "FACILE"} >Facile</option>
-                  <option value="medium"selected={levelName === "NORMAL"}>Normal</option>
-                  <option value="hard" selected={levelName === "DIFFICILE"}>Difficile</option>
+                  <option value="easy" selected={levelName === "FACILE"}>
+                    Facile
+                  </option>
+                  <option value="medium" selected={levelName === "NORMAL"}>
+                    Normal
+                  </option>
+                  <option value="hard" selected={levelName === "DIFFICILE"}>
+                    Difficile
+                  </option>
                 </select>
               ) : (
                 <NavItemLevelSelected>{levelName}</NavItemLevelSelected>
@@ -96,7 +151,15 @@ function Navbar() {
           </ul>
 
           <ul className="navbar-nav d-flex align-items-center">
-          {!isPageGame && <li style={{marginRight: "2rem"}}><Link to="/jeu" ><button type="button" className="btn btn-outline-primary">JOUER</button></Link></li>}
+            {!isPageGame && (
+              <li style={{ marginRight: "2rem" }}>
+                <Link to="/jeu">
+                  <button type="button" className="btn btn-outline-primary">
+                    JOUER
+                  </button>
+                </Link>
+              </li>
+            )}
 
             <NavProfile
               className="nav-item"
