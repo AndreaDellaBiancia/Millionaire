@@ -16,30 +16,33 @@ import {
 } from "./CssUserRanking";
 function UserRanking({ user, index }: UserRankingInterface) {
   return (
-    <DivUser key={user.id}>
-      <TriangleLeft></TriangleLeft>
-      <TriangleLeft2></TriangleLeft2>
-      <RankingName>{user.username}</RankingName>
-      <RankingPoints>{user.points}</RankingPoints>
-      <RankingImg
-        style={index === 0 ? { display: "block" } : { display: "none" }}
-        src={firstPlace}
-        alt="premiere place"
-      />
-      <RankingImg
-        style={index === 1 ? { display: "block" } : { display: "none" }}
-        src={secondPlace}
-        alt="deuxieme place"
-      />
-      <RankingImg
-        style={index === 2 ? { display: "block" } : { display: "none" }}
-        src={thirdPlace}
-        alt="troisieme place"
-      />
-      <Line></Line>
-      <TriangleRight></TriangleRight>
-      <TriangleRight2></TriangleRight2>
-    </DivUser>
+    <div style={{width: "100%", display: "flex", justifyContent: "center", position: "relative"}}>
+       <Line></Line>
+      <DivUser key={user.id}>
+        <TriangleLeft></TriangleLeft>
+        <TriangleLeft2></TriangleLeft2>
+        <RankingName>{user.username}</RankingName>
+        <RankingPoints>{user.points} XP</RankingPoints>
+        <RankingImg
+          style={index === 0 ? { display: "block" } : { display: "none" }}
+          src={firstPlace}
+          alt="premiere place"
+        />
+        <RankingImg
+          style={index === 1 ? { display: "block" } : { display: "none" }}
+          src={secondPlace}
+          alt="deuxieme place"
+        />
+        <RankingImg
+          style={index === 2 ? { display: "block" } : { display: "none" }}
+          src={thirdPlace}
+          alt="troisieme place"
+        />
+       
+        <TriangleRight></TriangleRight>
+        <TriangleRight2></TriangleRight2>
+      </DivUser>
+    </div>
   );
 }
 

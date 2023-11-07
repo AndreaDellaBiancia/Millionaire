@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const QuestionContainer = styled.div`
-@media (max-width:480px) {
+@media (max-width:360px) {
   max-width: 300px;
 }
   position: relative;
@@ -61,7 +61,7 @@ export const TriangleRight2 = styled.div`
 `;
 
 export const QuestionText = styled.p`
-@media (max-width:480px) {
+@media (max-width:360px) {
   margin-bottom: 0;
   padding: 0.5rem;
   font-size: 0.6rem;
