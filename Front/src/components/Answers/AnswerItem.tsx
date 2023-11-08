@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnswerItemProps } from "../../interfaces/AnswerItemInterface";
 import {
   AnswerContainer,
+  Container,
   Line,
   TriangleLeft,
   TriangleLeft2,
@@ -15,7 +16,7 @@ import {
 } from "../../store/gameReducer";
 import { useEffect, useState } from "react";
 import { RootState } from "../../store/store";
-import { setPointsQuestion } from "../../store/awardsReducer";
+import { setIsMillion, setPointsQuestion } from "../../store/awardsReducer";
 import { endGame } from "../../outils/endGame";
 import { useNavigate } from "react-router-dom";
 
@@ -92,6 +93,13 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
           dispatch(
             setPointsQuestion(pointsGame + (questionNb + 1) * indexPoints)
           );
+          if (questionNb === 14) {
+            dispatch(setIsMillion(true));
+            setTimeout(() => {
+              dispatch(setIsMillion(false));
+              endGame(navigate, dispatch, isNewGame, isStartTimer, "win");
+            }, 8000)
+          }
           // Après 2 secondes, arrêter l'intervalle "bonne répnse(verte)" et définir "isGoodAnswer" sur true.
           setTimeout(() => {
             clearInterval(intervalIdGood);
@@ -100,7 +108,7 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
         } else {
           // Si la réponse est incorrecte, définir la couleur sur "rouge".
           setTimeout(() => {
-            endGame(navigate, dispatch, isNewGame, isStartTimer);
+            endGame(navigate, dispatch, isNewGame, isStartTimer, "lost");
           }, 2000);
           setColor("red");
         }
@@ -131,6 +139,8 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
   }, [choosedAnswer]);
 
   return (
+    <Container>
+      <Line></Line>
     <AnswerContainer
       color={color}
       onClick={() => {
@@ -147,10 +157,11 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
       <TriangleLeft2 color={color}></TriangleLeft2>
       <div style={{ position: "absolute" }}>{letter} :</div>{" "}
       <p>{answer?.title}</p>
-      <Line></Line>
+      
       <TriangleRight color={color}></TriangleRight>
       <TriangleRight2 color={color}></TriangleRight2>
     </AnswerContainer>
+    </Container>
   );
 }
 

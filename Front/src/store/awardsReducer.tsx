@@ -6,6 +6,7 @@ export interface AwardsState {
   awards: number[];
   pointsQuestion: number;
   pointsGame: number;
+  isMillion: boolean;
 }
 const initialState: AwardsState = {
   awards: [
@@ -14,6 +15,7 @@ const initialState: AwardsState = {
   ],
   pointsQuestion: 0,
   pointsGame:0,
+  isMillion: false,
 };
 
 export const awardsSlice = createSlice({
@@ -29,7 +31,10 @@ export const awardsSlice = createSlice({
     setPointsGame: (state, action: PayloadAction<number>) => {
       state.pointsGame = action.payload;
     },
+    setIsMillion: (state, action: PayloadAction<boolean>) => {
+      state.isMillion = action.payload;
+    },
   },
 });
 
-export const { setAwards, setPointsQuestion, setPointsGame } = awardsSlice.actions;
+export const { setAwards, setPointsQuestion, setPointsGame, setIsMillion } = awardsSlice.actions;

@@ -1,11 +1,13 @@
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
+  ButtonPlay,
   Nav,
   NavItem,
   NavItemLevelSelected,
   NavItemNiveau,
   NavProfile,
   NavSelect,
+  NiveauContainer,
 } from "./CssNav";
 
 import logo from "../../assets/images/milionLogo.png";
@@ -126,39 +128,40 @@ function Navbar() {
                 Classement
               </div>
             </NavItem>
-            <NavItemNiveau className="nav-item">Niveau :</NavItemNiveau>
-            <NavSelect className="nav-item" style={{ margin: 0 }}>
-              {!isPageGame ? (
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                  onChange={(e) => handleLevel(e.target.value)}
-                >
-                  <option value="easy" selected={levelName === "FACILE"}>
-                    Facile
-                  </option>
-                  <option value="medium" selected={levelName === "NORMAL"}>
-                    Normal
-                  </option>
-                  <option value="hard" selected={levelName === "DIFFICILE"}>
-                    Difficile
-                  </option>
-                </select>
-              ) : (
-                <NavItemLevelSelected>{levelName}</NavItemLevelSelected>
-              )}
-            </NavSelect>
+            <NiveauContainer>
+              <NavItemNiveau className="nav-item">Niveau :</NavItemNiveau>
+              <NavSelect className="nav-item" style={{ margin: 0 }}>
+                {!isPageGame ? (
+                  <select
+                    className="form-select form-select-lg"
+                    onChange={(e) => handleLevel(e.target.value)}
+                  >
+                    <option value="easy" selected={levelName === "FACILE"}>
+                      Facile
+                    </option>
+                    <option value="medium" selected={levelName === "NORMAL"}>
+                      Normal
+                    </option>
+                    <option value="hard" selected={levelName === "DIFFICILE"}>
+                      Difficile
+                    </option>
+                  </select>
+                ) : (
+                  <NavItemLevelSelected>{levelName}</NavItemLevelSelected>
+                )}
+              </NavSelect>
+            </NiveauContainer>
           </ul>
 
           <ul className="navbar-nav d-flex align-items-center">
             {!isPageGame && (
-              <li style={{ marginRight: "2rem" }}>
+              <ButtonPlay >
                 <Link to="/jeu">
                   <button type="button" className="btn btn-outline-primary">
                     JOUER
                   </button>
                 </Link>
-              </li>
+              </ButtonPlay>
             )}
 
             <NavProfile

@@ -1,11 +1,43 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+@media (min-width: 1200px) {
+padding: 0 4rem
+}
+
+display: flex;
+flex-wrap: wrap;  
+justify-content: center; 
+padding: 0;
+width: 100%;
+`;
+
+export const GameContainer = styled.div`
+@media (min-width: 1200px) {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 ;
+}
+
+width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 0 0;
+  
+`;
+
 export const MenuContainer = styled.div`
+@media (min-width: 1200px) {
+  margin-bottom: 7rem;
+}
+
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items:flex-start;
-  padding: 0 4rem;
+  margin-bottom: 2rem;
+
 `;
 
 

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 interface DangerTimeProps {
-  isDangerTime: boolean;
+  isdangertime: string;
 }
 
 export const TimerContainer = styled.div`
@@ -13,13 +13,10 @@ export const TimerContainer = styled.div`
   font-size: 1.5rem;
 `;
 
-
 export const Time = styled.div<DangerTimeProps>`
- 
-  
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
-  color: ${(props) => props.isDangerTime ? 'red' : 'white' };
+  color: ${(props) => (props.isdangertime === "true" ? "red" : "white")};
 `;

@@ -1,0 +1,7 @@
+#coin-container{
+  z-index: 999;
+}
+
+img{
+  --animate-duration: 10s;
+}

@@ -49,7 +49,7 @@ function PointsGameCounter(points: { points: number }) {
 
   return (
     <PointsContainer>
-      <Points isPointsAdded={isPointsAdded}>
+      <Points isPointsAdded={isPointsAdded} className={isPointsAdded ? "animate__animated animate__pulse" : ""}>
         <p>POINTS</p> <p>{points.points}</p>
       </Points>
     </PointsContainer>

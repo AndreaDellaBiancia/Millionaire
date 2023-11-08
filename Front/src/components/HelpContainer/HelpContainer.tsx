@@ -4,14 +4,15 @@ import "./helpAlert.css";
 import QuestionsAnswers from "../../interfaces/QuestionsAnswersInterface";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setIsAskPublic, setIsCallHome, setIsHalfPossibility } from "../../store/helpReducer";
+import {
+  setIsAskPublic,
+  setIsCallHome,
+  setIsHalfPossibility,
+} from "../../store/helpReducer";
 import { useEffect } from "react";
 
 function HelpContainer(questionToPlay: QuestionsAnswers) {
-  
-  const isCallHome = useSelector(
-    (state: RootState) => state.help.isCallHome
-  );
+  const isCallHome = useSelector((state: RootState) => state.help.isCallHome);
   const isHalfPossibility = useSelector(
     (state: RootState) => state.help.isHalfPossibility
   );
@@ -81,25 +82,24 @@ function HelpContainer(questionToPlay: QuestionsAnswers) {
     }
   }, [isAskPublic]);
 
-
   return (
     <Container>
       <HelpItem
         onClick={() => (!isCallHome ? callHome() : null)}
-        isUsed={isCallHome}
+        isused={isCallHome}
       >
         <i className="fa-sharp fa-solid fa-phone-volume"></i>
       </HelpItem>
       <HelpItem
         onClick={() => dispatch(setIsHalfPossibility(true))}
-        isUsed={isHalfPossibility}
+        isused={isHalfPossibility}
       >
         <i className="fa-sharp fa-solid fa-star-half-stroke"></i>
         <span>50 : 50</span>
       </HelpItem>
       <HelpItem
         onClick={() => dispatch(setIsAskPublic(true))}
-        isUsed={isAskPublic}
+        isused={isAskPublic}
       >
         <i className="fa-sharp fa-solid fa-people-group"></i>
       </HelpItem>

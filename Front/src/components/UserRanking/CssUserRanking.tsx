@@ -1,86 +1,120 @@
 import styled from "styled-components";
+
+export const DivUser = styled.div`
+  @media (min-width: 700px) {
+    width: 50%;
+    font-size: 20px;
+    border-right: 0;
+    border-left: 0;
+  }
+  position: relative;
+  display: flex;
+  justify-content: flex-start; /* Pour centrer les enfants verticalement */
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  font-weight: bold;
+  font-size: 1rem;
+  border: 2.8px solid #e2bd00;
+
+  margin-bottom: 1rem;
+  background-color: white;
+`;
+
 export const TriangleLeft = styled.div`
-  position: absolute;
-  left: -2.2rem;
-  width: 0;
-  height: 0;
-  border-top: 2.33rem solid transparent;
-  border-right:  2.20rem solid #e2bd00;
-  border-bottom: 2.33rem solid transparent;
-  z-index:-1
+  @media (min-width: 1000px) {
+    position: absolute;
+    left: -2.2rem;
+    width: 0;
+    height: 0;
+    border-top: 2.33rem solid transparent;
+    border-right: 2.2rem solid #e2bd00;
+    border-bottom: 2.33rem solid transparent;
+    z-index: -1;
+    display:block;
+  }
+  display: none;
 `;
 
 export const TriangleLeft2 = styled.div`
-  position: absolute;
-  left: -2rem;
-  width: 0;
-  height: 0;
-  border-top: 2.20rem solid transparent;
-  border-right: 2.1rem solid white;
-  border-bottom: 2.20rem solid transparent;
+  @media (min-width: 1000px) {
+    position: absolute;
+    left: -2rem;
+    width: 0;
+    height: 0;
+    border-top: 2.2rem solid transparent;
+    border-right: 2.1rem solid white;
+    border-bottom: 2.2rem solid transparent;
+    display:block;
+  }
+  display: none;
 `;
 
 export const TriangleRight = styled.div`
-  position: absolute;
-  right: -2.2rem;
-  width: 0;
-  height: 0;
-  border-top: 2.33rem solid transparent;
-  border-left: 2.20rem solid #e2bd00;
-  border-bottom: 2.33rem solid transparent;
-  z-index:-1
+  @media (min-width: 1000px) {
+    position: absolute;
+    right: -2.2rem;
+    width: 0;
+    height: 0;
+    border-top: 2.33rem solid transparent;
+    border-left: 2.2rem solid #e2bd00;
+    border-bottom: 2.33rem solid transparent;
+    z-index: -1;
+    display:block;
+  }
+  display: none;
 `;
 
 export const TriangleRight2 = styled.div`
-  position: absolute;
-  right: -2rem;
-  width: 0;
-  height: 0;
-  border-top: 2.20rem solid transparent;
-  border-left: 2.1rem solid white;
-  border-bottom: 2.20rem solid transparent;
+  @media (min-width: 1000px) {
+    position: absolute;
+    right: -2rem;
+    width: 0;
+    height: 0;
+    border-top: 2.2rem solid transparent;
+    border-left: 2.1rem solid white;
+    border-bottom: 2.2rem solid transparent;
+    display:block;
+  }
+  display: none;
 `;
 
 export const Line = styled.div`
-  width: 100rem;
-  position : absolute;
-  background: #e2bd00;
-  height:2px;
-  z-index:-1;
+  @media (min-width: 1000px) {
+    width: 80%;
+    position: absolute;
+    top: 34px;
+    background: #e2bd00;
+    height: 2px;
+    z-index: -1;
+    display:block;
+  }
+  display: none;
 `;
 
-export const DivUser = styled.div`
-  position: relative;
+//Child Component - RankingName
+export const RankingName = styled.div`
+  @media (min-width: 500px) {
+    font-size: 1.5rem;
+  }
+  margin: 0 auto;
+  padding: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 700px;
-  font-weight: bold;
-  font-size: 20px;
-  border-top: 2.8px solid #e2bd00;
-  border-bottom: 2.8px solid #e2bd00;
-  
-  margin-bottom: 1rem;
-  background-color: white;
-
-
+  justify-content: flex-end;
 `;
-export const RankingName = styled.p`
-margin-bottom: 0;
-padding: 1rem; 
-font-size:1.5rem;
 
-  `;
-  export const RankingPoints = styled.p`
-  position: absolute;
-  right: 10rem;
-  top:30%;
-    
-  `;
+// Child Component - RankingPoints
+export const RankingPoints = styled.div`
+  margin-left: auto; 
+  margin-right: 8rem;
+  top: 30%;
+`;
 
 export const RankingImg = styled.img`
+@media (min-width: 500px) {
+  width: 3.8rem;
+}
   position: absolute;
   right: 1rem;
-  width: 3.8rem;
-  `;
+  width: 2.8rem;
+`;

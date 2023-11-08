@@ -14,13 +14,14 @@ function Home() {
     <HomeContainer>
       <Title>Le Millionaire</Title>
       <LogoContainer>
-        <LogoHome src={logo} alt="Qui veut gagner des milions" />
+        <LogoHome className="animate__animated animate__flipInY" src={logo} alt="Qui veut gagner des milions" />
       </LogoContainer>
       <Link to="/jeu">
         <StartBtn type="button" className="btn btn-outline-light">
           JOUER
         </StartBtn>
       </Link>
+      
     </HomeContainer>
   );
 }
