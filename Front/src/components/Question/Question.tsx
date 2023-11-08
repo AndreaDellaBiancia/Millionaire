@@ -18,7 +18,7 @@ function Question({ title }: QuestionsAnswers) {
   }, [title]);
 
   return (
-    <div className="col-12 d-flex justify-content-center">
+    <div style={{display:"flex", justifyContent: "center"}}>
       <QuestionContainer>
         <TriangleLeft></TriangleLeft>
         <TriangleLeft2></TriangleLeft2>

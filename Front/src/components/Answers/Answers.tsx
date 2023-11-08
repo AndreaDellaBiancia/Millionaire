@@ -71,10 +71,7 @@ function Answers({ goodAnswer, badAnswers }: AnswersPropsInterface) {
   }, [answerItems]);
 
   return (
-    <div
-      className="row col-12 d-flex justify-content-center m-0"
-      style={{ height: "fit-content" }}
-    >
+    <div style={{width: "100%", display: "flex", flexWrap: "wrap"}}>
       <AnswerItem letter={"A"} answer={answerItems[0]} />
       <AnswerItem letter={"B"} answer={answerItems[1]} />
       <AnswerItem letter={"C"} answer={answerItems[2]} />

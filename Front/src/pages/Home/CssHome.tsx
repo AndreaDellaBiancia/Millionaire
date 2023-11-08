@@ -16,14 +16,21 @@ export const Title = styled.h1`
 `;
 
 export const LogoHome = styled.img`
-  width: 500px;
-  height: 500px;
+@media(min-width: 1251px){
+  width: 30%;
+}
+
+@media (min-width: 800px) and (max-width: 1250px) {
+  width: 50%;
+}
+ width: 70%;
+ --animate-duration: 5s;
 `;
 
 export const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 45%;
+  width: 100%;
   margin-bottom:3rem; 
 `;
 

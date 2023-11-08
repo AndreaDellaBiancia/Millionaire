@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Answers from "../../components/Answers/Answers";
 import Awards from "../../components/Awards/Awards";
 import Question from "../../components/Question/Question";
-import { MenuContainer, NextQuestion, QuestionAward } from "./CssGame";
+import { Container, GameContainer, MenuContainer, NextQuestion, QuestionAward } from "./CssGame";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { getQuestions } from "../../fetch/fetchQuestions";
@@ -14,6 +14,8 @@ import PointsGameCounter from "../../components/PointsGameCounter/PointsGameCoun
 import HelpContainer from "../../components/HelpContainer/HelpContainer";
 import Timer from "../../components/Timer/Timer";
 import { setIsAskPublic, setIsCallHome, setIsHalfPossibility } from "../../store/helpReducer";
+import { setPointsGame } from "../../store/awardsReducer";
+import MoneyDrop from "../../components/MoneyDrop/MoneyDrop";
 
 function Game() {
   const [questions, setQuestions] = useState<QuestionsAnswers[]>([]);
@@ -32,6 +34,8 @@ function Game() {
   const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
   const isNewGame = useSelector((state: RootState) => state.game.isNewGame);
   const isStartTimer = useSelector((state: RootState) => state.game.isStartTimer);
+  const isMillion = useSelector((state: RootState) => state.awards.isMillion);
+
 
   let answers: string[] = []; // Tableau pour stocker les réponses
 
@@ -50,6 +54,7 @@ function Game() {
       dispatch(setIsCallHome(false));
       dispatch(setIsHalfPossibility(false));
       dispatch(setIsStartTimer(!isStartTimer))
+      dispatch(setPointsGame(0));
     }
     fetchData();
   }, [isNewGame]);
@@ -66,7 +71,7 @@ function Game() {
         answers?.push(answer.title); // Ajoute les mauvaises réponses au tableau des réponses
       });
     }
-  }, [questionNb]);
+  }, [questionToPlay]);
 
   function nextQuestion() {
     if (questionNb < 14) {
@@ -75,43 +80,43 @@ function Game() {
     }
   }
 
+
   return (
-    <div
-      className="row justify-content-center align-items-between"
-      style={{ width: "95%", margin: "0 auto" }}
-    >
-      <div className="row col-12 col-lg-8 ">
-        <MenuContainer>
-          <HelpContainer {...questionToPlay} />
-          <Timer />
-          <PointsGameCounter points={pointsGame} />
-        </MenuContainer>
-        <div>
-          <QuestionAward>
-            <p>
-              Question à{" "}
-              {awards[questionNb] === 1000000
-                ? "1 MILLION"
-                : awards[questionNb]}{" "}
-              €
-            </p>
-          </QuestionAward>
-          <Question {...questionToPlay} />
-          <Answers goodAnswer={goodAnswer} badAnswers={badAnswers} />
-          {isGoodAnswer && (
-            <div className="d-flex justify-content-center mt-2">
-              <NextQuestion
-                className="btn btn-outline-warning"
-                onClick={nextQuestion}
-              >
-                Question suivante
-              </NextQuestion>
-            </div>
-          )}
-        </div>
-      </div>
-      <Awards />
-    </div>
+    <Container>
+     {isMillion && <MoneyDrop />}
+        <GameContainer>
+          <MenuContainer>
+            <HelpContainer {...questionToPlay} />
+            <Timer />
+            <PointsGameCounter points={pointsGame} />
+          </MenuContainer>
+          <div>
+            <QuestionAward>
+              <p>
+                Question à{" "}
+                {awards[questionNb] === 1000000
+                  ? "1 MILLION"
+                  : awards[questionNb]}{" "}
+                €
+              </p>
+            </QuestionAward>
+            <Question {...questionToPlay} />
+            <Answers goodAnswer={goodAnswer} badAnswers={badAnswers} />
+            {(isGoodAnswer && questionNb < 14) &&  (
+              <div className="d-flex justify-content-center mt-2">
+                <NextQuestion
+                  className="btn btn-outline-warning"
+                  onClick={nextQuestion}
+                >
+                  Question suivante
+                </NextQuestion>
+              </div>
+            )}
+          </div>
+        </GameContainer>
+        <Awards />
+      
+    </Container>
   );
 }
 

@@ -16,6 +16,14 @@ export const NavItem = styled.li`
   }
 `;
 
+export const NiveauContainer = styled.div`
+  @media (min-width: 1000px) {
+    margin-bottom: 0;
+  }
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+`;
 export const NavItemNiveau = styled.li`
   display: flex;
   justify-content: center;
@@ -36,6 +44,7 @@ export const NavItemLevelSelected = styled.p`
 export const NavSelect = styled.li`
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 0 2rem;
   font-size: 1.5rem;
 
@@ -50,8 +59,21 @@ export const NavSelect = styled.li`
     width: 9rem;
     cursor: pointer;
   }
+
+ /*  select option {
+   font-size: 1.5rem;
+   padding: 2rem !important;   
+  } */
 `;
 
 export const NavProfile = styled.li`
   font-size: 1.5rem;
+`;
+
+export const ButtonPlay = styled.li`
+  @media (min-width: 1000px) {
+    margin-right: 2rem;
+    margin-bottom: 0;
+  }
+  margin-bottom: 1rem;
 `;

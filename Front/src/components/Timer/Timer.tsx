@@ -7,8 +7,8 @@ import { endGame } from "../../outils/endGame";
 import { setIsAnswerSelected } from "../../store/gameReducer";
 
 function Timer() {
-  const [time, setTime] = useState<number>(20);
-  const [isDangerTime, setIsDangerTime] = useState<boolean>(false);
+  const [time, setTime] = useState<number>(40);
+  const [isdangertime, setisdangertime] = useState<string>("false");
 
   const isStartTimer = useSelector(
     (state: RootState) => state.game.isStartTimer
@@ -24,15 +24,15 @@ function Timer() {
 
   // Utilise un effet pour réinitialiser le compte à rebours à 30 lorsque isStartTimer change
   useEffect(() => {
-    setTime(20);
-    setIsDangerTime(false);
+    setTime(40);
+    setisdangertime("false");
     dispatch(setIsAnswerSelected(false));
   }, [isStartTimer]);
 
   useEffect(() => {
     if (time !== 0) {
       if (time < 10) {
-        setIsDangerTime(true);
+        setisdangertime("true");
       }
       if (!isAnswerSelected) {
         const intervalId = setInterval(() => {
@@ -45,16 +45,18 @@ function Timer() {
     } else if (time === 0) {
       if (!isAnswerSelected) {
         setTimeout(() => {
-          endGame(navigate, dispatch, isNewGame, isStartTimer);
+          endGame(navigate, dispatch, isNewGame, isStartTimer, "lost");
         }, 1500);
       }
     }
   }, [time]);
 
   return (
-    <TimerContainer>
+    <TimerContainer
+      className={isdangertime === "true" ? "animate__animated animate__heartBeat" : ""}
+    >
       TIMER
-      <Time isDangerTime={isDangerTime}>{time}</Time>
+      <Time isdangertime={isdangertime}>{time}</Time>
     </TimerContainer>
   );
 }
