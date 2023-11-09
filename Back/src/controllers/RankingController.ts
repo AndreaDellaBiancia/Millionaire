@@ -2,7 +2,6 @@
 import { NextFunction, Request, Response } from "express";
 import { dataSource } from "../dataSource/data-source";
 import User from "../models/User";
-import { log } from "console";
 
 const userRepository = dataSource.getRepository(User);
 
@@ -18,9 +17,9 @@ const getRanking = async (
       },
       take: 10,
     });
-    res.status(200).json(users);
+    return res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error:
         "Une erreur est survenue lors de la récupération des utilisateurs.",
     });
