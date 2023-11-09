@@ -21,10 +21,8 @@ const startGame = async (
     let levelId: number = 1;
     if (level === "easy") {
       levelId = 1;
-    } else if (level === "medium") {
+    }else {
       levelId = 2;
-    } else {
-      levelId = 3;
     }
 
     // Récupérer les questions de la difficulté spécifiée
@@ -89,9 +87,9 @@ const startGame = async (
       return { ...question, homeHelp: homeHelps[index] };
     });
 
-    res.status(200).json(questions);
+    return res.status(200).json(questions);
   } catch (error: any) {
-    res.status(500).json({
+    return res.status(500).json({
       error: error.message,
     });
   }
