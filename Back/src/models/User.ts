@@ -15,7 +15,7 @@ export default class User {
   @Column({ type: "varchar" })
   password: string;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   points: number;
 
   @OneToMany(() => Match, (match) => match.user)
