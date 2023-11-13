@@ -18,9 +18,7 @@ const getToken = async (
     const user = await userRepository.findOneBy({ email: req.body.email });
 
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: "Paire login/mot de passe incorrecte" });
+      return res.status(401).json({ message: "Paire login/password incorrecte"  });
     }
 
     // On compare le mdp en clair avec le mdp hashé
@@ -29,7 +27,7 @@ const getToken = async (
     if (!isValid) {
       return res
         .status(401)
-        .json({ message: "Paire login/mot de passe incorrecte" });
+        .json({ message: "Paire login/password incorrecte" });
     }
 
     //On genere le token et on le returne
