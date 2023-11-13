@@ -11,26 +11,57 @@ import {
 } from "./CssNav";
 
 import logo from "../../assets/images/milionLogo.png";
+import coin from "../../assets/images/gold-coin.svg";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setChoosedAnswer, setIsAnswerSelected, setLevel, setQuestionNb, setQuestions } from "../../store/gameReducer";
+import {
+  setChoosedAnswer,
+  setIsAnswerSelected,
+  setLevel,
+  setQuestionNb,
+  setQuestions,
+} from "../../store/gameReducer";
 import Swal from "sweetalert2";
 import { setPointsGame } from "../../store/awardsReducer";
-import { setIsAskPublic, setIsCallHome, setIsHalfPossibility } from "../../store/helpReducer";
+import {
+  setIsAskPublic,
+  setIsCallHome,
+  setIsHalfPossibility,
+} from "../../store/helpReducer";
+import LogIn from "../LogIn/Login";
+import { RootState } from "../../store/store";
+import { setToken } from "../../store/userReducer";
 
 function Navbar() {
+  const [classLoginOpen, setClassLoginOpen] = useState<string>("");
+  const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
+
   const [isHoveredProfile, setIsHoveredProfile] = useState<boolean>(false);
   const [isPageGame, setIsPageGame] = useState<boolean>(false);
   const [levelName, setLevelName] = useState<string>("FACILE");
-  const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.user.token);
+
+  const tokenLocal = localStorage.getItem("token");
+  const loginClassOpen = "animate__animated animate__bounceInDown";
+  const loginClassClose = "animate__animated animate__bounceOutUp";
   const pathname: string = useLocation().pathname;
+
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   useEffect(() => {
     // Si on est dans la page du Jeu on empeche de changer le niveau.
     pathname === "/jeu" ? setIsPageGame(true) : setIsPageGame(false);
   }, [pathname]);
- 
- 
+
+  useEffect(() => {
+    if (tokenLocal) {
+      dispatch(setToken(tokenLocal));
+      setClassLoginOpen(loginClassClose);
+    }
+  }, [token]);
+
   const handleLevel = (levelSelected: string) => {
     dispatch(setLevel(levelSelected));
     if (levelSelected === "easy") {
@@ -50,6 +81,7 @@ function Navbar() {
   };
 
   function changePage(path: string) {
+    setClassLoginOpen(loginClassClose);
     if (pathname === "/jeu") {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -85,12 +117,38 @@ function Navbar() {
     }
   }
 
+  function handleLoginOpen() {
+    if (!isLoginOpen) {
+      setIsLoginOpen(true);
+    }
+
+    if (classLoginOpen === loginClassOpen) {
+      setClassLoginOpen(loginClassClose);
+    } else {
+      setClassLoginOpen(loginClassOpen);
+    }
+
+    const root = document.querySelector("#root");
+    const screen = root?.firstChild?.childNodes[1];
+
+    screen?.addEventListener("click", function () {
+      if (classLoginOpen === loginClassOpen || classLoginOpen === "") {
+        setClassLoginOpen(loginClassClose);
+      }
+    });
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    dispatch(setToken(""));
+  }
+
   const normalIcon = <i className="fa-solid fa-user fa-lg"></i>;
   const hoverIcon = <i className="fa-solid fa-user fa-bounce fa-lg"></i>;
 
   return (
     <Nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid" style={{cursor: "pointer"}}>
+      <div className="container-fluid" style={{ cursor: "pointer" }}>
         <div onClick={() => changePage("/")}>
           <img src={logo} alt="logo milionaire" height="75px" />
         </div>
@@ -139,9 +197,6 @@ function Navbar() {
                     <option value="easy" selected={levelName === "FACILE"}>
                       Facile
                     </option>
-                    <option value="medium" selected={levelName === "NORMAL"}>
-                      Normal
-                    </option>
                     <option value="hard" selected={levelName === "DIFFICILE"}>
                       Difficile
                     </option>
@@ -155,7 +210,7 @@ function Navbar() {
 
           <ul className="navbar-nav d-flex align-items-center">
             {!isPageGame && (
-              <ButtonPlay >
+              <ButtonPlay>
                 <Link to="/jeu">
                   <button type="button" className="btn btn-outline-primary">
                     JOUER
@@ -164,22 +219,26 @@ function Navbar() {
               </ButtonPlay>
             )}
 
-            <NavProfile
-              className="nav-item"
-              onMouseEnter={handleMouseEnterProfile}
-              onMouseLeave={handleMouseLeaveProfile}
-            >
-              <Link
-                to="/classement"
-                className="nav-link active"
-                aria-current="page"
+            {!token ? (
+              <NavProfile
+                className="nav-item"
+                onMouseEnter={handleMouseEnterProfile}
+                onMouseLeave={handleMouseLeaveProfile}
+                onClick={handleLoginOpen}
               >
                 {isHoveredProfile ? hoverIcon : normalIcon}
-              </Link>
-            </NavProfile>
+              </NavProfile>
+            ) : (
+              <div>
+                <img src={coin} alt="piece" style={{ width: "3.5rem" }} />
+
+                <button onClick={handleLogout}>deco</button>
+              </div>
+            )}
           </ul>
         </div>
       </div>
+      {isLoginOpen && <LogIn classLoginOpen={classLoginOpen} loginClassClose={loginClassClose} setClassLoginOpen={setClassLoginOpen}  />}
     </Nav>
   );
 }

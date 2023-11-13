@@ -1,4 +1,4 @@
-export async function getQuestions(level) {
+export async function getQuestions(level: string) {
   try {
     const requestOptions = {
       method: "POST",

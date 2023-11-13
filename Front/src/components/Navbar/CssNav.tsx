@@ -56,18 +56,17 @@ export const NavSelect = styled.li`
   ,
   select {
     font-size: 1.5rem;
-    width: 9rem;
+    width: 10.5rem;
     cursor: pointer;
   }
-
- /*  select option {
-   font-size: 1.5rem;
-   padding: 2rem !important;   
-  } */
+  select option {
+    font-size: 1.8rem;
+  }
 `;
 
 export const NavProfile = styled.li`
   font-size: 1.5rem;
+  margin: 0 2rem;
 `;
 
 export const ButtonPlay = styled.li`

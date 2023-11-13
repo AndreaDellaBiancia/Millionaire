@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getRanking } from "../../fetch/fetchUser";
+import { getRanking } from "../../fetch/fetchRanking";
 import User from "../../interfaces/UserInterface";
 import {
   RankingTitle,
@@ -7,8 +7,7 @@ import {
   RankingContainer,
 } from "./CssRanking";
 import UserRanking from "../../components/UserRanking/UserRanking";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+
 
 function Ranking() {
   const [users, setUsers] = useState<User[]>([]);

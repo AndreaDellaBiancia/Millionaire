@@ -13,6 +13,7 @@ const getToken = async (
   next: NextFunction
 ): Promise<User | any> => {
   try {
+
     //On controle si l'utilisateur existe dans la bdd
     const user = await userRepository.findOneBy({ email: req.body.email });
 
@@ -74,6 +75,7 @@ const registration = async (
     newUser.username = username;
     newUser.password = passwordHash;
     newUser.email = email;
+    newUser.points = 0;
 
     await userRepository.save(newUser);
 
