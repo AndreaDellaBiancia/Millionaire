@@ -13,12 +13,13 @@ const getToken = async (
   next: NextFunction
 ): Promise<User | any> => {
   try {
-
     //On controle si l'utilisateur existe dans la bdd
     const user = await userRepository.findOneBy({ email: req.body.email });
 
     if (!user) {
-      return res.status(401).json({ message: "Paire login/password incorrecte"  });
+      return res
+        .status(401)
+        .json({ message: "Paire login/password incorrecte" });
     }
 
     // On compare le mdp en clair avec le mdp hashé
@@ -30,9 +31,9 @@ const getToken = async (
         .json({ message: "Paire login/password incorrecte" });
     }
 
-    //On genere le token et on le returne
+    //On genere le token et on le returne avec l'utilisateur
     return res.status(200).json({
-      userId: user?.id,
+      userId: user.id,
       token: jwt.sign({ userId: user.id }, process.env.TOKEN_SECRET, {
         expiresIn: "24h",
       }),
@@ -77,7 +78,7 @@ const registration = async (
 
     await userRepository.save(newUser);
 
-    return res.status(200).json({ message: "Utilisateur enregistré." });
+    return res.status(201).json({ message: "Utilisateur enregistré." });
   } catch (error) {
     return res.status(500).json({
       error: "Une erreur est survenue lors de l'inscription.",
@@ -85,4 +86,20 @@ const registration = async (
   }
 };
 
-export { getToken, registration };
+const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<User | any> => {
+  try {
+    const userId: number = Number(req.params.id);
+    const user =  await userRepository.findOneBy({id : userId})
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({
+      error: "Une erreur est survenue lors de l'inscription.",
+    });
+  }
+};
+
+export { getToken, registration, getUser };

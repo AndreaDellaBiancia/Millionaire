@@ -10,7 +10,9 @@ const router = express.Router();
 router.post('/registration', UserController.registration);
 router.post('/auth', UserController.getToken);
 router.get('/ranking', RankingController.getRanking);
-router.post('/game', GameController.startGame);
+router.get('/game/:level', GameController.startGame);
+router.get('/user/:id', UserController.getUser);
+
 
  
 module.exports = router;

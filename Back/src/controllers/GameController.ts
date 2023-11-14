@@ -16,7 +16,7 @@ const startGame = async (
   next: NextFunction
 ): Promise<any> => {
   try {
-    const level: string = req.body.level;
+    const level: string = req.params.level;
 
     let levelId: number = 1;
     if (level === "easy") {
