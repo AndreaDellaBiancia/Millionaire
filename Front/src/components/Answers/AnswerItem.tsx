@@ -26,6 +26,8 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
   const questionNb = useSelector((state: RootState) => state.game.questionNb);
   const level = useSelector((state: RootState) => state.game.level);
   const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
+  const user = useSelector((state: RootState) => state.user.user);
+
   const isStartTimer = useSelector(
     (state: RootState) => state.game.isStartTimer
   );
@@ -97,7 +99,8 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
             dispatch(setIsMillion(true));
             setTimeout(() => {
               dispatch(setIsMillion(false));
-              endGame(navigate, dispatch, isNewGame, isStartTimer, "win");
+              
+              endGame(navigate, dispatch, isNewGame, isStartTimer, "win", pointsGame, questionNb, level, user);
             }, 8000)
           }
           // Après 2 secondes, arrêter l'intervalle "bonne répnse(verte)" et définir "isGoodAnswer" sur true.
@@ -108,7 +111,7 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
         } else {
           // Si la réponse est incorrecte, définir la couleur sur "rouge".
           setTimeout(() => {
-            endGame(navigate, dispatch, isNewGame, isStartTimer, "lost");
+            endGame(navigate, dispatch, isNewGame, isStartTimer, "lost", pointsGame, questionNb, level, user);
           }, 2000);
           setColor("red");
         }

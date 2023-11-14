@@ -19,6 +19,11 @@ function Timer() {
     (state: RootState) => state.game.isAnswerSelected
   );
 
+  const questionNb = useSelector((state: RootState) => state.game.questionNb);
+  const level = useSelector((state: RootState) => state.game.level);
+  const pointsGame = useSelector((state: RootState) => state.awards.pointsGame);
+  const user = useSelector((state: RootState) => state.user.user);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -45,7 +50,7 @@ function Timer() {
     } else if (time === 0) {
       if (!isAnswerSelected) {
         setTimeout(() => {
-          endGame(navigate, dispatch, isNewGame, isStartTimer, "lost");
+          endGame(navigate, dispatch, isNewGame, isStartTimer, "lost", pointsGame, questionNb, level, user);
         }, 1500);
       }
     }
