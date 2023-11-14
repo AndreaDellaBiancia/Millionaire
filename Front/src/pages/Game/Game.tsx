@@ -15,7 +15,7 @@ import HelpContainer from "../../components/HelpContainer/HelpContainer";
 import Timer from "../../components/Timer/Timer";
 import { setIsAskPublic, setIsCallHome, setIsHalfPossibility } from "../../store/helpReducer";
 import { setPointsGame } from "../../store/awardsReducer";
-import MoneyDrop from "../../components/MoneyDrop/MoneyDrop";
+import MoneyDrop from "../../components/MoneyDropAnimation/MoneyDrop";
 
 function Game() {
   const [questions, setQuestions] = useState<QuestionsAnswers[]>([]);

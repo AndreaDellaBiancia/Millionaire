@@ -56,18 +56,17 @@ export const NavSelect = styled.li`
   ,
   select {
     font-size: 1.5rem;
-    width: 9rem;
+    width: 10.5rem;
     cursor: pointer;
   }
-
- /*  select option {
-   font-size: 1.5rem;
-   padding: 2rem !important;   
-  } */
+  select option {
+    font-size: 1.8rem;
+  }
 `;
 
 export const NavProfile = styled.li`
   font-size: 1.5rem;
+  margin: 0 2rem;
 `;
 
 export const ButtonPlay = styled.li`
@@ -76,4 +75,28 @@ export const ButtonPlay = styled.li`
     margin-bottom: 0;
   }
   margin-bottom: 1rem;
+`;
+
+export const ProfileOptionContainer = styled.div`
+  background-color: white;
+  position: absolute;
+  right: 0;
+  top: 6rem;
+
+  div {
+    height: 3rem;
+    width: 15rem;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  div:first-child {
+    border-bottom: 3px solid black;
+  }
+
+  div:hover{
+    background-color:#F3C327;
+    cursor: pointer;
+  }
 `;

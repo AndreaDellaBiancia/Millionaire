@@ -1,0 +1,32 @@
+.form-group{
+position: relative;
+margin-bottom: 2rem;
+}
+
+
+.form-group label{
+  font-size: 1.3rem;
+}
+
+.form-group input{
+  height: 3rem;
+  font-size: 1.7rem;
+ 
+}
+
+.form-group img {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  width: 2.5rem;
+  right: 2rem;
+  top : 2.3rem;
+}
+.modal-title{
+  text-align: center;
+}
+
+
+.form-group .error-message{
+  color: red !important;
+}

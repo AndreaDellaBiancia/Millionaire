@@ -2,9 +2,11 @@ import { useEffect } from "react";
 import coinImg from "../../assets/images/gold-coin.svg";
 import "./style.css"
 function MoneyDrop() {
+
+  // On genere l'animation des pieces dorées qui tombent à la question de 1000000 d'euros
   useEffect(() => {
     const container = document.getElementById('coin-container');
-
+    
     const numCoins = 70;
 
     for (let i = 0; i < numCoins; i++) {
