@@ -25,3 +25,8 @@ margin-bottom: 2rem;
 .modal-title{
   text-align: center;
 }
+
+
+.form-group .error-message{
+  color: red !important;
+}

@@ -76,3 +76,27 @@ export const ButtonPlay = styled.li`
   }
   margin-bottom: 1rem;
 `;
+
+export const ProfileOptionContainer = styled.div`
+  background-color: white;
+  position: absolute;
+  right: 0;
+  top: 6rem;
+
+  div {
+    height: 3rem;
+    width: 15rem;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  div:first-child {
+    border-bottom: 3px solid black;
+  }
+
+  div:hover{
+    background-color:#F3C327;
+    cursor: pointer;
+  }
+`;

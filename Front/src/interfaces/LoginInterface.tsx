@@ -1,7 +1,7 @@
 interface LoginProps {
-  classLoginOpen: string;
+  classLogin: string;
   loginClassClose: string;
-  setClassLoginOpen: (value : string) => void;
+  setClassLogin: (value : string) => void;
 }
 
 export default LoginProps;

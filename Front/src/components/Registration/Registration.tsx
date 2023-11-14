@@ -4,6 +4,10 @@ import closeEye from "../../assets/images/closeEye.png";
 import openEye from "../../assets/images/openEye.png";
 
 import "./style.css";
+import { registration } from "../../fetch/fetchRegistration";
+import { getToken } from "../../fetch/fetchToken";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../../store/userReducer";
 
 function Registration(props: any) {
   const [email, setEmail] = useState<string>("");
@@ -20,6 +24,10 @@ function Registration(props: any) {
     useState<boolean>(false);
   const [isErrorPasswords, setIsErrorPasswords] = useState<boolean>(false);
 
+  const [errorRegistration, setErrorRegistration] = useState<string>("");
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setEmail("");
     setUsername("");
@@ -29,7 +37,7 @@ function Registration(props: any) {
     setIsShowPasswordConfirm(false);
   }, [props]);
 
-  function handleSubmit(e: any): void {
+  async function handleSubmit(e: any) {
     e.preventDefault();
     const regexPassword =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
@@ -55,9 +63,20 @@ function Registration(props: any) {
         } else {
           setIsErrorPasswords(false);
           if (emailDone && usernameDone && password && passwordConfirm) {
-            console.log("====================================");
-            console.log("requete");
-            console.log("====================================");
+            try {
+              // Si toutes les données ont été bien renseignées on ajoute l'utilisateur en BDD
+              await registration(email, username, password);
+              // Et ensuite on recupere le token
+              const tokenData = await getToken(email, password);
+              dispatch(setToken(tokenData.token));
+              localStorage.setItem("token", tokenData.token);
+              localStorage.setItem("userId", tokenData.userId);
+
+              setErrorRegistration("");
+              props.setModalShow(false);
+            } catch (error: any) {
+              setErrorRegistration(error.message);
+            }
           }
         }
       } else {
@@ -102,7 +121,7 @@ function Registration(props: any) {
               onChange={(e) => setEmail(e.target.value)}
             />
             {errorEmail && (
-              <small id="emailHelp" className="form-text text-muted">
+              <small className="form-text text-muted error-message">
                 {errorEmail}
               </small>
             )}
@@ -115,10 +134,12 @@ function Registration(props: any) {
               id="inputSurnom"
               aria-describedby="surnomHelp"
               onChange={(e) => setUsername(e.target.value)}
-              required
             />
             {errorUsername && (
-              <small id="emailHelp" className="form-text text-muted">
+              <small
+                id="emailHelp"
+                className="form-text text-muted error-message"
+              >
                 {errorUsername}
               </small>
             )}
@@ -130,7 +151,6 @@ function Registration(props: any) {
               type={isShowPassword ? "text" : "password"}
               className="form-control"
               id="inputPassword1"
-              required
               onChange={(e) => setPassword(e.target.value)}
             />
             <img
@@ -139,7 +159,10 @@ function Registration(props: any) {
               alt=""
             />
             {errorPassword && (
-              <small id="emailHelp" className="form-text text-muted">
+              <small
+                id="emailHelp"
+                className="form-text text-muted error-message"
+              >
                 {errorPassword}
               </small>
             )}
@@ -151,7 +174,6 @@ function Registration(props: any) {
               type={isShowPasswordConfirm ? "text" : "password"}
               className="form-control"
               id="inputPassword2"
-              required
               onChange={(e) => setPasswordConfirm(e.target.value)}
             />
             <img
@@ -160,7 +182,7 @@ function Registration(props: any) {
               alt=""
             />
             {errorPasswordConfirm && (
-              <small id="emailHelp" className="form-text text-muted">
+              <small className="form-text text-muted error-message">
                 {errorPasswordConfirm}
               </small>
             )}
@@ -168,7 +190,7 @@ function Registration(props: any) {
               <span>Les passwords ne corrispondent pas.</span>
             )}
           </div>
-
+          {errorRegistration && <span>{errorRegistration}</span>}
           <div
             style={{
               display: "flex",

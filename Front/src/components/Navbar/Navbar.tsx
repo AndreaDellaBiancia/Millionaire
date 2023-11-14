@@ -8,6 +8,7 @@ import {
   NavProfile,
   NavSelect,
   NiveauContainer,
+  ProfileOptionContainer,
 } from "./CssNav";
 
 import logo from "../../assets/images/milionLogo.png";
@@ -31,20 +32,27 @@ import {
 } from "../../store/helpReducer";
 import LogIn from "../LogIn/Login";
 import { RootState } from "../../store/store";
-import { setToken } from "../../store/userReducer";
+import { setToken, setUser } from "../../store/userReducer";
+import { getUser } from "../../fetch/fetchUser";
 
 function Navbar() {
-  const [classLoginOpen, setClassLoginOpen] = useState<string>("");
+  const [classLogin, setClassLogin] = useState<string>("");
+  const [classProfile, setClassProfile] = useState<string>("");
+
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
 
   const [isHoveredProfile, setIsHoveredProfile] = useState<boolean>(false);
   const [isPageGame, setIsPageGame] = useState<boolean>(false);
   const [levelName, setLevelName] = useState<string>("FACILE");
   const token = useSelector((state: RootState) => state.user.token);
+  const user = useSelector((state: RootState) => state.user.user);
 
   const tokenLocal = localStorage.getItem("token");
   const loginClassOpen = "animate__animated animate__bounceInDown";
   const loginClassClose = "animate__animated animate__bounceOutUp";
+
+  const profileClassOpen = "animate__animated animate__fadeInRight";
+  const profileClassClose = "animate__animated animate__fadeOutLeft";
   const pathname: string = useLocation().pathname;
 
   const dispatch = useDispatch();
@@ -56,18 +64,25 @@ function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
+    // Quand la valeur du token de redux change, on regarde si dans le local storage on a un token
+    // et si c'est le cas, on recupere l'utilisateur et on le stock dans redux
+    async function getUserData(id: number) {
+      const user = await getUser(id);
+      dispatch(setUser(user));
+    }
     if (tokenLocal) {
       dispatch(setToken(tokenLocal));
-      setClassLoginOpen(loginClassClose);
+      setClassLogin(loginClassClose);
+      const userId = Number(localStorage.getItem("userId"));
+      getUserData(userId);
     }
   }, [token]);
+
 
   const handleLevel = (levelSelected: string) => {
     dispatch(setLevel(levelSelected));
     if (levelSelected === "easy") {
       setLevelName("FACILE");
-    } else if (levelSelected === "medium") {
-      setLevelName("NORMAL");
     } else {
       setLevelName("DIFFICILE");
     }
@@ -81,7 +96,8 @@ function Navbar() {
   };
 
   function changePage(path: string) {
-    setClassLoginOpen(loginClassClose);
+    // Si pendant le jeu on veux changer de page on affiche un alert
+    setClassLogin(loginClassClose);
     if (pathname === "/jeu") {
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -100,6 +116,7 @@ function Navbar() {
           reverseButtons: false,
         })
         .then((result) => {
+          // Si on quitte la page on met les infos du jeu à 0
           if (result.isConfirmed) {
             dispatch(setIsAnswerSelected(false));
             dispatch(setPointsGame(0));
@@ -118,29 +135,56 @@ function Navbar() {
   }
 
   function handleLoginOpen() {
+    // On gére l'overture ou la fermeture du composant login
     if (!isLoginOpen) {
       setIsLoginOpen(true);
     }
-
-    if (classLoginOpen === loginClassOpen) {
-      setClassLoginOpen(loginClassClose);
+    if (classLogin === loginClassOpen) {
+      setClassLogin(loginClassClose);
     } else {
-      setClassLoginOpen(loginClassOpen);
+      setClassLogin(loginClassOpen);
     }
-
+    // Si le composant est affiché et on click dans la page (sauf sur la nav) le composant se ferme
     const root = document.querySelector("#root");
     const screen = root?.firstChild?.childNodes[1];
 
     screen?.addEventListener("click", function () {
-      if (classLoginOpen === loginClassOpen || classLoginOpen === "") {
-        setClassLoginOpen(loginClassClose);
+      if (classLogin === loginClassOpen || classLogin === "") {
+        setClassLogin(loginClassClose);
       }
     });
   }
 
+  function handleProfileOption() {
+    // Quand l'utilisateur est connecté on affiche, si cliqué sur l'image de la piece dorée,
+    // le menu pour se deconnecter ou pour aller sur le profile de l'utilisateur.
+    // Si on click sur la page (sauf sur la nav) le menu disparait
+    const root = document.querySelector("#root");
+    const screen = root?.firstChild?.childNodes[1];
+    screen?.addEventListener("click", function () {
+      if (classProfile === profileClassOpen || classProfile === "") {
+        setClassProfile(profileClassClose);
+      }
+    });
+    const profileOptionHtml = document.querySelector(
+      "#profile-container-option"
+    );
+    if (classProfile === profileClassOpen) {
+      setClassProfile(profileClassClose);
+    } else {
+      if (profileOptionHtml instanceof HTMLElement) {
+        profileOptionHtml.style.display = "block";
+      }
+      setClassProfile(profileClassOpen);
+    }
+  }
+
   function handleLogout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     dispatch(setToken(""));
+    dispatch(setUser({}));
+    setClassProfile(profileClassClose);
   }
 
   const normalIcon = <i className="fa-solid fa-user fa-lg"></i>;
@@ -229,16 +273,48 @@ function Navbar() {
                 {isHoveredProfile ? hoverIcon : normalIcon}
               </NavProfile>
             ) : (
-              <div>
-                <img src={coin} alt="piece" style={{ width: "3.5rem" }} />
-
-                <button onClick={handleLogout}>deco</button>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  style={{
+                    marginBottom: 0,
+                    textTransform: "uppercase",
+                    color: "blue",
+                  }}
+                >
+                  {user?.username}
+                </p>
+                <img
+                  onClick={handleProfileOption}
+                  src={coin}
+                  alt="piece"
+                  style={{ width: "3.5rem" }}
+                />
               </div>
             )}
           </ul>
         </div>
       </div>
-      {isLoginOpen && <LogIn classLoginOpen={classLoginOpen} loginClassClose={loginClassClose} setClassLoginOpen={setClassLoginOpen}  />}
+      {isLoginOpen && (
+        <LogIn
+          classLogin={classLogin}
+          loginClassClose={loginClassClose}
+          setClassLogin={setClassLogin}
+        />
+      )}
+      <ProfileOptionContainer
+        id="profile-container-option"
+        style={{ display: "none" }}
+        className={classProfile}
+      >
+        <div>PROFIL</div>
+        <div onClick={handleLogout}>DÉCONNEXION</div>
+      </ProfileOptionContainer>
     </Nav>
   );
 }
