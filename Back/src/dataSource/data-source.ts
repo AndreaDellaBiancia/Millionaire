@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 import User from "../models/User";
-import Match from "../models/Match";
+import Game from "../models/Game";
 import Question from "../models/Question";
 import HomeHelp from "../models/HomeHelp";
 import GoodAnswer from "../models/GoodAnswer";
@@ -17,7 +17,7 @@ export const dataSource = new DataSource({
   synchronize: true,
   entities: [
     User,
-    Match,
+    Game,
     LevelDifficulty,
     Question,
     HomeHelp,

@@ -4,11 +4,17 @@ import Question from "../models/Question";
 import GoodAnswer from "../models/GoodAnswer";
 import BadAnswer from "../models/BadAnswer";
 import HomeHelp from "../models/HomeHelp";
+import Game from "../models/Game";
+import User from "../models/User";
+import LevelDifficulty from "../models/LevelDifficulty";
 
 const questionRepository = dataSource.getRepository(Question);
 const goodAnswerRepository = dataSource.getRepository(GoodAnswer);
 const badAnswersRepository = dataSource.getRepository(BadAnswer);
 const homeHelpRepository = dataSource.getRepository(HomeHelp);
+const gameRepository = dataSource.getRepository(Game);
+const levelRepository = dataSource.getRepository(LevelDifficulty);
+const userRepository = dataSource.getRepository(User);
 
 const startGame = async (
   req: Request,
@@ -21,7 +27,7 @@ const startGame = async (
     let levelId: number = 1;
     if (level === "easy") {
       levelId = 1;
-    }else {
+    } else {
       levelId = 2;
     }
 
@@ -51,12 +57,13 @@ const startGame = async (
       });
 
     // Récupérer les mauvaises réponses des questions récupérées
-    const homeHelpPromises: Promise<HomeHelp | null>[] =
-      filteredQuestions.map((question: Question) => {
+    const homeHelpPromises: Promise<HomeHelp | null>[] = filteredQuestions.map(
+      (question: Question) => {
         return homeHelpRepository.findOne({
           where: { question: { id: question.id } },
         });
-      });
+      }
+    );
 
     // Attendre que toutes les promesses soient terminées
     const goodAnsws: (GoodAnswer | null)[] = await Promise.all(
@@ -64,9 +71,7 @@ const startGame = async (
     );
     const badAnsws: (BadAnswer[] | null)[] = await Promise.all(badAnswPromises);
 
-    const homeHelps: (HomeHelp | null)[] = await Promise.all(
-      homeHelpPromises
-    );
+    const homeHelps: (HomeHelp | null)[] = await Promise.all(homeHelpPromises);
 
     // Associer les bonnes réponses aux questions
     let questionGoodAnsw = filteredQuestions.map(
@@ -95,4 +100,40 @@ const startGame = async (
   }
 };
 
-export { startGame };
+const saveGame = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    let currentUser: User = req.body.user;
+    const gamePoints: number = req.body.points;
+    const questionNb: number = req.body.questionNb;
+    const level: string = req.body.level;
+
+    const levelDifficulty = await levelRepository.findOneBy({ level: level });
+    if (levelDifficulty) {
+      const newGame = new Game();
+      newGame.points = gamePoints;
+      newGame.questionNb = questionNb;
+      newGame.user = currentUser;
+      newGame.levelDifficulty = levelDifficulty;
+      newGame.created_at = new Date().toJSON();
+      gameRepository.save(newGame);
+    }
+
+    const user = await userRepository.findOneBy({ id: currentUser.id });
+    if (user) {
+      const userPoints = user.points + gamePoints;
+      await userRepository.update(user.id, { points: userPoints });
+    }
+
+    return res.status(201).json({ message: "Game saved" });
+  } catch (error: any) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+export { startGame, saveGame };

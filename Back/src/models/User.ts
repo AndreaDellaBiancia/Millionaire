@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import Match from "./Match";
+import Game from "./Game";
 
 @Entity()
 export default class User {
@@ -18,6 +18,6 @@ export default class User {
   @Column({ type: "int", nullable: true })
   points: number;
 
-  @OneToMany(() => Match, (match) => match.user)
-  matches: Match[];
+  @OneToMany(() => Game, (game) => game.user)
+  games: Game[];
 }
