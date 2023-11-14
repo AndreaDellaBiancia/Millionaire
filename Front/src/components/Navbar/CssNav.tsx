@@ -65,8 +65,23 @@ export const NavSelect = styled.li`
 `;
 
 export const NavProfile = styled.li`
+  @media (min-width: 992px) {
+    flex-direction: column;
+  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   font-size: 1.5rem;
   margin: 0 2rem;
+
+  p {
+    margin-right: 0.5rem;
+    font-weight: bold;
+  }
+
+  i{
+    margin: 1rem;
+  }
 `;
 
 export const ButtonPlay = styled.li`
@@ -77,16 +92,26 @@ export const ButtonPlay = styled.li`
   margin-bottom: 1rem;
 `;
 
-export const ProfileOptionContainer = styled.div`
+export const ProfileOptionContainer = styled.li`
+  @media (min-width: 992px) {
+    position: absolute;
+    right: 0;
+    top: 6rem;
+    width: 15rem;
+
+    div {
+      width: 15rem;
+    }
+
+  }
+
   background-color: white;
-  position: absolute;
-  right: 0;
-  top: 6rem;
+  width: 100%;
 
   div {
     height: 3rem;
-    width: 15rem;
-    display:flex;
+    width: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
   }
@@ -95,8 +120,8 @@ export const ProfileOptionContainer = styled.div`
     border-bottom: 3px solid black;
   }
 
-  div:hover{
-    background-color:#F3C327;
+  div:hover {
+    background-color: #f3c327;
     cursor: pointer;
   }
 `;
