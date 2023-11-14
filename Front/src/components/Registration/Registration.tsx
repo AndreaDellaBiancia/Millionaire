@@ -146,7 +146,7 @@ function Registration(props: any) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="inputPassword1">Password *</label>
+            <label htmlFor="inputPassword1">Password *  <span style={{fontSize: 15}}>(6 caractères min., 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial)</span></label>
             <input
               type={isShowPassword ? "text" : "password"}
               className="form-control"
@@ -154,6 +154,7 @@ function Registration(props: any) {
               onChange={(e) => setPassword(e.target.value)}
             />
             <img
+              id="password-input-img"
               onClick={() => setIsShowPassword(!isShowPassword)}
               src={isShowPassword ? openEye : closeEye}
               alt=""

@@ -11,6 +11,8 @@ router.post('/registration', UserController.registration);
 router.post('/auth', UserController.getToken);
 router.get('/ranking', RankingController.getRanking);
 router.get('/game/:level', GameController.startGame);
+router.post('/game/', GameController.saveGame);
+
 router.get('/user/:id', UserController.getUser);
 
 

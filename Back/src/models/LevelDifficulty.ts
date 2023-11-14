@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import Match from "./Match";
 import Question from "./Question";
+import Game from "./Game";
 
 @Entity()
 export default class LevelDifficulty {
   @PrimaryGeneratedColumn()
-  id: number; 
+  id: number;
 
   @Column({ type: "varchar" })
   level: string;
@@ -13,6 +13,6 @@ export default class LevelDifficulty {
   @OneToMany(() => Question, (question) => question.levelDifficulty)
   questions: Question[];
 
-  @OneToMany(() => Match, (match) => match.levelDifficulty)
-  matches: Match[];
+  @OneToMany(() => Game, (game) => game.levelDifficulty)
+  games: Game[];
 }

@@ -6,15 +6,21 @@ import {
 } from "../store/gameReducer";
 import { setPointsGame } from "../store/awardsReducer";
 import { setIsAskPublic, setIsHalfPossibility } from "../store/helpReducer";
+import { saveGame } from "../fetch/fetchSaveGame";
+import { useSelector } from "react-redux";
+import User from "../interfaces/UserInterface";
 
 export function endGame(
   navigate: any,
   dispatch: any,
   isNewGame: boolean,
   isStartTimer: boolean,
-  status: string
+  status: string,
+  pointsGame: number,
+  questionNb: number,
+  level: string,
+  user: User | null
 ) {
-
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",
@@ -34,9 +40,15 @@ export function endGame(
     })
     .then((result) => {
       if (result.isConfirmed) {
+        if (user) {
+          saveGame(pointsGame, questionNb, user, level);
+        }
         dispatch(setIsNewGame(!isNewGame));
         dispatch(setIsStartTimer(!isStartTimer));
       } else if (result.dismiss === Swal.DismissReason.cancel) {
+        if (user) {
+          saveGame(pointsGame, questionNb, user, level);
+        }
         dispatch(setIsAnswerSelected(false));
         dispatch(setIsAskPublic(false));
         dispatch(setIsHalfPossibility(false));

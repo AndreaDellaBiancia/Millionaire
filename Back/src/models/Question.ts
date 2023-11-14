@@ -9,10 +9,10 @@ import {
   ManyToOne,
   OneToOne,
 } from "typeorm";
-import Match from "./Match";
+import Match from "./Game";
 import LevelDifficulty from "./LevelDifficulty";
 import BadAnswer from "./BadAnswer";
-import GoodAnswer from "./GoodAnswer";
+import Game from "./Game";
 
 @Entity()
 export default class Question {
@@ -23,7 +23,7 @@ export default class Question {
   title: string;
 
   @Column({ type: "int" })
-  price: number; 
+  price: number;
 
   @ManyToOne(
     () => LevelDifficulty,
@@ -39,13 +39,12 @@ export default class Question {
       referencedColumnName: "id",
     },
     inverseJoinColumn: {
-      name: "match_id",
+      name: "game_id",
       referencedColumnName: "id",
     },
   })
-  matches: Match[];
+  games: Game[];
 
   @OneToMany(() => BadAnswer, (badAnswer) => badAnswer.question)
   badAnswers: BadAnswer[];
-
 }
