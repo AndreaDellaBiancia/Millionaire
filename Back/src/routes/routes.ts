@@ -13,7 +13,7 @@ router.get('/ranking', RankingController.getRanking);
 router.get('/game/:level', GameController.startGame);
 router.post('/game/', GameController.saveGame);
 
-router.get('/user/:id', UserController.getUser);
+router.get('/user/:id', auth, UserController.getUser);
 
 
  
