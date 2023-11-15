@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar/Navbar"; // Importez le composant Navba
 import Game from "../pages/Game/Game";
 import Home from "../pages/Home/Home";
 import Ranking from "../pages/Ranking/Ranking";
-
+import ProtectedRoute from "../outils/protectedRoutes";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +22,9 @@ const router = createBrowserRouter([
       },
       {
         path: "classement",
-        element: <Ranking />,
+       // element: <ProtectedRoute route={"classement"} /> ,
+       element: <Ranking />,
+
       },
       {
         path: "jeu",
