@@ -8,6 +8,7 @@ import {
   Line,
   RankingImg,
   RankingName,
+  RankingPlace,
   RankingPoints,
   TriangleLeft,
   TriangleLeft2,
@@ -21,6 +22,7 @@ function UserRanking({ user, index }: UserRankingInterface) {
       <DivUser key={user.id}>
         <TriangleLeft></TriangleLeft>
         <TriangleLeft2></TriangleLeft2>
+        <RankingPlace>{index + 1}</RankingPlace>
         <RankingName>{user.username}</RankingName>
         <RankingPoints>{user.points} XP</RankingPoints>
         <RankingImg

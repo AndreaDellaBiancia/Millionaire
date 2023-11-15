@@ -17,7 +17,7 @@ export const Title = styled.h1`
 
 export const LogoHome = styled.img`
 @media(min-width: 1251px){
-  width: 30%;
+  width: 25%;
 }
 
 @media (min-width: 800px) and (max-width: 1250px) {
