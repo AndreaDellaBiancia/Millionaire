@@ -14,8 +14,7 @@ const getRanking = async (
     const users = await userRepository.find({
       order: {
         points: "DESC",
-      },
-      take: 10,
+      }
     });
     return res.status(200).json(users);
   } catch (error) {

@@ -1,15 +1,25 @@
 import User from "../interfaces/UserInterface";
 
-export async function saveGame(points: number, questionNb: number, user: User, level: string) {
+export async function saveGame(
+  points: number,
+  questionNb: number,
+  user: User,
+  level: string
+) {
+  const token = localStorage.getItem("token");
   try {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({points, questionNb, user, level}),
+      
     };
-     const response = await fetch("http://localhost:5000/api/game", requestOptions)
-     
-     if (!response.ok) {
+    const response = await fetch(
+      "http://localhost:5000/api/game/save",
+      requestOptions
+    );
+
+    if (!response.ok) {
       throw new Error((await response.json()).message);
     }
 

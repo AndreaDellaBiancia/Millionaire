@@ -95,6 +95,7 @@ export const Line = styled.div`
 export const RankingName = styled.div`
   @media (min-width: 500px) {
     font-size: 1.5rem;
+    text-transform: capitalize;
   }
   padding: 1rem;
   display: flex;
