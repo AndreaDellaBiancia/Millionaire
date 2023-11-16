@@ -42,6 +42,8 @@ function Registration(props: any) {
     const regexPassword =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
 
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     const emailDone = email
       ? (setErrorEmail(""), true)
       : (setErrorEmail("Renseigner une adresse email"), false);
@@ -57,30 +59,34 @@ function Registration(props: any) {
         false);
 
     if (passwordDone && passwordConfirmDone) {
-      if (regexPassword.test(password)) {
-        if (password !== passwordConfirm) {
-          setIsErrorPasswords(true);
-        } else {
-          setIsErrorPasswords(false);
-          if (emailDone && usernameDone && password && passwordConfirm) {
-            try {
-              // Si toutes les données ont été bien renseignées on ajoute l'utilisateur en BDD
-              await registration(email, username, password);
-              // Et ensuite on recupere le token
-              const tokenData = await getToken(email, password);
-              dispatch(setToken(tokenData.token));
-              localStorage.setItem("token", tokenData.token);
-              localStorage.setItem("userId", tokenData.userId);
+      if (regexEmail.test(email)) {
+        if (regexPassword.test(password)) {
+          if (password !== passwordConfirm) {
+            setIsErrorPasswords(true);
+          } else {
+            setIsErrorPasswords(false);
+            if (emailDone && usernameDone && password && passwordConfirm) {
+              try {
+                // Si toutes les données ont été bien renseignées on ajoute l'utilisateur en BDD
+                await registration(email, username, password);
+                // Et ensuite on recupere le token
+                const tokenData = await getToken(email, password);
+                dispatch(setToken(tokenData.token));
+                localStorage.setItem("token", tokenData.token);
+                localStorage.setItem("userId", tokenData.userId);
 
-              setErrorRegistration("");
-              props.setModalShow(false);
-            } catch (error: any) {
-              setErrorRegistration(error.message);
+                setErrorRegistration("");
+                props.setModalShow(false);
+              } catch (error: any) {
+                setErrorRegistration(error.message);
+              }
             }
           }
+        } else {
+          setErrorPassword("Password non valide");
         }
       } else {
-        setErrorPassword("Password non valide");
+        setErrorEmail("Email non valide");
       }
     }
   }
@@ -146,7 +152,13 @@ function Registration(props: any) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="inputPassword1">Password *  <span style={{fontSize: 15}}>(6 caractères min., 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial)</span></label>
+            <label htmlFor="inputPassword1">
+              Password *{" "}
+              <span style={{ fontSize: 15 }}>
+                (6 caractères min., 1 majuscule, 1 minuscule, 1 chiffre, 1
+                caractère spécial)
+              </span>
+            </label>
             <input
               type={isShowPassword ? "text" : "password"}
               className="form-control"
