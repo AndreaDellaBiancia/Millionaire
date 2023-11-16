@@ -1,26 +1,21 @@
-
-import Ranking from "../pages/Ranking/Ranking";
 import ErrorPage from "../pages/Error/Error404";
-import Home from "../pages/Home/Home";
+import Profile from "../pages/Profile/Profile";
 
-const ProtectedRoute = (route: {route: string}) => {
-  function isAuthenticated(){
+const ProtectedRoute = (route: { route: string }) => {
+  function isAuthenticated() {
     const token = localStorage.getItem("token");
     return token ? true : false;
-    
   }
 
   if (!isAuthenticated()) {
-    return <ErrorPage />; 
+    return <ErrorPage />;
   }
 
   switch (route.route) {
-    case "home":
-     return <Home />
-    case "classement":
-      return <Ranking />
+    case "mon-profil":
+      return <Profile />;
     default:
-     return <ErrorPage />
+      return <ErrorPage />;
   }
 };
 

@@ -56,8 +56,8 @@ function Navbar() {
   const pathname: string = useLocation().pathname;
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
+
   useEffect(() => {
     // Si on est dans la page du Jeu on empeche de changer le niveau.
     pathname === "/jeu" ? setIsPageGame(true) : setIsPageGame(false);
@@ -95,6 +95,10 @@ function Navbar() {
   };
 
   function changePage(path: string): void {
+    // Si ProfileOptionContainer est ouvert, on le ferme
+    if (profileClassOpen === classProfile) {
+      setClassProfile(profileClassClose);
+    }
     // Si pendant le jeu on veux changer de page on affiche un alert
     setClassLogin(loginClassClose);
     if (pathname === "/jeu") {
@@ -140,7 +144,7 @@ function Navbar() {
       //On set display block
       if (loginContainerHtml instanceof HTMLElement) {
         loginContainerHtml.style.display = "block";
-       }
+      }
       setIsLoginOpen(true);
     }
     if (classLogin === loginClassOpen) {
@@ -149,7 +153,7 @@ function Navbar() {
       //On set display block
       if (loginContainerHtml instanceof HTMLElement) {
         loginContainerHtml.style.display = "block";
-       }
+      }
       setClassLogin(loginClassOpen);
     }
     // Si le composant est affiché et on click dans la page (sauf sur la nav) le composant se ferme
@@ -162,16 +166,16 @@ function Navbar() {
       }
     });
 
-     // Si la NavBar est en version mobile on utilise displau block pour cacher le ProfileOptionContainer
-     const navBarMobile = document.querySelector("nav");
-     const btnNav = navBarMobile?.querySelector("button");
-     if (!navBarMobile?.classList.contains("show")) {
-       btnNav?.addEventListener("click", function () {
-         if (loginContainerHtml instanceof HTMLElement) {
+    // Si la NavBar est en version mobile on utilise displau block pour cacher le ProfileOptionContainer
+    const navBarMobile = document.querySelector("nav");
+    const btnNav = navBarMobile?.querySelector("button");
+    if (!navBarMobile?.classList.contains("show")) {
+      btnNav?.addEventListener("click", function () {
+        if (loginContainerHtml instanceof HTMLElement) {
           loginContainerHtml.style.display = "none";
-         }
-       });
-     }
+        }
+      });
+    }
   }
 
   function handleProfileOption(): void {
@@ -230,6 +234,7 @@ function Navbar() {
     if (profileOptionHtml instanceof HTMLElement) {
       profileOptionHtml.style.display = "none";
     }
+    window.location.replace("/");
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     dispatch(setToken(""));
@@ -337,7 +342,7 @@ function Navbar() {
                   {user?.username}
                 </p>
 
-                <img src={coin} alt="piece" style={{ width: "3rem" }} />
+                <img src={coin} alt="piece dorée" style={{ width: "3rem" }} />
               </NavProfile>
             )}
           </ul>
@@ -352,6 +357,7 @@ function Navbar() {
       )}
 
       <ProfileOptionContainer
+        onClick={() => changePage("/mon-profil")}
         id="profile-container-option"
         style={{ display: "none" }}
         className={classProfile}

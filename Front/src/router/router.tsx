@@ -31,6 +31,10 @@ const router = createBrowserRouter([
         element: <Game />,
       },
       {
+        path: "mon-profil",
+        element:<ProtectedRoute route={"mon-profil"} />,
+      },
+      {
         path: "*", // Route catch-all
         element: <ErrorPage />,
       },

@@ -110,7 +110,6 @@ const saveGame = async (
     const gamePoints: number = req.body.points;
     const questionNb: number = req.body.questionNb;
     const level: string = req.body.level;
-
     const levelDifficulty = await levelRepository.findOneBy({ level: level });
     if (levelDifficulty) {
       const newGame = new Game();
@@ -118,13 +117,13 @@ const saveGame = async (
       newGame.questionNb = questionNb;
       newGame.user = currentUser;
       newGame.levelDifficulty = levelDifficulty;
-      newGame.created_at = new Date().toJSON();
+      newGame.created_at = new Date(Date.now());
       gameRepository.save(newGame);
     }
 
     const user = await userRepository.findOneBy({ id: currentUser.id });
     if (user) {
-      const userPoints = user.points + gamePoints;
+      const userPoints: number = user.points + gamePoints;
       await userRepository.update(user.id, { points: userPoints });
     }
 
@@ -136,4 +135,34 @@ const saveGame = async (
   }
 };
 
-export { startGame, saveGame };
+const getGamesByUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    let userId: number = Number(req.params.userId);
+    let games: Game[] = await gameRepository.find({
+      relations: {
+        levelDifficulty: true,
+        user: true,
+      },
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+      order: {
+        created_at: "DESC",
+      },
+    });
+
+    return res.status(201).json(games);
+  } catch (error: any) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+export { startGame, saveGame, getGamesByUser };

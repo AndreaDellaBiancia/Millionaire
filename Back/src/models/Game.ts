@@ -19,8 +19,8 @@ export default class Game {
   @Column({ type: "int" })
   questionNb: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  created_at: string;
+  @Column({ type: 'timestamp', nullable: true })
+  created_at: Date;
 
   @ManyToOne(() => User, (user) => user.games)
   @JoinColumn({ name: "user_id" })
