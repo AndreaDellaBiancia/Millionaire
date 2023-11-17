@@ -285,6 +285,15 @@ function Navbar() {
                 Classement
               </div>
             </NavItem>
+            <NavItem className="nav-item">
+              <div
+                className="nav-link active"
+                aria-current="page"
+                onClick={() => changePage("/admin")}
+              >
+                Admin
+              </div>
+            </NavItem>
             <NiveauContainer>
               <NavItemNiveau className="nav-item">Niveau :</NavItemNiveau>
               <NavSelect className="nav-item" style={{ margin: 0 }}>

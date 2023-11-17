@@ -1,7 +1,7 @@
 import Game from "../interfaces/GameInterface";
 import GameNormalize from "../interfaces/GameNormalizeInterface";
 
-function dateNormalize(dateString: string): string {
+export function dateNormalize(dateString: string): string {
   const date = new Date(dateString);
 
   const options = { day: "numeric", month: "long", year: "numeric" };
@@ -13,7 +13,7 @@ function dateNormalize(dateString: string): string {
   return formattedDate;
 }
 
-function levelNormalize(level: string): string {
+export function levelNormalize(level: string): string {
   if (level === "easy") {
     return "FACILE";
   } else {
@@ -21,7 +21,7 @@ function levelNormalize(level: string): string {
   }
 }
 
-function questionNormalize(questionNb: number): string {
+export function questionAwardNormalize(questionNb: number): string {
   switch (questionNb) {
     case 1:
       return "500";
@@ -65,7 +65,7 @@ export function gameNormalize(games: Game[]):GameNormalize[] {
       points: game.points,
       created_at: dateNormalize(game.created_at),
       level: levelNormalize(game.levelDifficulty.level),
-      questionAward: questionNormalize(game.questionNb),
+      questionAward: questionAwardNormalize(game.questionNb),
     };
   });
 }

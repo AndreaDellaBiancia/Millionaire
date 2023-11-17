@@ -5,6 +5,7 @@ import Game from "../pages/Game/Game";
 import Home from "../pages/Home/Home";
 import Ranking from "../pages/Ranking/Ranking";
 import ProtectedRoute from "../outils/protectedRoutes";
+import Admin from "../pages/Admin/Admin";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "mon-profil",
         element:<ProtectedRoute route={"mon-profil"} />,
+      },
+      {
+        path: "admin",
+        element:<Admin />,
       },
       {
         path: "*", // Route catch-all
