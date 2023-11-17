@@ -22,10 +22,23 @@ export const RankingTitle = styled.h2`
   text-align: center;
   color: gold;
   text-transform: uppercase;
-  margin-bottom: 2rem;  
+  margin-bottom: 0.5rem;  
 
 @media (min-width: 361px) {
   font-size: 3rem;
+}
+`;
+
+export const RankingTitleTop10 = styled.h3`
+  width: 100%;
+  font-size: 1.8rem;
+  text-align: center;
+  color: gold;
+  text-transform: uppercase;
+  margin-bottom: 2rem;  
+
+@media (min-width: 361px) {
+  font-size: 2.5rem;
 }
 `;
 
