@@ -23,7 +23,7 @@ export default class Question {
   title: string;
 
   @Column({ type: "int" })
-  price: number;
+  award: number;
 
   @ManyToOne(
     () => LevelDifficulty,

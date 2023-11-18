@@ -6,11 +6,11 @@ import levelDifficulty from "./LevelDifficultyInterface";
 interface QuestionsAnswers {
   id?: number;
   title?: string;
-  price?: number;
+  award?: number;
   levelDifficulty?: levelDifficulty;
-  goodAnsw? : GoodAnsw,
-  badAnsw? : BadAnsw[],
-  homeHelp? : HomeHelpInterface,
+  goodAnsw?: GoodAnsw;
+  badAnsw?: BadAnsw[];
+  homeHelp?: HomeHelpInterface;
 }
 
 export default QuestionsAnswers;

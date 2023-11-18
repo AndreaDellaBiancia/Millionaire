@@ -14,7 +14,7 @@ export const AdminContainer = styled.div`
 
 `;
 
-export const Title = styled.h3`
+export const Title = styled.h2`
   width: 100%;
   text-align: center;
   color: white;

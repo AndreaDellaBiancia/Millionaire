@@ -16,12 +16,12 @@ import {
   questionAwardNormalize,
 } from "../../outils/gameNormalize";
 import ViewQuestion from "../../components/Admin/ViewQuestion";
+import { getQuestionById } from "../../fetch/fetchQuestionById";
 
 function Admin() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [modalShow, setModalShow] = useState(false);
-  const [questionId, setQuestionId] = useState<number>();
-
+  const [questionToView, setQuestionToView] = useState<any>();
 
   useEffect(() => {
     async function getQuestionData() {
@@ -33,17 +33,23 @@ function Admin() {
   }, []);
 
   function handleViewQuestion(idQuestion: number) {
-    setQuestionId(idQuestion);
-    setModalShow(true);
+    async function getQuestionDatas() {
+      const datas = await getQuestionById(idQuestion);
+      setQuestionToView(datas);
+      setModalShow(true);
+    }
+    getQuestionDatas();
   }
 
   return (
     <AdminContainer>
       <Title>Administration</Title>
-      <ViewQuestion  show={modalShow}
-          setModalShow={setModalShow}
-          onHide={() => setModalShow(false)} 
-          questionId={questionId}/>
+      <ViewQuestion
+        show={modalShow}
+        setModalShow={setModalShow}
+        onHide={() => setModalShow(false)}
+        questionToView={questionToView}
+      />
       <Table>
         <LineTitle className="title-line">
           <ColTitle className="col-admin-award">Prix</ColTitle>
@@ -57,13 +63,16 @@ function Admin() {
           {questions.map((question) => (
             <Line key={question.id}>
               <ColItem className="col-admin-award">
-                {questionAwardNormalize(question.price)} €
+                {questionAwardNormalize(question.award)} €
               </ColItem>
               <ColItem className="col-admin-question">{question.title}</ColItem>
               <ColItem className="col-admin-level">
                 {levelNormalize(question.levelDifficulty.level)}
               </ColItem>
-              <ColItem className="col-admin-view" onClick={() => handleViewQuestion(question.id)}>
+              <ColItem
+                className="col-admin-view"
+                onClick={() => handleViewQuestion(question.id)}
+              >
                 <i className="fa-regular fa-eye"></i>
               </ColItem>
               <ColItem className="col-admin-update">

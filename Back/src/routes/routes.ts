@@ -18,6 +18,8 @@ router.get("/games/:userId", auth, GameController.getGamesByUser);
 router.get("/user/:id", auth, UserController.getUser);
 
 router.get("/admin", auth, AdminController.getQuestions);
+router.get("/admin/view/:questionId", auth, AdminController.getQuestionById);
+
 
 
 module.exports = router;
