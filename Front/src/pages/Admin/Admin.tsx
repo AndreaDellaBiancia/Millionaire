@@ -17,11 +17,14 @@ import {
 } from "../../outils/gameNormalize";
 import ViewQuestion from "../../components/Admin/ViewQuestion";
 import { getQuestionById } from "../../fetch/fetchQuestionById";
+import UpdateQuestion from "../../components/Admin/UpdateQuestion";
+import QuestionToHandle from "../../interfaces/QuestionToHandle";
 
 function Admin() {
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [modalShow, setModalShow] = useState(false);
-  const [questionToView, setQuestionToView] = useState<any>();
+  const [modalViewShow, setModalViewShow] = useState<boolean>(false);
+  const [modalUpdateShow, setModalUpdateShow] = useState<boolean>(false);
+  const [questionToHandle, setQuestionToHandle] = useState<QuestionToHandle>();
 
   useEffect(() => {
     async function getQuestionData() {
@@ -30,25 +33,45 @@ function Admin() {
     }
 
     getQuestionData();
-  }, []);
+  }, [modalUpdateShow]);
 
   function handleViewQuestion(idQuestion: number) {
     async function getQuestionDatas() {
       const datas = await getQuestionById(idQuestion);
-      setQuestionToView(datas);
-      setModalShow(true);
+      setQuestionToHandle(datas);
+      setModalViewShow(true);
     }
     getQuestionDatas();
+  }
+
+  function handleUpdateQuestion(idQuestion: number) {
+    async function getQuestionDatas() {
+      const datas = await getQuestionById(idQuestion);
+      setQuestionToHandle(datas);
+      setModalUpdateShow(true);
+    }
+    getQuestionDatas();
+  }
+
+  function handleDeleteQuestion(idQuestion: number){
+   
   }
 
   return (
     <AdminContainer>
       <Title>Administration</Title>
       <ViewQuestion
-        show={modalShow}
-        setModalShow={setModalShow}
-        onHide={() => setModalShow(false)}
-        questionToView={questionToView}
+        show={modalViewShow}
+        setModalShow={setModalViewShow}
+        onHide={() => setModalViewShow(false)}
+        questionToHandle={questionToHandle}
+        setModalUpdateShow={setModalUpdateShow}
+      />
+      <UpdateQuestion
+        show={modalUpdateShow}
+        setModalShow={setModalUpdateShow}
+        onHide={() => setModalUpdateShow(false)}
+        questionToHandle={questionToHandle}
       />
       <Table>
         <LineTitle className="title-line">
@@ -75,10 +98,16 @@ function Admin() {
               >
                 <i className="fa-regular fa-eye"></i>
               </ColItem>
-              <ColItem className="col-admin-update">
+              <ColItem
+                className="col-admin-update"
+                onClick={() => handleUpdateQuestion(question.id)}
+              >
                 <i className="fa-regular fa-pen-to-square"></i>
               </ColItem>
-              <ColItem className="col-admin-delete">
+              <ColItem
+                className="col-admin-delete"
+                onClick={() => handleDeleteQuestion(question.id)}
+              >
                 <i className="fa-solid fa-trash-can"></i>
               </ColItem>
             </Line>

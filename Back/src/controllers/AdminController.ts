@@ -78,4 +78,32 @@ const getQuestionById = async (
   }
 };
 
-export { getQuestions, getQuestionById };
+const updateQuestion = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    const question = req.body.question;
+    const goodAnswer = req.body.goodAnswer;
+    const badAnswer1 = req.body.badAnswer1;
+    const badAnswer2 = req.body.badAnswer2;
+    const badAnswer3 = req.body.badAnswer3;
+    const homeHelp = req.body.homeHelp;
+
+    await questionsRepository.save(question);
+    await goodAnswerRepository.save(goodAnswer);
+    await badAnswersRepository.save(badAnswer1);
+    await badAnswersRepository.save(badAnswer2);
+    await badAnswersRepository.save(badAnswer3);
+    await homeHelpRepository.save(homeHelp);
+
+    return res.status(200).json({message : "Question modifiée avec succes !"});
+  } catch (error) {
+    return res.status(500).json({
+      error: "Une erreur est survenue lors de la mise à jour de la question.",
+    });
+  }
+};
+
+export { getQuestions, getQuestionById, updateQuestion };

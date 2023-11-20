@@ -19,14 +19,42 @@ font-size: 1.7rem;
 font-weight: bold;
 }
 
+.select-award{
+  border: 1px solid  rgb(255, 179, 0);
+}
+
+.select-award,
 .modal-title__award{
 width: 20%;
+padding: 1rem;
 margin-left: 2rem;
 font-weight: bold;
-font-size: 1.8rem;
+font-size: 1.7rem;
 color: rgb(255, 179, 0);
 }
 
+.option__award{
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: rgb(255, 179, 0);
+}
+
+.level_container_update,
+.level{
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.level span{
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.level_container_update select{
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
 .answers_container{
   display: flex;
 }
@@ -35,15 +63,28 @@ color: rgb(255, 179, 0);
   color: green;
   font-weight: bold;
   width: 40%;
+}
+.good-answer_help,
+.good-answer_title{
+  color: green;
+  font-weight: bold;
+  
+}
 
+.bad-answer_help,
+.bad-answer_title{
+  color: red;
+  font-weight: bold;
+  text-align: center;
 }
 
 .bad-answers{
   color: red;
   font-weight: bold;
   width: 60%;
-
 }
+
+
 
 
 .good-answer,
@@ -54,6 +95,8 @@ color: rgb(255, 179, 0);
 }
 
 .good-answer p,
+.good-answer input,
+.bad-answers input,
 .bad-answers p{
   width: 100%;
   display: flex;
@@ -66,4 +109,26 @@ color: rgb(255, 179, 0);
 .home_help{
   margin: 2rem 0;
   font-size: 1.4rem;
+}
+
+.home_help input{
+  width: 100%;
+}
+.error-handle-question{
+  color: red;
+  font-weight: bold;
+  font-size: 1rem  !important;
+  padding-left: 1.5rem;
+}
+
+.error-sum-percentages{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.modal-footer{
+  display: flex;
+  justify-content: center;
 }
