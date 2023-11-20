@@ -98,7 +98,7 @@ const updateQuestion = async (
     await badAnswersRepository.save(badAnswer3);
     await homeHelpRepository.save(homeHelp);
 
-    return res.status(200).json({message : "Question modifiée avec succes !"});
+    return res.status(200).json({ message: "Question modifiée avec succes !" });
   } catch (error) {
     return res.status(500).json({
       error: "Une erreur est survenue lors de la mise à jour de la question.",
@@ -106,4 +106,50 @@ const updateQuestion = async (
   }
 };
 
-export { getQuestions, getQuestionById, updateQuestion };
+const deleteQuestion = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    const questionId = req.params.questionId;
+
+    await goodAnswerRepository
+      .createQueryBuilder("goodAnswer")
+      .delete()
+      .from(GoodAnswer)
+      .where("question_id = :questionId", { questionId })
+      .execute();
+
+    await badAnswersRepository
+      .createQueryBuilder("badAnswers")
+      .delete()
+      .from(BadAnswer)
+      .where("question_id = :questionId", { questionId })
+      .execute();
+
+    await homeHelpRepository
+      .createQueryBuilder("homeHelp")
+      .delete()
+      .from(HomeHelp)
+      .where("question_id = :questionId", { questionId })
+      .execute();
+
+    await questionsRepository
+      .createQueryBuilder("question")
+      .delete()
+      .from(Question)
+      .where("id = :questionId", { questionId })
+      .execute();
+
+    return res
+      .status(200)
+      .json({ message: "Question supprimée avec succes !" });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Une erreur est survenue lors de la mise à jour de la question.",
+    });
+  }
+};
+
+export { getQuestions, getQuestionById, updateQuestion, deleteQuestion };

@@ -35,6 +35,7 @@ function UpdateQuestion({
 
   const awards = useSelector((state: RootState) => state.awards.awards);
 
+  // Met à jour les états avec les données de la question à manipuler
   useEffect(() => {
     if (questionToHandle) {
       setQuestion(questionToHandle.question);
@@ -46,9 +47,11 @@ function UpdateQuestion({
     }
   }, [questionToHandle]);
 
+  // Fonction de gestion de la mise à jour de la question
   async function handleUpdate() {
-    const onlyNumbersRegex = /^\d+$/;
+    const onlyNumbersRegex = /^\d+/;
 
+    // Validation des champs obligatoires
     const isQuetionTitle = question.title
       ? (setQuestionError(false), true)
       : (setQuestionError(true), false);
@@ -62,6 +65,7 @@ function UpdateQuestion({
       ? (setGoodAnswerHelpError(false), true)
       : (setGoodAnswerHelpError(true), false);
 
+    // Validation des réponses incorrectes
     const isBadAnswer1Title = badAnswer1.title ? true : false;
     const isBadAnswer1Help = onlyNumbersRegex.test(badAnswer1.help_percentage)
       ? true
@@ -77,6 +81,7 @@ function UpdateQuestion({
       ? true
       : false;
 
+    // Validation des réponses incorrectes (titres)
     let isBadAnswersTitlesOk = false;
     if (isBadAnswer1Title && isBadAnswer2Title && isBadAnswer3Title) {
       setbadAnswerTitleError(false);
@@ -85,12 +90,14 @@ function UpdateQuestion({
       setbadAnswerTitleError(true);
     }
 
+    // Validation des réponses incorrectes (pourcentages)
     if (isBadAnswer1Help && isBadAnswer2Help && isBadAnswer3Help) {
       setBadAnswerHelpError(false);
     } else {
       setBadAnswerHelpError(true);
     }
 
+    // Validation de la somme des pourcentages
     let isPercentagesSumOk = false;
     if (
       isBadAnswer1Help &&
@@ -112,6 +119,7 @@ function UpdateQuestion({
       }
     }
 
+    // Si toutes les validations sont réussies, tente la mise à jour de la question
     if (
       isQuetionTitle &&
       isHomeHelp &&
@@ -129,15 +137,19 @@ function UpdateQuestion({
           homeHelp
         );
 
+        // Affiche un message de succès
         Swal.fire({
           position: "top-end",
           icon: "success",
           title: "Question enregistrée",
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,
         });
+
+        // Ferme la fenêtre modale
         setModalShow(false);
       } catch (error: any) {
+        // Affiche l'erreur dans la console en cas d'échec de la mise à jour
         console.log("====================================");
         console.log(error.message);
         console.log("====================================");
@@ -349,8 +361,18 @@ function UpdateQuestion({
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <button className="btn btn-outline-success btn-lg" onClick={() => handleUpdate()}>Modifier</button>
-        <button className="btn btn-outline-dark btn-lg" onClick={() => setModalShow(false)}>Annuler</button>
+        <button
+          className="btn btn-outline-success btn-lg"
+          onClick={() => handleUpdate()}
+        >
+          Modifier
+        </button>
+        <button
+          className="btn btn-outline-dark btn-lg"
+          onClick={() => setModalShow(false)}
+        >
+          Annuler
+        </button>
       </Modal.Footer>
     </Modal>
   );

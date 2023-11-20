@@ -18,8 +18,10 @@ router.get("/games/:userId", auth, GameController.getGamesByUser);
 router.get("/user/:id", auth, UserController.getUser);
 
 router.get("/admin", auth, AdminController.getQuestions);
-router.get("/admin/view/:questionId", auth, AdminController.getQuestionById);
+router.get("/admin/view-question/:questionId", auth, AdminController.getQuestionById);
 router.post("/admin/update-question", auth, AdminController.updateQuestion);
+router.delete("/admin/delete-question/:questionId", auth, AdminController.deleteQuestion);
+
 
 
 

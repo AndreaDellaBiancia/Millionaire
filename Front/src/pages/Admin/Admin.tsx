@@ -16,45 +16,69 @@ import {
   questionAwardNormalize,
 } from "../../outils/gameNormalize";
 import ViewQuestion from "../../components/Admin/ViewQuestion";
-import { getQuestionById } from "../../fetch/fetchQuestionById";
+import { getQuestionById } from "../../fetch/fetchAdminQuestionById";
 import UpdateQuestion from "../../components/Admin/UpdateQuestion";
 import QuestionToHandle from "../../interfaces/QuestionToHandle";
+import { deleteQuestionModal } from "../../outils/deleteQuestion";
 
 function Admin() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [modalViewShow, setModalViewShow] = useState<boolean>(false);
   const [modalUpdateShow, setModalUpdateShow] = useState<boolean>(false);
   const [questionToHandle, setQuestionToHandle] = useState<QuestionToHandle>();
+  const [isDeleteQuestion, setIsDeleteQuestion] = useState<boolean>(false);
 
+  // Utilise useEffect pour récupérer les questions lorsque
+  // modalUpdateShow ou isDeleteQuestion changent
   useEffect(() => {
     async function getQuestionData() {
+      // Appelle la fonction asynchrone pour récupérer les questions
       const questionsData = await getAdminQuestions();
+
+      // Met à jour l'état des questions avec les données récupérées
       setQuestions(questionsData);
     }
-
     getQuestionData();
-  }, [modalUpdateShow]);
+  }, [modalUpdateShow, isDeleteQuestion]);
 
+  // Fonction pour afficher les détails d'une question
   function handleViewQuestion(idQuestion: number) {
     async function getQuestionDatas() {
+      // Appelle la fonction pour récupérer les détails de la question par son ID
       const datas = await getQuestionById(idQuestion);
+
       setQuestionToHandle(datas);
+
+      // Affiche le modal pour visualiser la question
       setModalViewShow(true);
     }
     getQuestionDatas();
   }
 
+  // Fonction pour gérer la mise à jour d'une question
   function handleUpdateQuestion(idQuestion: number) {
     async function getQuestionDatas() {
+      // Appelle la fonction pour récupérer les détails de la question par son ID
       const datas = await getQuestionById(idQuestion);
       setQuestionToHandle(datas);
+      // Affiche le modal pour la mise à jour de la question
       setModalUpdateShow(true);
     }
     getQuestionDatas();
   }
 
-  function handleDeleteQuestion(idQuestion: number){
-   
+  // Fonction pour gérer la suppression d'une question
+  async function handleDeleteQuestion(
+    questionId: number,
+    questionTitle: string
+  ) {
+    // Appelle la fonction pour confirmer la suppression de la question
+    deleteQuestionModal(
+      questionId,
+      questionTitle,
+      setIsDeleteQuestion,
+      isDeleteQuestion
+    );
   }
 
   return (
@@ -66,6 +90,8 @@ function Admin() {
         onHide={() => setModalViewShow(false)}
         questionToHandle={questionToHandle}
         setModalUpdateShow={setModalUpdateShow}
+        setIsDeleteQuestion={setIsDeleteQuestion}
+        isDeleteQuestion={isDeleteQuestion}
       />
       <UpdateQuestion
         show={modalUpdateShow}
@@ -106,7 +132,9 @@ function Admin() {
               </ColItem>
               <ColItem
                 className="col-admin-delete"
-                onClick={() => handleDeleteQuestion(question.id)}
+                onClick={() =>
+                  handleDeleteQuestion(question.id, question.title)
+                }
               >
                 <i className="fa-solid fa-trash-can"></i>
               </ColItem>

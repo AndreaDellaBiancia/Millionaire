@@ -7,7 +7,6 @@ import {
 import { setPointsGame } from "../store/awardsReducer";
 import { setIsAskPublic, setIsHalfPossibility } from "../store/helpReducer";
 import { saveGame } from "../fetch/fetchSaveGame";
-import { useSelector } from "react-redux";
 import User from "../interfaces/UserInterface";
 
 export function endGame(
@@ -38,16 +37,16 @@ export function endGame(
       cancelButtonText: "NON",
       reverseButtons: false,
     })
-    .then((result) => {
+    .then(async (result) => {
       if (result.isConfirmed) {
         if (user) {
-          saveGame(pointsGame, questionNb, user, level);
+          await saveGame(pointsGame, questionNb, user, level);
         }
         dispatch(setIsNewGame(!isNewGame));
         dispatch(setIsStartTimer(!isStartTimer));
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         if (user) {
-          saveGame(pointsGame, questionNb, user, level);
+          await saveGame(pointsGame, questionNb, user, level);
         }
         dispatch(setIsAnswerSelected(false));
         dispatch(setIsAskPublic(false));

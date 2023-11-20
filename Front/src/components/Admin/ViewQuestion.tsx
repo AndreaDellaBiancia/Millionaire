@@ -6,20 +6,39 @@ import {
 } from "../../outils/gameNormalize";
 import BadAnsw from "../../interfaces/BadAnswInterface";
 import ModalQuestionToHandleProps from "../../interfaces/ModalQuestionToHandleProps";
+import { deleteQuestionModal } from "../../outils/deleteQuestion";
 
 function ViewQuestion({
   questionToHandle,
   show,
   setModalShow,
   onHide,
-  setModalUpdateShow
+  setModalUpdateShow,
+  setIsDeleteQuestion,
+  isDeleteQuestion,
 }: ModalQuestionToHandleProps) {
-
-  function handleUpdate(){
+  function handleUpdate() {
     if (setModalUpdateShow) {
       setModalUpdateShow(true);
       onHide();
-    } 
+    }
+  }
+
+  // Fonction pour gérer la suppression d'une question
+  function handleDelete(
+    questionId: number | undefined,
+    questionTitle: string | undefined
+  ) {
+    if (setIsDeleteQuestion && isDeleteQuestion !== undefined) {
+      // Appelle la fonction pour confirmer la suppression de la question
+      deleteQuestionModal(
+        questionId,
+        questionTitle,
+        setIsDeleteQuestion,
+        isDeleteQuestion
+      );
+      onHide();
+    }
   }
 
   return (
@@ -79,10 +98,29 @@ function ViewQuestion({
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <button className="btn btn-outline-success btn-lg" onClick={() => handleUpdate()}>Modifier</button>
-        <button className="btn btn-outline-dark btn-lg" onClick={() => setModalShow(false)}>Annuler</button>
-        <button className="btn btn-outline-danger btn-lg">Supprimer</button>
-
+        <button
+          className="btn btn-outline-success btn-lg"
+          onClick={() => handleUpdate()}
+        >
+          Modifier
+        </button>
+        <button
+          className="btn btn-outline-dark btn-lg"
+          onClick={() => setModalShow(false)}
+        >
+          Annuler
+        </button>
+        <button
+          className="btn btn-outline-danger btn-lg"
+          onClick={() =>
+            handleDelete(
+              questionToHandle?.question.id,
+              questionToHandle?.question.title
+            )
+          }
+        >
+          Supprimer
+        </button>
       </Modal.Footer>
     </Modal>
   );
