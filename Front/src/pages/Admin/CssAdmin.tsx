@@ -18,9 +18,8 @@ export const Title = styled.h2`
   width: 100%;
   text-align: center;
   color: white;
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: bold;
-  margin-top: 1.5rem;
 `;
 
 export const ListContainer = styled.div`

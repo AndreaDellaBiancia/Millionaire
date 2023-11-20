@@ -1,7 +1,7 @@
 import QuestionToHandle from "./QuestionToHandle";
 
 interface ModalQuestionToHandleProps {
-  questionToHandle: QuestionToHandle | undefined,
+  questionToHandle?: QuestionToHandle | undefined,
   show: boolean,
   setModalShow : (value : boolean) => void,
   onHide: () => void,

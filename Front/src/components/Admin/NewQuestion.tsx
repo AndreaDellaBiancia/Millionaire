@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import ModalQuestionToHandleProps from "../../interfaces/ModalQuestionToHandleProps";
-import { updateQuestion } from "../../fetch/fetchAdminUpdateQuestion";
 import Swal from "sweetalert2";
+import { createQuestion } from "../../fetch/fetcAdminCreateQuestion";
 
-function UpdateQuestion({
-  questionToHandle,
+function NewQuestion({
   show,
   setModalShow,
   onHide,
@@ -35,20 +34,15 @@ function UpdateQuestion({
 
   const awards = useSelector((state: RootState) => state.awards.awards);
 
-  // Met à jour les états avec les données de la question à manipuler
+  // Met à jour les états à 0
   useEffect(() => {
-    if (questionToHandle) {
-      setQuestion(questionToHandle.question);
-      setGoodAnswer(questionToHandle.goodAnswer);
-      setBadnswer1(questionToHandle.badAnswers[0]);
-      setBadnswer2(questionToHandle.badAnswers[1]);
-      setBadnswer3(questionToHandle.badAnswers[2]);
-      setHomeHelp(questionToHandle.homeHelp);
-    }
-  }, [questionToHandle]);
+    setQuestion({ title: "", award: 1, levelDifficulty: 1 });
+    setGoodAnswer({ title: "", help_percentage: null });
+    setBadnswer1({ title: "", help_percentage: null });
+    setBadnswer2({ title: "", help_percentage: null });
+    setBadnswer3({ title: "", help_percentage: null });
+    setHomeHelp({ description: "" });
 
-  // Met à jour les états des erreurs à false toutes les fois les que le composant est monté
-  useEffect(() => {
     if (show) {
       setQuestionError(false);
       setGoodAnswerTitleError(false);
@@ -61,7 +55,7 @@ function UpdateQuestion({
   }, [show]);
 
   // Fonction de gestion de la mise à jour de la question
-  async function handleUpdate() {
+  async function handleCreateQuestion() {
     const onlyNumbersRegex = /^\d+/;
 
     // Validation des champs obligatoires
@@ -141,7 +135,7 @@ function UpdateQuestion({
       isPercentagesSumOk
     ) {
       try {
-        await updateQuestion(
+        await createQuestion(
           question,
           goodAnswer,
           badAnswer1,
@@ -154,7 +148,7 @@ function UpdateQuestion({
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Question enregistrée",
+          title: "Question créée !",
           showConfirmButton: false,
           timer: 2000,
         });
@@ -163,7 +157,7 @@ function UpdateQuestion({
         setModalShow(false);
       } catch (error: any) {
         Swal.fire({
-          title: "Erreur pendant la mise à jour.",
+          title: "Erreur pendant la création.",
           icon: "error",
         });
       }
@@ -182,7 +176,12 @@ function UpdateQuestion({
         <Modal.Title id="contained-modal-title-vcenter">
           <div className="modal-title__question">
             <label
-              style={{ width: "100%", display: "flex", fontWeight: "normal", fontSize:"1.2rem" }}
+              style={{
+                width: "100%",
+                display: "flex",
+                fontWeight: "normal",
+                fontSize: "1.2rem",
+              }}
             >
               QUESTION :
             </label>
@@ -195,7 +194,7 @@ function UpdateQuestion({
             ></textarea>
           </div>
           <div className="select-award-container">
-            <label style={{fontSize:"1.2rem"}}>PRIX :</label>
+            <label style={{ fontSize: "1.2rem" }}>PRIX :</label>
             <select
               className="select-award"
               onChange={(e) =>
@@ -203,12 +202,7 @@ function UpdateQuestion({
               }
             >
               {awards.map((award: number, index: number) => (
-                <option
-                  className="option__award"
-                  key={award}
-                  value={index + 1}
-                  selected={questionToHandle?.question.award === index + 1}
-                >
+                <option className="option__award" key={award} value={index + 1}>
                   {questionAwardNormalize(index + 1)} €
                 </option>
               ))}
@@ -232,18 +226,8 @@ function UpdateQuestion({
               })
             }
           >
-            <option
-              value={1}
-              selected={questionToHandle?.question.levelDifficulty.id === 1}
-            >
-              FACILE
-            </option>
-            <option
-              value={2}
-              selected={questionToHandle?.question.levelDifficulty.id === 2}
-            >
-              DIFFICILE
-            </option>
+            <option value={1}>FACILE</option>
+            <option value={2}>DIFFICILE</option>
           </select>
         </div>
         <div className="answers_container">
@@ -386,9 +370,9 @@ function UpdateQuestion({
       <Modal.Footer>
         <button
           className="btn btn-outline-success btn-lg"
-          onClick={() => handleUpdate()}
+          onClick={() => handleCreateQuestion()}
         >
-          Modifier
+          Ajouter
         </button>
         <button
           className="btn btn-outline-dark btn-lg"
@@ -401,4 +385,4 @@ function UpdateQuestion({
   );
 }
 
-export default UpdateQuestion;
+export default NewQuestion;

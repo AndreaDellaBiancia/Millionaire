@@ -3,7 +3,7 @@ import GoodAnsw from "../interfaces/GoodAnswInterface";
 import HomeHelpInterface from "../interfaces/HomeHelpInterface";
 import Question from "../interfaces/QuestionInterface";
 
-export async function updateQuestion(
+export async function createQuestion(
   question: Question,
   goodAnswer: GoodAnsw,
   badAnswer1: BadAnsw,
@@ -15,13 +15,13 @@ export async function updateQuestion(
   
   try {
     const requestOptions = {
-      method: "PUT",
+      method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({question, goodAnswer, badAnswer1, badAnswer2, badAnswer3, homeHelp}),
       
     };
     const response = await fetch(
-      "http://localhost:5000/api/admin/update-question",
+      "http://localhost:5000/api/admin/create-question",
       requestOptions
     );
 

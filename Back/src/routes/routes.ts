@@ -19,8 +19,10 @@ router.get("/user/:id", auth, UserController.getUser);
 
 router.get("/admin", auth, AdminController.getQuestions);
 router.get("/admin/view-question/:questionId", auth, AdminController.getQuestionById);
-router.post("/admin/update-question", auth, AdminController.updateQuestion);
+router.put("/admin/update-question", auth, AdminController.updateQuestion);
 router.delete("/admin/delete-question/:questionId", auth, AdminController.deleteQuestion);
+router.post("/admin/create-question", auth, AdminController.createQuestion);
+
 
 
 

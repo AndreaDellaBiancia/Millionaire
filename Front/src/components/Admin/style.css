@@ -10,7 +10,7 @@ margin: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
 }
 
 .modal-title__question{
@@ -19,15 +19,21 @@ font-size: 1.7rem;
 font-weight: bold;
 }
 
+.select-award-container{
+  width: 20%;
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
 .select-award{
   border: 1px solid  rgb(255, 179, 0);
 }
 
-.select-award,
-.modal-title__award{
-width: 20%;
+.select-award
+{
+  width: 100%;
 padding: 1rem;
-margin-left: 2rem;
 font-weight: bold;
 font-size: 1.7rem;
 color: rgb(255, 179, 0);
@@ -36,6 +42,12 @@ color: rgb(255, 179, 0);
 .option__award{
   font-weight: bold;
   font-size: 1.2rem;
+  color: rgb(255, 179, 0);
+}
+
+.modal-title__award{
+  font-weight: bold;
+  font-size: 2rem;
   color: rgb(255, 179, 0);
 }
 

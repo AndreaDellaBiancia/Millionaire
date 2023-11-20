@@ -20,11 +20,13 @@ import { getQuestionById } from "../../fetch/fetchAdminQuestionById";
 import UpdateQuestion from "../../components/Admin/UpdateQuestion";
 import QuestionToHandle from "../../interfaces/QuestionToHandle";
 import { deleteQuestionModal } from "../../outils/deleteQuestion";
+import NewQuestion from "../../components/Admin/NewQuestion";
 
 function Admin() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [modalViewShow, setModalViewShow] = useState<boolean>(false);
   const [modalUpdateShow, setModalUpdateShow] = useState<boolean>(false);
+  const [modalNewShow, setModalNewShow] = useState<boolean>(false);
   const [questionToHandle, setQuestionToHandle] = useState<QuestionToHandle>();
   const [isDeleteQuestion, setIsDeleteQuestion] = useState<boolean>(false);
 
@@ -39,7 +41,7 @@ function Admin() {
       setQuestions(questionsData);
     }
     getQuestionData();
-  }, [modalUpdateShow, isDeleteQuestion]);
+  }, [modalUpdateShow, modalNewShow, isDeleteQuestion]);
 
   // Fonction pour afficher les détails d'une question
   function handleViewQuestion(idQuestion: number) {
@@ -84,6 +86,11 @@ function Admin() {
   return (
     <AdminContainer>
       <Title>Administration</Title>
+      <div style={{width: "100%", display: "flex", justifyContent:"flex-end"}}>
+        <button onClick={() => setModalNewShow(true)} type="button" className="btn btn-outline-light" style={{marginRight: "2rem"}}>
+        <i className="fa-solid fa-plus"></i> QUESTION
+        </button>
+      </div>
       <ViewQuestion
         show={modalViewShow}
         setModalShow={setModalViewShow}
@@ -98,6 +105,11 @@ function Admin() {
         setModalShow={setModalUpdateShow}
         onHide={() => setModalUpdateShow(false)}
         questionToHandle={questionToHandle}
+      />
+       <NewQuestion
+        show={modalNewShow}
+        setModalShow={setModalNewShow}
+        onHide={() => setModalNewShow(false)}
       />
       <Table>
         <LineTitle className="title-line">

@@ -78,6 +78,74 @@ const getQuestionById = async (
   }
 };
 
+const createQuestion = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
+  try {
+    const question = req.body.question;
+    const goodAnswer = req.body.goodAnswer;
+    const badAnswer1 = req.body.badAnswer1;
+    const badAnswer2 = req.body.badAnswer2;
+    const badAnswer3 = req.body.badAnswer3;
+    const homeHelp = req.body.homeHelp;
+
+    const newQuestion = await questionsRepository.save(question);
+    let newGoodAnswer = new GoodAnswer();
+    let newBadAnswer1 = new BadAnswer();
+    let newBadAnswer2 = new BadAnswer();
+    let newBadAnswer3 = new BadAnswer();
+    let newHomeHelp = new HomeHelp();
+
+    newGoodAnswer = {
+      ...newGoodAnswer,
+      title: goodAnswer.title,
+      help_percentage: goodAnswer.help_percentage,
+      question: newQuestion.id,
+    };
+
+    newBadAnswer1 = {
+      ...newBadAnswer1,
+      title: badAnswer1.title,
+      help_percentage: badAnswer1.help_percentage,
+      question: newQuestion.id,
+    };
+
+    newBadAnswer2 = {
+      ...newBadAnswer2,
+      title: badAnswer2.title,
+      help_percentage: badAnswer2.help_percentage,
+      question: newQuestion.id,
+    };
+
+    newBadAnswer3 = {
+      ...newBadAnswer3,
+      title: badAnswer3.title,
+      help_percentage: badAnswer3.help_percentage,
+      question: newQuestion.id,
+    };
+
+    newHomeHelp = {
+      ...newHomeHelp,
+      description: homeHelp.description,
+      question: newQuestion.id,
+    };
+
+    await goodAnswerRepository.save(newGoodAnswer);
+    await badAnswersRepository.save(newBadAnswer1);
+    await badAnswersRepository.save(newBadAnswer2);
+    await badAnswersRepository.save(newBadAnswer3);
+    await homeHelpRepository.save(newHomeHelp);
+
+    return res.status(200).json({ message: "Question modifiée avec succes !" });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Une erreur est survenue lors de la mise à jour de la question.",
+    });
+  }
+};
+
 const updateQuestion = async (
   req: Request,
   res: Response,
@@ -152,4 +220,10 @@ const deleteQuestion = async (
   }
 };
 
-export { getQuestions, getQuestionById, updateQuestion, deleteQuestion };
+export {
+  getQuestions,
+  getQuestionById,
+  createQuestion,
+  updateQuestion,
+  deleteQuestion,
+};
