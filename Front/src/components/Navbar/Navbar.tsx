@@ -323,7 +323,7 @@ function Navbar() {
               <NavItem
                 className="nav-item"
                 style={{ display: "flex", flexDirection: "column" }}
-                onClick={() => changePage("/admin")}
+                onClick={() => changePage("/admin/questions")}
               >
                 <i className="fa-solid fa-screwdriver-wrench"></i>
                 <div

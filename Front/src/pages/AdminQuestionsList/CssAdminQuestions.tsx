@@ -13,15 +13,6 @@ export const AdminContainer = styled.div`
   }
 
 `;
-
-export const Title = styled.h2`
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 2.2rem;
-  font-weight: bold;
-`;
-
 export const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;

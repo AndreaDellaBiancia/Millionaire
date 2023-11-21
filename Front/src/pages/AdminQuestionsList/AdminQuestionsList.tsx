@@ -7,24 +7,24 @@ import {
   LineTitle,
   ListContainer,
   Table,
-  Title,
-} from "./CssAdmin";
+} from "./CssAdminQuestions";
 import Question from "../../interfaces/QuestionInterface";
 import { getAdminQuestions } from "../../fetch/fetchAdminQuestions";
 import {
   levelNormalize,
   questionAwardNormalize,
 } from "../../outils/gameNormalize";
-import ViewQuestion from "../../components/Admin/ViewQuestion";
+import ViewQuestion from "../../components/AdminQuestions/ViewQuestion";
 import { getQuestionById } from "../../fetch/fetchAdminQuestionById";
-import UpdateQuestion from "../../components/Admin/UpdateQuestion";
+import UpdateQuestion from "../../components/AdminQuestions/UpdateQuestion";
 import QuestionToHandle from "../../interfaces/QuestionToHandle";
 import { deleteQuestionModal } from "../../outils/deleteQuestion";
-import NewQuestion from "../../components/Admin/NewQuestion";
+import NewQuestion from "../../components/AdminQuestions/NewQuestion";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import AdminMenu from "../../components/AdminMenu/AdminMenu";
 
-function Admin() {
+function AdminQuestionsList() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [modalViewShow, setModalViewShow] = useState<boolean>(false);
   const [modalUpdateShow, setModalUpdateShow] = useState<boolean>(false);
@@ -91,7 +91,8 @@ function Admin() {
 
   return (
     <AdminContainer>
-      <Title>Administration</Title>
+      <AdminMenu />
+
       <div style={{width: "100%", display: "flex", justifyContent:"flex-end"}}>
         <button onClick={() => setModalNewShow(true)} type="button" className="btn btn-outline-light" style={{marginRight: "2rem", fontSize:"0.8rem"}}>
         <i className="fa-solid fa-plus"></i> NOUVELLE QUESTION
@@ -164,4 +165,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default AdminQuestionsList;
