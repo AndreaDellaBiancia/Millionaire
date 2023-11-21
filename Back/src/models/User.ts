@@ -1,5 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import Game from "./Game";
+import Role from "./Role";
 
 @Entity()
 export default class User {
@@ -20,4 +28,8 @@ export default class User {
 
   @OneToMany(() => Game, (game) => game.user)
   games: Game[];
+
+  @ManyToOne(() => Role, (role) => role.users)
+  @JoinColumn({ name: "role_id" })
+  role: Role;
 }

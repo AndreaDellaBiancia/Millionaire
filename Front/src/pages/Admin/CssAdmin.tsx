@@ -46,7 +46,7 @@ export const Table = styled.table`
   padding: 0;
   width: 100%;
   margin-top: 1rem;
-  position: relative; /* Ajoutez cette ligne */
+  position: relative;
 
   .col-admin-view,
   .col-admin-update,
@@ -80,7 +80,6 @@ export const Line = styled.tr`
   width: 100%;
   padding: 0.7rem 0;
   border-bottom: 1px solid gold;
-
   .title-line {
     position: fixed;
   }
@@ -91,7 +90,6 @@ export const ColTitle = styled.th`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1.2rem 0;
   width: 25%;
   color: gold;
 `;

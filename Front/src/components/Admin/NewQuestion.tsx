@@ -1,11 +1,11 @@
 import Modal from "react-bootstrap/Modal";
+import Swal from "sweetalert2";
 import "./style.css";
 import { questionAwardNormalize } from "../../outils/gameNormalize";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import ModalQuestionToHandleProps from "../../interfaces/ModalQuestionToHandleProps";
-import Swal from "sweetalert2";
 import { createQuestion } from "../../fetch/fetcAdminCreateQuestion";
 
 function NewQuestion({
@@ -33,6 +33,9 @@ function NewQuestion({
     useState<boolean>(false);
 
   const awards = useSelector((state: RootState) => state.awards.awards);
+  const roleCurrentUser = useSelector(
+    (state: RootState) => state.user.user?.role?.name
+  );
 
   // Met à jour les états à 0
   useEffect(() => {
@@ -134,30 +137,39 @@ function NewQuestion({
       isBadAnswersTitlesOk &&
       isPercentagesSumOk
     ) {
-      try {
-        await createQuestion(
-          question,
-          goodAnswer,
-          badAnswer1,
-          badAnswer2,
-          badAnswer3,
-          homeHelp
-        );
+      // On execute l'action seulement si on est SUPER_ADMIN
+      if (roleCurrentUser === "SUPER_ADMIN") {
+        try {
+          await createQuestion(
+            question,
+            goodAnswer,
+            badAnswer1,
+            badAnswer2,
+            badAnswer3,
+            homeHelp
+          );
 
-        // Affiche un message de succès
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Question créée !",
-          showConfirmButton: false,
-          timer: 2000,
-        });
+          // Affiche un message de succès
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Question créée !",
+            showConfirmButton: false,
+            timer: 2000,
+          });
 
-        // Ferme la fenêtre modale
-        setModalShow(false);
-      } catch (error: any) {
+          // Ferme la fenêtre modale
+          setModalShow(false);
+        } catch (error: any) {
+          Swal.fire({
+            title: "Erreur pendant la création.",
+            icon: "error",
+          });
+        }
+      }else{
         Swal.fire({
-          title: "Erreur pendant la création.",
+          title: "Opération non autorisée.",
+          text: "Seuls les super admins peuvent créer une question.",
           icon: "error",
         });
       }

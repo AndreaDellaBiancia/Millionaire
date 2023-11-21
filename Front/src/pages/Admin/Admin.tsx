@@ -21,6 +21,8 @@ import UpdateQuestion from "../../components/Admin/UpdateQuestion";
 import QuestionToHandle from "../../interfaces/QuestionToHandle";
 import { deleteQuestionModal } from "../../outils/deleteQuestion";
 import NewQuestion from "../../components/Admin/NewQuestion";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 function Admin() {
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -29,6 +31,9 @@ function Admin() {
   const [modalNewShow, setModalNewShow] = useState<boolean>(false);
   const [questionToHandle, setQuestionToHandle] = useState<QuestionToHandle>();
   const [isDeleteQuestion, setIsDeleteQuestion] = useState<boolean>(false);
+  const roleCurrentUser = useSelector(
+    (state: RootState) => state.user.user?.role?.name
+  );
 
   // Utilise useEffect pour récupérer les questions lorsque
   // modalUpdateShow ou isDeleteQuestion changent
@@ -79,7 +84,8 @@ function Admin() {
       questionId,
       questionTitle,
       setIsDeleteQuestion,
-      isDeleteQuestion
+      isDeleteQuestion,
+      roleCurrentUser
     );
   }
 
@@ -87,8 +93,8 @@ function Admin() {
     <AdminContainer>
       <Title>Administration</Title>
       <div style={{width: "100%", display: "flex", justifyContent:"flex-end"}}>
-        <button onClick={() => setModalNewShow(true)} type="button" className="btn btn-outline-light" style={{marginRight: "2rem"}}>
-        <i className="fa-solid fa-plus"></i> QUESTION
+        <button onClick={() => setModalNewShow(true)} type="button" className="btn btn-outline-light" style={{marginRight: "2rem", fontSize:"0.8rem"}}>
+        <i className="fa-solid fa-plus"></i> NOUVELLE QUESTION
         </button>
       </div>
       <ViewQuestion

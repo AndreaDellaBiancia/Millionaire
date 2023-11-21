@@ -46,6 +46,9 @@ function Navbar() {
   const [levelName, setLevelName] = useState<string>("FACILE");
   const token = useSelector((state: RootState) => state.user.token);
   const user = useSelector((state: RootState) => state.user.user);
+  const roleUser = useSelector(
+    (state: RootState) => state.user.user?.role?.name
+  );
 
   const tokenLocal = localStorage.getItem("token");
   const loginClassOpen = "animate__animated animate__bounceInDown";
@@ -216,7 +219,6 @@ function Navbar() {
     }
   }
 
-  
   // Si on click sur l'ecran sauf sur la nav, on fait disparaitre le ProfileOptionContainer
   screen?.addEventListener("click", function () {
     if (classProfile === profileClassOpen || classProfile === "") {
@@ -285,15 +287,6 @@ function Navbar() {
                 Classement
               </div>
             </NavItem>
-            <NavItem className="nav-item">
-              <div
-                className="nav-link active"
-                aria-current="page"
-                onClick={() => changePage("/admin")}
-              >
-                Admin
-              </div>
-            </NavItem>
             <NiveauContainer>
               <NavItemNiveau className="nav-item">Niveau :</NavItemNiveau>
               <NavSelect className="nav-item" style={{ margin: 0 }}>
@@ -325,6 +318,22 @@ function Navbar() {
                   </button>
                 </Link>
               </ButtonPlay>
+            )}
+            {(roleUser === "ADMIN" || roleUser === "SUPER_ADMIN") && (
+              <NavItem
+                className="nav-item"
+                style={{ display: "flex", flexDirection: "column" }}
+                onClick={() => changePage("/admin")}
+              >
+                <i className="fa-solid fa-screwdriver-wrench"></i>
+                <div
+                  className="nav-link active"
+                  aria-current="page"
+                  style={{ fontSize: "1rem" }}
+                >
+                  ADMINISTRATION
+                </div>
+              </NavItem>
             )}
 
             {!token ? (

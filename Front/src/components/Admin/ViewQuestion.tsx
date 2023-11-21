@@ -7,6 +7,8 @@ import {
 import BadAnsw from "../../interfaces/BadAnswInterface";
 import ModalQuestionToHandleProps from "../../interfaces/ModalQuestionToHandleProps";
 import { deleteQuestionModal } from "../../outils/deleteQuestion";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 function ViewQuestion({
   questionToHandle,
@@ -17,6 +19,11 @@ function ViewQuestion({
   setIsDeleteQuestion,
   isDeleteQuestion,
 }: ModalQuestionToHandleProps) {
+
+  const roleCurrentUser = useSelector(
+    (state: RootState) => state.user.user?.role?.name
+  );
+
   function handleUpdate() {
     if (setModalUpdateShow) {
       setModalUpdateShow(true);
@@ -35,7 +42,8 @@ function ViewQuestion({
         questionId,
         questionTitle,
         setIsDeleteQuestion,
-        isDeleteQuestion
+        isDeleteQuestion,
+        roleCurrentUser
       );
       onHide();
     }

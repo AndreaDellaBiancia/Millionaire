@@ -3,11 +3,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  ManyToMany,
-  JoinTable,
   JoinColumn,
   ManyToOne,
-  OneToOne,
 } from "typeorm";
 import Match from "./Game";
 import LevelDifficulty from "./LevelDifficulty";
@@ -31,19 +28,6 @@ export default class Question {
   )
   @JoinColumn({ name: "level_difficulty_id" })
   levelDifficulty: LevelDifficulty;
-
-  @ManyToMany(() => Match)
-  @JoinTable({
-    joinColumn: {
-      name: "question_id",
-      referencedColumnName: "id",
-    },
-    inverseJoinColumn: {
-      name: "game_id",
-      referencedColumnName: "id",
-    },
-  })
-  games: Game[];
 
   @OneToMany(() => BadAnswer, (badAnswer) => badAnswer.question)
   badAnswers: BadAnswer[];

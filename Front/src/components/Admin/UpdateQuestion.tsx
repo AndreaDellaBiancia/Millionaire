@@ -34,6 +34,8 @@ function UpdateQuestion({
     useState<boolean>(false);
 
   const awards = useSelector((state: RootState) => state.awards.awards);
+  const roleCurrentUser = useSelector((state: RootState) => state.user.user?.role?.name);
+
 
   // Met à jour les états avec les données de la question à manipuler
   useEffect(() => {
@@ -140,33 +142,44 @@ function UpdateQuestion({
       isBadAnswersTitlesOk &&
       isPercentagesSumOk
     ) {
-      try {
-        await updateQuestion(
-          question,
-          goodAnswer,
-          badAnswer1,
-          badAnswer2,
-          badAnswer3,
-          homeHelp
-        );
+      //On executel'operation seulement si l'utilisateur est un SUPER_ADMIN
 
-        // Affiche un message de succès
+      if (roleCurrentUser === "SUPER_ADMIN") {
+        try {
+          await updateQuestion(
+            question,
+            goodAnswer,
+            badAnswer1,
+            badAnswer2,
+            badAnswer3,
+            homeHelp
+          );
+  
+          // Affiche un message de succès
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Question enregistrée",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+  
+          // Ferme la fenêtre modale
+          setModalShow(false);
+        } catch (error: any) {
+          Swal.fire({
+            title: "Erreur pendant la mise à jour.",
+            icon: "error",
+          });
+        }
+      }else{
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Question enregistrée",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-
-        // Ferme la fenêtre modale
-        setModalShow(false);
-      } catch (error: any) {
-        Swal.fire({
-          title: "Erreur pendant la mise à jour.",
+          title: "Opération non autorisée.",
+          text: "Seuls les super admins peuvent modifier une question.",
           icon: "error",
         });
       }
+     
     }
   }
 

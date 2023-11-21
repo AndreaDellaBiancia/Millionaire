@@ -19,17 +19,14 @@ export default class Game {
   @Column({ type: "int" })
   questionNb: number;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: "timestamp", nullable: true })
   created_at: Date;
 
   @ManyToOne(() => User, (user) => user.games)
   @JoinColumn({ name: "user_id" })
   user: User;
 
-  @ManyToOne(
-    () => LevelDifficulty,
-    (levelDifficulty) => levelDifficulty.games
-  )
+  @ManyToOne(() => LevelDifficulty, (levelDifficulty) => levelDifficulty.games)
   @JoinColumn({ name: "levelDifficulty_id" })
   levelDifficulty: LevelDifficulty;
 }

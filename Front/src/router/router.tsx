@@ -23,9 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "classement",
-       // element: <ProtectedRoute route={"classement"} /> ,
-       element: <Ranking />,
-
+        element: <Ranking />,
       },
       {
         path: "jeu",
@@ -33,11 +31,11 @@ const router = createBrowserRouter([
       },
       {
         path: "mon-profil",
-        element:<ProtectedRoute route={"mon-profil"} />,
+        element: <ProtectedRoute route={"mon-profil"} />,
       },
       {
         path: "admin",
-        element:<Admin />,
+        element: <ProtectedRoute route={"admin"} />,
       },
       {
         path: "*", // Route catch-all

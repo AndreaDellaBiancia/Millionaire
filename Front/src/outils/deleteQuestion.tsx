@@ -5,7 +5,8 @@ export async function deleteQuestionModal(
   idQuestion: number | undefined,
   titleQuestion: string | undefined,
   setIsDeleteQuestion: any,
-  isDeleteQuestion: boolean
+  isDeleteQuestion: boolean,
+  roleCurrentUser: string | undefined
 ) {
   Swal.fire({
     title: "Veux-tu supprimer cette question ?",
@@ -18,16 +19,25 @@ export async function deleteQuestionModal(
     cancelButtonText: "Annuler",
   }).then(async (result) => {
     if (result.isConfirmed) {
-      try {
-        await deleteQuestion(idQuestion);
-        setIsDeleteQuestion(!isDeleteQuestion);
+      //On executel'operation seulement si l'utilisateur est un SUPER_ADMIN
+      if (roleCurrentUser === "SUPER_ADMIN") {
+        try {
+          await deleteQuestion(idQuestion);
+          setIsDeleteQuestion(!isDeleteQuestion);
+          Swal.fire({
+            title: "Supprimée!",
+            icon: "success",
+          });
+        } catch (error) {
+          Swal.fire({
+            title: "Erreur pendant la suppression.",
+            icon: "error",
+          });
+        }
+      }else{
         Swal.fire({
-          title: "Supprimée!",
-          icon: "success",
-        });
-      } catch (error) {
-        Swal.fire({
-          title: "Erreur pendant la suppression.",
+          title: "Opération non autorisée.",
+          text: "Seuls les super admins peuvent supprimer une question.",
           icon: "error",
         });
       }
