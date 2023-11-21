@@ -3,7 +3,7 @@ import levelDifficulty from "./LevelDifficultyInterface";
 interface Question {
   id: number;
   title: string;
-  price: number;
+  award: number;
   levelDifficulty: levelDifficulty;
 }
 

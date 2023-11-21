@@ -46,6 +46,9 @@ function Navbar() {
   const [levelName, setLevelName] = useState<string>("FACILE");
   const token = useSelector((state: RootState) => state.user.token);
   const user = useSelector((state: RootState) => state.user.user);
+  const roleUser = useSelector(
+    (state: RootState) => state.user.user?.role?.name
+  );
 
   const tokenLocal = localStorage.getItem("token");
   const loginClassOpen = "animate__animated animate__bounceInDown";
@@ -156,15 +159,6 @@ function Navbar() {
       }
       setClassLogin(loginClassOpen);
     }
-    // Si le composant est affiché et on click dans la page (sauf sur la nav) le composant se ferme
-    const root = document.querySelector("#root");
-    const screen = root?.firstChild?.childNodes[1];
-
-    screen?.addEventListener("click", function () {
-      if (classLogin === loginClassOpen || classLogin === "") {
-        setClassLogin(loginClassClose);
-      }
-    });
 
     // Si la NavBar est en version mobile on utilise displau block pour cacher le ProfileOptionContainer
     const navBarMobile = document.querySelector("nav");
@@ -178,24 +172,22 @@ function Navbar() {
     }
   }
 
+  // Si le composant LOGIN est affiché et on click dans la page (sauf sur la nav) le composant se ferme
+  const root = document.querySelector("#root");
+  const screen = root?.firstChild?.childNodes[1];
+
+  screen?.addEventListener("click", function () {
+    if (classLogin === loginClassOpen || classLogin === "") {
+      setClassLogin(loginClassClose);
+    }
+  });
+
   function handleProfileOption(): void {
     // Quand l'utilisateur est connecté on affiche, si cliqué sur l'image de la piece dorée,
     // le menu pour se deconnecter ou pour aller sur le profile de l'utilisateur.
-    // Si on click sur la page (sauf sur la nav) le menu disparait
     const profileOptionHtml = document.querySelector(
       "#profile-container-option"
     );
-    const root = document.querySelector("#root");
-    const screen = root?.firstChild?.childNodes[1];
-    // Si on click sur l'ecran on fait disparaitre le ProfileOptionContainer
-    screen?.addEventListener("click", function () {
-      if (classProfile === profileClassOpen || classProfile === "") {
-        //Si on est en taille mobile on fait rien
-        if (window.screen.width > 991) {
-          setClassProfile(profileClassClose);
-        }
-      }
-    });
 
     //Si ProfileOptionContainer est affiché
     if (classProfile === profileClassOpen) {
@@ -226,6 +218,16 @@ function Navbar() {
       });
     }
   }
+
+  // Si on click sur l'ecran sauf sur la nav, on fait disparaitre le ProfileOptionContainer
+  screen?.addEventListener("click", function () {
+    if (classProfile === profileClassOpen || classProfile === "") {
+      //Si on est en taille mobile on fait rien
+      if (window.screen.width > 991) {
+        setClassProfile(profileClassClose);
+      }
+    }
+  });
 
   function handleLogout(): void {
     const profileOptionHtml = document.querySelector(
@@ -316,6 +318,22 @@ function Navbar() {
                   </button>
                 </Link>
               </ButtonPlay>
+            )}
+            {(roleUser === "ADMIN" || roleUser === "SUPER_ADMIN") && (
+              <NavItem
+                className="nav-item"
+                style={{ display: "flex", flexDirection: "column" }}
+                onClick={() => changePage("/admin")}
+              >
+                <i className="fa-solid fa-screwdriver-wrench"></i>
+                <div
+                  className="nav-link active"
+                  aria-current="page"
+                  style={{ fontSize: "1rem" }}
+                >
+                  ADMINISTRATION
+                </div>
+              </NavItem>
             )}
 
             {!token ? (

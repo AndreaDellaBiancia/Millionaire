@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { dataSource } from "../dataSource/data-source";
 import User from "../models/User";
+import Role from "../models/Role";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -13,8 +14,14 @@ const getToken = async (
   next: NextFunction
 ): Promise<User | any> => {
   try {
-    //On controle si l'utilisateur existe dans la bdd
-    const user = await userRepository.findOneBy({ email: req.body.email });
+    const user = await userRepository.findOne({
+      relations: {
+        role: true,
+      },
+      where: {
+        email: req.body.email,
+      },
+    });
 
     if (!user) {
       return res
@@ -67,14 +74,19 @@ const registration = async (
       return res.status(401).json({ message: "Username déjà existante" });
     }
 
-    //On hash le mdp et on enregistre le nouveau utilisateur
+    // On hash le mdp et on enregistre le nouveau utilisateur
     const newUser = new User();
     const passwordHash = await bcrypt.hash(req.body.password, 10);
+
+    const userRole = new Role();
+    userRole.id = 3;
+    userRole.name = "USER";
 
     newUser.username = username;
     newUser.password = passwordHash;
     newUser.email = email;
     newUser.points = 0;
+    newUser.role = userRole;
 
     await userRepository.save(newUser);
 
@@ -93,7 +105,13 @@ const getUser = async (
 ): Promise<User | any> => {
   try {
     const userId: number = Number(req.params.id);
-    const user =  await userRepository.findOneBy({id : userId})
+    const user = await userRepository.findOne({
+      relations: {
+        role: true,
+      },
+      where: { id: userId },
+    });
+
     return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({

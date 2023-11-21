@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getRanking } from "../../fetch/fetchRanking";
 import User from "../../interfaces/UserInterface";
-import { RankingTitle, RankingList, RankingContainer } from "./CssRanking";
+import { RankingTitle, RankingList, RankingContainer, RankingTitleTop10 } from "./CssRanking";
 import UserRanking from "../../components/UserRanking/UserRanking";
 
 function Ranking() {
@@ -35,6 +35,7 @@ function Ranking() {
       </div>}
       <RankingList>
         <RankingTitle>Classement</RankingTitle>
+        <RankingTitleTop10>TOP 10</RankingTitleTop10>
         {users?.map((user: User, index: number) => (
           <UserRanking key={user.id} index={index} user={user} />
         ))}

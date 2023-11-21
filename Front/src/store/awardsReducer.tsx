@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { AnswerItemI } from "../interfaces/AnswerItemInterface";
 
 export interface AwardsState {
   awards: number[];

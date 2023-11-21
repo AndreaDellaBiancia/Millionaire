@@ -1,0 +1,146 @@
+.modal-header{
+  width: 100%;
+}
+
+.modal-header p{
+margin: 0;
+}
+
+.modal-title{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.modal-title__question{
+width: 80%;
+font-size: 1.7rem;
+font-weight: bold;
+}
+
+.select-award-container{
+  width: 20%;
+  margin-left: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-award{
+  border: 1px solid  rgb(255, 179, 0);
+}
+
+.select-award
+{
+  width: 100%;
+padding: 1rem;
+font-weight: bold;
+font-size: 1.7rem;
+color: rgb(255, 179, 0);
+}
+
+.option__award{
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: rgb(255, 179, 0);
+}
+
+.modal-title__award{
+  font-weight: bold;
+  font-size: 2rem;
+  color: rgb(255, 179, 0);
+}
+
+.level_container_update,
+.level{
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.level span{
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.level_container_update select{
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+.answers_container{
+  display: flex;
+}
+
+.good-answer{
+  color: green;
+  font-weight: bold;
+  width: 40%;
+}
+.good-answer_help,
+.good-answer_title{
+  color: green;
+  font-weight: bold;
+  
+}
+
+.bad-answer_help,
+.bad-answer_title{
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
+.bad-answers{
+  color: red;
+  font-weight: bold;
+  width: 60%;
+}
+
+
+
+
+.good-answer,
+.bad-answers{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.good-answer p,
+.good-answer input,
+.bad-answers input,
+.bad-answers p{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 1rem ;
+  font-size: 1.2rem;
+}
+
+.home_help{
+  margin: 2rem 0;
+  font-size: 1.4rem;
+}
+
+.home_help input{
+  width: 100%;
+}
+.error-handle-question{
+  color: red;
+  font-weight: bold;
+  font-size: 1rem  !important;
+  padding-left: 1.5rem;
+}
+
+.error-sum-percentages{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.modal-footer{
+  display: flex;
+  justify-content: center;
+}
