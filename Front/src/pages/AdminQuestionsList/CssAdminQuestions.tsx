@@ -93,3 +93,17 @@ export const ColItem = styled.td`
   font-size: 1.3rem;
   color: white;
 `;
+
+export const SearchContainer = styled.div`
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+align-tems: center;
+justify-content: center;
+width: 15rem;
+text-align: center;
+
+label{
+  color: white;
+}
+`;

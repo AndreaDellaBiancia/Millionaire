@@ -15,34 +15,39 @@ import AdminUserDetails from "../../components/AdminUserDetails/AdminUserDetails
 function AdminUsers() {
   const [users, setUsers] = useState<User[]>();
   const [userId, setUserId] = useState<number>();
-
   const [filteredUsers, setFilteredUsers] = useState<User[]>();
   const [modalViewShow, setModalViewShow] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchData() {
       const usersData = await getUsersList();
+      // Met à jour le state avec les données des utilisateurs
       setUsers(usersData);
     }
 
+    // Appelle la fonction fetchData lors du montage du composant
     fetchData();
   }, []);
 
   function handleSearch(e: any) {
+    // Filtrer les utilisateurs en fonction de la valeur de recherche
     const usersFilter = users?.filter(
       (user: any) =>
         user.username.toUpperCase().includes(e.target.value.toUpperCase()) ||
-        user.email.includes(e.target.value)||
-        user.role.name.includes(e.target.value)
+        user.email.toUpperCase().includes(e.target.value.toUpperCase()) ||
+        user.role.name.toUpperCase().includes(e.target.value.toUpperCase())
     );
+    // Met à jour le state avec les utilisateurs filtrés
     setFilteredUsers(usersFilter);
   }
 
-  // Fonction pour afficher les détails d'une question
   function handleViewDetails(idUser: number) {
+    // Met à jour le state avec l'ID de l'utilisateur à afficher en détail
     setUserId(idUser);
+    // Affiche la modal pour les détails de l'utilisateur
     setModalViewShow(true);
   }
+
   return (
     <>
       <AdminUserDetails

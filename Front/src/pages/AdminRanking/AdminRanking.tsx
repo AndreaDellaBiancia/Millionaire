@@ -14,31 +14,39 @@ import UserAdminRanking from "../../interfaces/UserAdminRanking";
 function AdminRanking() {
   const [users, setUsers] = useState<UserAdminRanking[]>();
   const [filteredUsers, setFilteredUsers] = useState<UserAdminRanking[]>();
-
   const [isSortByPlace, setIsSortByPlace] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchData() {
+      // Appel de la fonction getRanking pour obtenir les données des utilisateurs
       const usersData = await getRanking();
+
+      // Transformation des données pour inclure la position de chaque utilisateur
       const usersList = usersData.map((user: any, index: number) => {
         return { position: index + 1, user: user };
       });
 
+      // Création d'une copie de la liste d'utilisateurs pour le tri
       const positionSorted = [...usersList];
 
+      // Tri de la liste en fonction de la position, en ordre croissant ou décroissant
       positionSorted.sort((a, b) => {
         const positionA = a.position !== undefined ? a.position : 0;
         const positionB = b.position !== undefined ? b.position : 0;
         return isSortByPlace ? positionB - positionA : positionA - positionB;
       });
 
+      // Mise à jour de l'état des utilisateurs avec la liste triée
       setUsers(positionSorted);
     }
 
+    // Appel de la fonction fetchData à chaque changement de isSortByPlace
     fetchData();
   }, [isSortByPlace]);
 
+  // Fonction pour gérer la recherche d'utilisateurs
   function handleSearch(e: any) {
+    // Filtrage des utilisateurs en fonction du nom d'utilisateur ou des points
     const usersFilter = users?.filter(
       (user: any) =>
         user.user.username
@@ -46,6 +54,8 @@ function AdminRanking() {
           .includes(e.target.value.toUpperCase()) ||
         user.user.points.toString().includes(e.target.value)
     );
+
+    // Mise à jour de l'état des utilisateurs filtrés
     setFilteredUsers(usersFilter);
   }
 
