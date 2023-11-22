@@ -79,7 +79,7 @@ function Profile() {
   }, [isSortByPoints]);
 
   useEffect(() => {
-    // Trier les parties par prime
+    // Trier les parties par prix
     if (games) {
       if (isSortByAward) {
         const awardSorted = gameNormalize(games).sort(function (a, b) {

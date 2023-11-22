@@ -41,7 +41,7 @@ function Navbar() {
 
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
 
-  const [isHoveredProfile, setIsHoveredProfile] = useState<boolean>(false);
+  const [isHoveredProfile, setIsHoveredProfile] = useState<boolean>( );
   const [isPageGame, setIsPageGame] = useState<boolean>(false);
   const [levelName, setLevelName] = useState<string>("FACILE");
   const token = useSelector((state: RootState) => state.user.token);
@@ -79,6 +79,11 @@ function Navbar() {
       const userId = Number(localStorage.getItem("userId"));
       getUserData(userId);
     }
+     // On declanche l'animation de l'icone profile pendant 6 seconds
+     setIsHoveredProfile(true);
+     setTimeout(() => {
+       setIsHoveredProfile(false);
+     }, 6000)
   }, [token]);
 
   const handleLevel = (levelSelected: string): void => {

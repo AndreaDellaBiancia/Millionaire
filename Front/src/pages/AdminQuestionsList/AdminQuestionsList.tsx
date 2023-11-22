@@ -91,9 +91,7 @@ function AdminQuestionsList() {
 
   return (
     <AdminContainer>
-      <AdminMenu />
-
-      <div style={{width: "100%", display: "flex", justifyContent:"flex-end"}}>
+           <div style={{width: "100%", display: "flex", justifyContent:"flex-end"}}>
         <button onClick={() => setModalNewShow(true)} type="button" className="btn btn-outline-light" style={{marginRight: "2rem", fontSize:"0.8rem"}}>
         <i className="fa-solid fa-plus"></i> NOUVELLE QUESTION
         </button>

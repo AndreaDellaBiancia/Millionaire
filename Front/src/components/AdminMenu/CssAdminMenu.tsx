@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 export const AdminNav = styled.div`
+  width: fit-content;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: gold;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0 0.5rem 1rem;
   position: relative;
   top: -3rem;
 `;

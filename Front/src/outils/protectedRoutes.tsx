@@ -1,8 +1,10 @@
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ErrorPage from "../pages/Error/Error404";
 import Profile from "../pages/Profile/Profile";
 import { RootState } from "../store/store";
 import AdminQuestionsList from "../pages/AdminQuestionsList/AdminQuestionsList";
+import AdminRanking from "../pages/AdminRanking/AdminRanking";
+import AdminUserList from "../pages/AdminUserList/AdminUserList";
 
 const ProtectedRoute = (route: { route: string }) => {
   const role = useSelector((state: RootState) => state.user.user?.role?.name);
@@ -20,6 +22,10 @@ const ProtectedRoute = (route: { route: string }) => {
     switch (route.route) {
       case "admin/questions":
         return <AdminQuestionsList />;
+      case "admin/classement":
+        return <AdminRanking />;
+      case "admin/utilisateurs":
+        return <AdminUserList />;
       case "mon-profil":
         return <Profile />;
       default:
