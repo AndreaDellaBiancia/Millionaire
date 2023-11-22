@@ -22,6 +22,8 @@ router.get("/admin/view-question/:questionId", auth, AdminController.getQuestion
 router.put("/admin/update-question", auth, AdminController.updateQuestion);
 router.delete("/admin/delete-question/:questionId", auth, AdminController.deleteQuestion);
 router.post("/admin/create-question", auth, AdminController.createQuestion);
+router.get("/admin/users-list", auth, AdminController.getUsersList);
+
 
 
 

@@ -4,11 +4,14 @@ import Question from "../models/Question";
 import GoodAnswer from "../models/GoodAnswer";
 import BadAnswer from "../models/BadAnswer";
 import HomeHelp from "../models/HomeHelp";
+import User from "../models/User";
 
 const questionsRepository = dataSource.getRepository(Question);
 const goodAnswerRepository = dataSource.getRepository(GoodAnswer);
 const badAnswersRepository = dataSource.getRepository(BadAnswer);
 const homeHelpRepository = dataSource.getRepository(HomeHelp);
+const userRepository = dataSource.getRepository(User);
+
 
 const getQuestions = async (
   req: Request,
@@ -220,10 +223,29 @@ const deleteQuestion = async (
   }
 };
 
+const getUsersList = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<User[] | any> => {
+  try {
+    const users = await userRepository.find({relations:{
+      role: true
+    }});
+    return res.status(200).json(users);
+  } catch (error) {
+    return res.status(500).json({
+      error:
+        "Une erreur est survenue lors de la récupération des utilisateurs.",
+    });
+  }
+};
+
 export {
   getQuestions,
   getQuestionById,
   createQuestion,
   updateQuestion,
   deleteQuestion,
+  getUsersList
 };
