@@ -123,10 +123,9 @@ function AdminQuestionsList() {
           <button
             onClick={() => setModalNewShow(true)}
             type="button"
-            className="btn btn-outline-light"
-            style={{ marginRight: "2rem", fontSize: "0.8rem" }}
+            className="btn btn-outline-light btn-new-question"
           >
-            <i className="fa-solid fa-plus"></i> NOUVELLE QUESTION
+            <i className="fa-solid fa-pencil"></i> NOUVELLE QUESTION
           </button>
         </div>
         <ViewQuestion

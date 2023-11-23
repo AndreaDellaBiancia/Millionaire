@@ -1,11 +1,10 @@
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import ErrorPage from "../pages/Error/Error404";
+import ErrorPage404 from "../pages/Error/Error404";
 import Navbar from "../components/Navbar/Navbar"; // Importez le composant Navbar
 import Game from "../pages/Game/Game";
 import Home from "../pages/Home/Home";
 import Ranking from "../pages/Ranking/Ranking";
 import ProtectedRoute from "./protectedRoutes";
-import AdminMenu from "../components/AdminMenu/AdminMenu";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -15,7 +14,7 @@ const router = createBrowserRouter([
         <Outlet />
       </div>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage404 />,
     children: [
       {
         path: "/",
@@ -37,7 +36,6 @@ const router = createBrowserRouter([
         path: "/admin",
         element: (
           <div>
-           <AdminMenu />
             <Outlet />
           </div>
         ),
@@ -57,8 +55,8 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "*", // Route catch-all
-        element: <ErrorPage />,
+        path: "*", 
+        element: <ErrorPage404 />,
       },
     ],
   },

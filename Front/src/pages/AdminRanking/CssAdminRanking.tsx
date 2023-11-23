@@ -78,5 +78,12 @@ text-align: center;
 
 label{
   color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+input {
+  border: 2mm ridge rgb(255, 255, 255, .6);
+  font-size: 1.2rem;
 }
 `;

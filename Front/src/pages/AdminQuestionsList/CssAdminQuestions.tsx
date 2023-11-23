@@ -12,13 +12,19 @@ export const AdminContainer = styled.div`
     width: 90%;
   }
 
+  .btn-new-question{
+    padding: 0.8rem;
+    font-size: 1rem;
+    margin-right: 2rem;
+  }
+
 `;
 export const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   overflow-y: scroll;
-  max-height: 60vh;
+  max-height: 57vh;
 
   /* Masquer la barre de défilement pour les navigateurs WebKit (Chrome, Safari) */
   &::-webkit-scrollbar {
@@ -105,5 +111,12 @@ text-align: center;
 
 label{
   color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+input {
+  border: 2mm ridge rgb(255, 255, 255, .6);
+  font-size: 1.2rem;
 }
 `;
