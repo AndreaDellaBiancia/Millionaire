@@ -14,31 +14,34 @@ const ProtectedRoute = (route: { route: string }) => {
     return token ? true : false;
   }
 
+  const components: any = {
+    SUPER_ADMIN: {
+      "admin/questions": <AdminQuestionsList />,
+      "admin/classement": <AdminRanking />,
+      "admin/utilisateurs": <AdminUserList />,
+      "mon-profil": <Profile />,
+    },
+    ADMIN: {
+      "admin/questions": <AdminQuestionsList />,
+      "admin/classement": <AdminRanking />,
+      "mon-profil": <Profile />,
+    },
+    USER: {
+      "mon-profil": <Profile />,
+    },
+  };
+
   if (!isAuthenticated()) {
     return <ErrorPage />;
   }
 
-  if (isAuthenticated() && (role === "ADMIN" || role === "SUPER_ADMIN")) {
-    switch (route.route) {
-      case "admin/questions":
-        return <AdminQuestionsList />;
-      case "admin/classement":
-        return <AdminRanking />;
-      case "admin/utilisateurs":
-        return <AdminUserList />;
-      case "mon-profil":
-        return <Profile />;
-      default:
-        return <ErrorPage />;
-    }
-  } else {
-    switch (route.route) {
-      case "mon-profil":
-        return <Profile />;
-      default:
-        return <ErrorPage />;
-    }
+  if (!role) {
+    return <ErrorPage />;
   }
+  if (components[role][route.route]) {
+    return components[role][route.route];
+  }
+  return <ErrorPage />;
 };
 
 export default ProtectedRoute;

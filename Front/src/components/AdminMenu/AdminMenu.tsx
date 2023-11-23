@@ -1,12 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { AdminNav, LinkItem, NavList, Title } from "./CssAdminMenu";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 function AdminMenu() {
   const [colorQuestionsCliked, setColorQuestionsCliked] = useState<string>("#2F2FCD")
   const [colorRankingCliked, setColorRankingCliked] = useState<string>("black")
   const [colorUsersCliked, setColorUsersCliked] = useState<string>("black")
-
+  const roleCurrentUser = useSelector(
+    (state: RootState) => state.user.user?.role?.name
+  );
   const pathname: string = useLocation().pathname;
 
   useEffect(() => {
@@ -36,9 +40,10 @@ function AdminMenu() {
         <Link to="/admin/classement" className="admin-menu-link">
           <LinkItem color={colorRankingCliked}>Classement</LinkItem>
         </Link>
-        <Link to="/admin/utilisateurs" className="admin-menu-link">
+       {roleCurrentUser === "SUPER_ADMIN" && <Link to="/admin/utilisateurs" className="admin-menu-link">
           <LinkItem color={colorUsersCliked}>Utilisateurs</LinkItem>
         </Link>
+  }
       </NavList>
     </AdminNav>
   );

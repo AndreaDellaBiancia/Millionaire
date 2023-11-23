@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar/Navbar"; // Importez le composant Navba
 import Game from "../pages/Game/Game";
 import Home from "../pages/Home/Home";
 import Ranking from "../pages/Ranking/Ranking";
-import ProtectedRoute from "../outils/protectedRoutes";
+import ProtectedRoute from "./protectedRoutes";
 import AdminMenu from "../components/AdminMenu/AdminMenu";
 const router = createBrowserRouter([
   {
