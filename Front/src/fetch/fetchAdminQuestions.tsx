@@ -2,7 +2,7 @@
 export async function getAdminQuestions(){
   const token = localStorage.getItem('token');
   try {
-    const response = await fetch(`http://localhost:5000/api/admin`, {
+    const response = await fetch(`http://localhost:5000/api/admin/questions`, {
       headers: {Authorization: `Bearer ${token}`}
     }) 
     if (!response.ok) {

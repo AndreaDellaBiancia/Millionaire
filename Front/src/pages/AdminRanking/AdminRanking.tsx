@@ -10,6 +10,7 @@ import {
   Table,
 } from "./CssAdminRanking";
 import UserAdminRanking from "../../interfaces/UserAdminRanking";
+import User from "../../interfaces/UserInterface";
 
 function AdminRanking() {
   const [users, setUsers] = useState<UserAdminRanking[]>();
@@ -21,8 +22,8 @@ function AdminRanking() {
       // Appel de la fonction getRanking pour obtenir les données des utilisateurs
       const usersData = await getRanking();
 
-      // Transformation des données pour inclure la position de chaque utilisateur
-      const usersList = usersData.map((user: any, index: number) => {
+      // Transformation des données pour inclure la position de chaque utilisateur (On exclut les admin et superadmin)
+      const usersList = usersData.filter((user: User) => (user.role?.name !== "ADMIN" && user.role?.name !== "SUPER_ADMIN")).map((user: any, index: number) => {
         return { position: index + 1, user: user };
       });
 
