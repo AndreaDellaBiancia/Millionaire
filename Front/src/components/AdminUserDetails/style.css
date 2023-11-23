@@ -1,0 +1,55 @@
+.user-details{
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  color: black;
+}
+.user-details-name{
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.user-details span{
+  font-weight: bold;
+
+}
+
+.user-details-table{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.user-details-table tr{
+  width: 100%;
+  display: flex;
+
+}
+
+.user-details-table th,
+.user-details-table td{
+  width: 25%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.list-container{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 40vh;
+}
+
+/* Masquer la barre de défilement pour les navigateurs WebKit (Chrome, Safari) */
+.list-container::-webkit-scrollbar {
+  width: 0.2em;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}

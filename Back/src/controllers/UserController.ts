@@ -41,7 +41,7 @@ const getToken = async (
     //On genere le token et on le returne avec l'utilisateur
     return res.status(200).json({
       userId: user.id,
-      token: jwt.sign({ userId: user.id }, process.env.TOKEN_SECRET, {
+      token: jwt.sign({ userId: user.id, roleUser: user.role}, process.env.TOKEN_SECRET, {
         expiresIn: "24h",
       }),
     });

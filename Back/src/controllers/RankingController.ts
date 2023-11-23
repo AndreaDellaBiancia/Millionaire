@@ -12,6 +12,9 @@ const getRanking = async (
 ): Promise<User[] | any> => {
   try {
     const users = await userRepository.find({
+      relations:{
+        role: true,
+      },
       order: {
         points: "DESC",
       }

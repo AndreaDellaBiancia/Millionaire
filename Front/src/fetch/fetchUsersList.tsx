@@ -1,8 +1,7 @@
-
-export async function getAdminQuestions(){
+export async function getUsersList(){
   const token = localStorage.getItem('token');
   try {
-    const response = await fetch(`http://localhost:5000/api/admin/questions`, {
+    const response = await fetch(`http://localhost:5000/api/admin/users-list`, {
       headers: {Authorization: `Bearer ${token}`}
     }) 
     if (!response.ok) {

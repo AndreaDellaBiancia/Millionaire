@@ -1,33 +1,11 @@
 import styled from "styled-components";
 
-export const AdminContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0 auto;
-  padding: 0;
-  width: 100%;
-
-  .dataTables_wrapper{
-    width: 90%;
-  }
-
-`;
-
-export const Title = styled.h2`
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 2.2rem;
-  font-weight: bold;
-`;
-
 export const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   overflow-y: scroll;
-  max-height: 60vh;
+  max-height: 65vh;
 
   /* Masquer la barre de défilement pour les navigateurs WebKit (Chrome, Safari) */
   &::-webkit-scrollbar {
@@ -48,23 +26,7 @@ export const Table = styled.table`
   margin-top: 1rem;
   position: relative;
 
-  .col-admin-view,
-  .col-admin-update,
-  .col-admin-delete {
-    width: 3%;
-  }
-
-  .col-admin-question {
-    width: 55%;
-  }
-
-  .col-admin-award {
-    width: 15%;
-  }
-
-  .col-admin-level {
-    width: 15%;
-  }
+  
 `;
 export const LineTitle = styled.tr`
   display: flex;
@@ -86,12 +48,17 @@ export const Line = styled.tr`
 `;
 
 export const ColTitle = styled.th`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 25%;
   color: gold;
+  width: 23%;
+
+  &:last-child{
+    width:8%
+  }
 `;
 
 export const ColItem = styled.td`
@@ -99,6 +66,25 @@ export const ColItem = styled.td`
   justify-content: center;
   align-items: center;
   padding: 0;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   color: white;
+  width: 23%;
+
+  &:last-child{
+    width:8%
+  }
+`;
+
+export const SearchContainer = styled.div`
+margin: 0 auto;
+display: flex;
+flex-direction: column;
+align-tems: center;
+justify-content: center;
+width: 15rem;
+text-align: center;
+
+label{
+  color: white;
+}
 `;

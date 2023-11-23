@@ -4,8 +4,8 @@ import Navbar from "../components/Navbar/Navbar"; // Importez le composant Navba
 import Game from "../pages/Game/Game";
 import Home from "../pages/Home/Home";
 import Ranking from "../pages/Ranking/Ranking";
-import ProtectedRoute from "../outils/protectedRoutes";
-import Admin from "../pages/Admin/Admin";
+import ProtectedRoute from "./protectedRoutes";
+import AdminMenu from "../components/AdminMenu/AdminMenu";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,8 +34,27 @@ const router = createBrowserRouter([
         element: <ProtectedRoute route={"mon-profil"} />,
       },
       {
-        path: "admin",
-        element: <ProtectedRoute route={"admin"} />,
+        path: "/admin",
+        element: (
+          <div>
+           <AdminMenu />
+            <Outlet />
+          </div>
+        ),
+        children: [
+          {
+            path: "questions",
+            element: <ProtectedRoute route={"admin/questions"} />,
+          },
+          {
+            path: "classement",
+            element: <ProtectedRoute route={"admin/classement"} />,
+          },
+          {
+            path: "utilisateurs",
+            element: <ProtectedRoute route={"admin/utilisateurs"} />,
+          },
+        ],
       },
       {
         path: "*", // Route catch-all
