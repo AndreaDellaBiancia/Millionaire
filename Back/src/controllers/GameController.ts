@@ -118,18 +118,23 @@ const saveGame = async (
     const isHalfPossibility: boolean = req.body.isHalfPossibility;
 
     let usedHelps: Help[] = []
+
+    // Vérifie si l'aide "Call Home" a été utilisée
     if (isCallHome) {
       const helpCallHome = await helpRepository.findOneBy({ id: 1 });
       if (helpCallHome) {
         usedHelps.push(helpCallHome)
       }
     }
+    // Vérifie si l'aide "Half Possibility" a été utilisée
     if (isHalfPossibility) {
       const helpHalfPossibility = await helpRepository.findOneBy({ id: 2 });
       if (helpHalfPossibility) {
         usedHelps.push(helpHalfPossibility)
       }
     }
+
+    // Vérifie si l'aide "Ask Public" a été utilisée
     if (isAskPublic) {
       const helpPublic = await helpRepository.findOneBy({ id: 3 });
       if (helpPublic) {
@@ -137,8 +142,10 @@ const saveGame = async (
       }
     }
 
-    
+    // Récupère le niveau de difficulté en fonction du niveau de la question
     const levelDifficulty = await levelRepository.findOneBy({ level: level });
+    
+    // Crée un nouveau jeu avec les informations nécessaires
     if (levelDifficulty) {
       const newGame = new Game();
       newGame.points = gamePoints;
@@ -150,6 +157,7 @@ const saveGame = async (
       gameRepository.save(newGame);
     }
 
+    // Met à jour les points de l'utilisateur
     const user = await userRepository.findOneBy({ id: currentUser.id });
     if (user) {
       const userPoints: number = user.points + gamePoints;

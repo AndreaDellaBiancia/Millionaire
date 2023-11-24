@@ -13,12 +13,14 @@ import {
   setChoosedAnswer,
   setIsAnswerSelected,
   setIsGoodAnswer,
+  setIsShowPopupRegister,
 } from "../../store/gameReducer";
 import { useEffect, useState } from "react";
 import { RootState } from "../../store/store";
 import { setIsMillion, setPointsQuestion } from "../../store/awardsReducer";
 import { endGame } from "../../outils/endGame";
 import { useNavigate } from "react-router-dom";
+import { popupIsAlredyRegistered } from "../../outils/popupIsAlredyRegistered";
 
 function AnswerItem({ letter, answer }: AnswerItemProps) {
   const [color, setColor] = useState("white");
@@ -51,6 +53,15 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
   const isHalfPossibility = useSelector(
     (state: RootState) =>  state.help.isHalfPossibility
   );
+
+  const isShowPopupRegister = useSelector(
+    (state: RootState) =>  state.game.isShowPopupRegister
+  );
+
+  const token = useSelector(
+    (state: RootState) =>  state.user.token
+  );  
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -107,11 +118,11 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
           dispatch(
             setPointsQuestion(pointsGame + (questionNb + 1) * indexPoints)
           );
+          // Si c'est la dernière question, déclencher la victoire et démander de réinitialiser le jeu.
           if (questionNb === 14) {
             dispatch(setIsMillion(true));
             setTimeout(() => {
               dispatch(setIsMillion(false));
-              
               endGame(navigate, dispatch, isNewGame, isStartTimer, "win", pointsGame, questionNb, level, user, isAskPublic, isCallHome, isHalfPossibility);
             }, 8000)
           }
@@ -120,6 +131,13 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
             clearInterval(intervalIdGood);
             dispatch(setIsGoodAnswer(true));
           }, 2000);
+
+          // Si la popup de rappel  d'inscription n'est pas encore affichée et l'utilisateur n'est pas connecté, afficher la popup.
+          if (!isShowPopupRegister && !token) {
+            popupIsAlredyRegistered();
+            dispatch(setIsShowPopupRegister(true))
+          }
+          
         } else {
           // Si la réponse est incorrecte, définir la couleur sur "rouge".
           setTimeout(() => {

@@ -42,13 +42,13 @@ export function endGame(
     })
     .then(async (result) => {
       if (result.isConfirmed) {
-        if (user) {
+        if (user?.id) {
           await saveGame(pointsGame, questionNb, user, level, isAskPublic, isCallHome, isHalfPossibility);
         }
         dispatch(setIsNewGame(!isNewGame));
         dispatch(setIsStartTimer(!isStartTimer));
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        if (user) {
+        if (user?.id) {
           await saveGame(pointsGame, questionNb, user, level, isAskPublic, isCallHome, isHalfPossibility);
         }
         dispatch(setIsAnswerSelected(false));

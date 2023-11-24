@@ -13,6 +13,7 @@ import {
   TableTitle,
   NoGames,
   HelpItem,
+  ListContainer,
 } from "./CssProfile";
 import coin from "../../assets/images/gold-coin.svg";
 import rankingImg from "../../assets/images/ranking.png";
@@ -123,23 +124,23 @@ function Profile() {
     // Trier les parties par date
     if (games) {
       if (isSortByDate) {
-        const awardSorted = gameNormalize(games).sort(function (a, b) {
-          const dateA = new Date(a.created_at);
-          const dateB = new Date(b.created_at);
-          const timestampA = dateA.getTime();
-          const timestampB = dateB.getTime();
-          return timestampB - timestampA;
-        });
-        setGamesNormalize(awardSorted);
-      } else {
-        const awardSorted = gameNormalize(games).sort(function (a, b) {
+        const dateSorted = gameNormalize(games).sort(function (a, b) {
           const dateA = new Date(a.created_at);
           const dateB = new Date(b.created_at);
           const timestampA = dateA.getTime();
           const timestampB = dateB.getTime();
           return timestampA - timestampB;
         });
-        setGamesNormalize(awardSorted);
+        setGamesNormalize(dateSorted);
+      } else {
+        const dateSorted = gameNormalize(games).sort(function (a, b) {
+          const dateA = new Date(a.created_at);
+          const dateB = new Date(b.created_at);
+          const timestampA = dateA.getTime();
+          const timestampB = dateB.getTime();
+          return timestampB - timestampA;
+        });
+        setGamesNormalize(dateSorted);
       }
     }
   }, [isSortByDate]);
@@ -191,6 +192,7 @@ function Profile() {
               ></i>
             </ColTitle>
           </Ligne>
+          <ListContainer>
           {gamesNormalize?.map((game) => (
             <Ligne key={game.id}>
               <ColItem>{game.points}</ColItem>
@@ -218,12 +220,15 @@ function Profile() {
                       </HelpItem>
                     );
                   }
-                }) : <p>Aucune</p>}
+                }) 
+               : <p>Aucune</p>}
+               
               </ColItem>
               <ColItem>{game.level}</ColItem>
               <ColItem>{game.created_at}</ColItem>
             </Ligne>
           ))}
+          </ListContainer>
         </Table>
       ) : (
         <NoGames>

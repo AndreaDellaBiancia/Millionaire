@@ -11,6 +11,7 @@ export interface GameState {
   isAnswerSelected: boolean;
   isGoodAnswer: boolean;
   isStartTimer: boolean;
+  isShowPopupRegister: boolean;
 }
 const initialState: GameState = {
   isNewGame: false,
@@ -21,6 +22,7 @@ const initialState: GameState = {
   isAnswerSelected: false,
   isGoodAnswer: false,
   isStartTimer: false,
+  isShowPopupRegister: false,
 };
 
 export const gameSlice = createSlice({
@@ -54,6 +56,9 @@ export const gameSlice = createSlice({
     setIsStartTimer: (state, action: PayloadAction<boolean>) => {
       state.isStartTimer = action.payload;
     },
+    setIsShowPopupRegister: (state, action: PayloadAction<boolean>) => {
+      state.isShowPopupRegister = action.payload;
+    },
   },
 });
 
@@ -66,4 +71,5 @@ export const {
   setIsAnswerSelected,
   setIsGoodAnswer,
   setIsStartTimer,
+  setIsShowPopupRegister,
 } = gameSlice.actions;

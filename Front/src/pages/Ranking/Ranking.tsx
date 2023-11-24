@@ -40,7 +40,7 @@ function Ranking() {
         setClassPopup(
           "popup-inscription animate__animated animate__zoomOutDown"
         );
-      }, 7000);
+      }, 5000);
     }
   }, []);
   return (
