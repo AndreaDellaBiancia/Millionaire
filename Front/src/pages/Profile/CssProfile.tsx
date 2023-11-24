@@ -20,7 +20,7 @@ export const Name = styled.h2`
   justify-content: center;
   padding: 0;
   width: 100%;
-  font-size: 3rem;
+  font-size: 2rem;
   color: white;
   text-transform: capitalize;
 `;
@@ -112,7 +112,7 @@ export const Table = styled.table`
   justify-content: center;
   padding: 0;
   width: 100%;
-  margin-top: 1rem;
+ // margin-top: 1rem;
 `;
 
 export const Ligne = styled.tr`
@@ -170,8 +170,9 @@ export const ColItem = styled.td`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   padding: 0;
-  width: 25%;
+  width: 20%;
   font-size: 1rem;
   font-weight: bold;
   color: #fdd835;
@@ -184,3 +185,35 @@ export const NoGames = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
 `;
+
+export const HelpItem = styled.div`
+  @media (min-width: 950px) {
+    height: 3.2rem;
+    width: 3.2rem;
+    span {
+      font-size: 1rem;
+    }
+
+    i {
+      font-size: 1.2rem;
+      color: gold;
+    }
+  }
+
+  background-color: black;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: gold;
+  border: 2px solid gold;
+
+  i {
+    font-size: 1.2rem;
+    color: gold;
+  }
+`;
+

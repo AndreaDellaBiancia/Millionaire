@@ -9,7 +9,6 @@ import {
 import Match from "./Game";
 import LevelDifficulty from "./LevelDifficulty";
 import BadAnswer from "./BadAnswer";
-import Game from "./Game";
 
 @Entity()
 export default class Question {

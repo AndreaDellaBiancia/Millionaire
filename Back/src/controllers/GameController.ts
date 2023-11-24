@@ -7,6 +7,7 @@ import HomeHelp from "../models/HomeHelp";
 import Game from "../models/Game";
 import User from "../models/User";
 import LevelDifficulty from "../models/LevelDifficulty";
+import Help from "../models/Help";
 
 const questionRepository = dataSource.getRepository(Question);
 const goodAnswerRepository = dataSource.getRepository(GoodAnswer);
@@ -15,6 +16,8 @@ const homeHelpRepository = dataSource.getRepository(HomeHelp);
 const gameRepository = dataSource.getRepository(Game);
 const levelRepository = dataSource.getRepository(LevelDifficulty);
 const userRepository = dataSource.getRepository(User);
+const helpRepository = dataSource.getRepository(Help);
+
 
 const startGame = async (
   req: Request,
@@ -110,6 +113,31 @@ const saveGame = async (
     const gamePoints: number = req.body.points;
     const questionNb: number = req.body.questionNb;
     const level: string = req.body.level;
+    const isAskPublic: boolean = req.body.isAskPublic;
+    const isCallHome: boolean = req.body.isCallHome;
+    const isHalfPossibility: boolean = req.body.isHalfPossibility;
+
+    let usedHelps: Help[] = []
+    if (isCallHome) {
+      const helpCallHome = await helpRepository.findOneBy({ id: 1 });
+      if (helpCallHome) {
+        usedHelps.push(helpCallHome)
+      }
+    }
+    if (isHalfPossibility) {
+      const helpHalfPossibility = await helpRepository.findOneBy({ id: 2 });
+      if (helpHalfPossibility) {
+        usedHelps.push(helpHalfPossibility)
+      }
+    }
+    if (isAskPublic) {
+      const helpPublic = await helpRepository.findOneBy({ id: 3 });
+      if (helpPublic) {
+        usedHelps.push(helpPublic)
+      }
+    }
+
+    
     const levelDifficulty = await levelRepository.findOneBy({ level: level });
     if (levelDifficulty) {
       const newGame = new Game();
@@ -118,6 +146,7 @@ const saveGame = async (
       newGame.user = currentUser;
       newGame.levelDifficulty = levelDifficulty;
       newGame.created_at = new Date(Date.now());
+      newGame.helps = usedHelps;
       gameRepository.save(newGame);
     }
 
@@ -146,6 +175,7 @@ const getGamesByUser = async (
       relations: {
         levelDifficulty: true,
         user: true,
+        helps: true
       },
       where: {
         user: {

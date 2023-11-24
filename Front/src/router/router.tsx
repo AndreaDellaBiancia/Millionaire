@@ -5,6 +5,7 @@ import Game from "../pages/Game/Game";
 import Home from "../pages/Home/Home";
 import Ranking from "../pages/Ranking/Ranking";
 import ProtectedRoute from "./protectedRoutes";
+import AdminMenu from "../components/AdminMenu/AdminMenu";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
         path: "/admin",
         element: (
           <div>
+            <AdminMenu />
             <Outlet />
           </div>
         ),

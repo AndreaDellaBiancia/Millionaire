@@ -18,7 +18,10 @@ export function endGame(
   pointsGame: number,
   questionNb: number,
   level: string,
-  user: User | null
+  user: User | null,
+  isAskPublic : boolean, 
+  isCallHome: boolean, 
+  isHalfPossibility: boolean,
 ) {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -40,13 +43,13 @@ export function endGame(
     .then(async (result) => {
       if (result.isConfirmed) {
         if (user) {
-          await saveGame(pointsGame, questionNb, user, level);
+          await saveGame(pointsGame, questionNb, user, level, isAskPublic, isCallHome, isHalfPossibility);
         }
         dispatch(setIsNewGame(!isNewGame));
         dispatch(setIsStartTimer(!isStartTimer));
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         if (user) {
-          await saveGame(pointsGame, questionNb, user, level);
+          await saveGame(pointsGame, questionNb, user, level, isAskPublic, isCallHome, isHalfPossibility);
         }
         dispatch(setIsAnswerSelected(false));
         dispatch(setIsAskPublic(false));

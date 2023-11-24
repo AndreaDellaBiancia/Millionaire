@@ -4,9 +4,12 @@ import {
   Column,
   JoinColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import User from "./User";
 import LevelDifficulty from "./LevelDifficulty";
+import Help from "./Help";
 
 @Entity()
 export default class Game {
@@ -29,4 +32,9 @@ export default class Game {
   @ManyToOne(() => LevelDifficulty, (levelDifficulty) => levelDifficulty.games)
   @JoinColumn({ name: "levelDifficulty_id" })
   levelDifficulty: LevelDifficulty;
+
+
+  @ManyToMany(() => Help)
+  @JoinTable()
+  helps: Help[]
 }

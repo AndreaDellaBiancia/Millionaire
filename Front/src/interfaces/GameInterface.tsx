@@ -1,3 +1,4 @@
+import Help from "./HelpInterface";
 import levelDifficulty from "./LevelDifficultyInterface";
 import User from "./UserInterface";
 
@@ -7,7 +8,8 @@ interface Game {
   questionNb: number;
   created_at: string;
   levelDifficulty: levelDifficulty;
-  user: User
+  user: User;
+  helps: Help[]
 }
 
 export default Game;

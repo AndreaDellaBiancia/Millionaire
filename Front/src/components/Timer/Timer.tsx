@@ -18,6 +18,17 @@ function Timer() {
   const isAnswerSelected = useSelector(
     (state: RootState) => state.game.isAnswerSelected
   );
+  const isAskPublic = useSelector(
+    (state: RootState) => state.help.isAskPublic
+  );
+
+  const isCallHome = useSelector(
+    (state: RootState) => state.help.isCallHome
+  );
+
+  const isHalfPossibility = useSelector(
+    (state: RootState) =>  state.help.isHalfPossibility
+  );
 
   const questionNb = useSelector((state: RootState) => state.game.questionNb);
   const level = useSelector((state: RootState) => state.game.level);
@@ -50,7 +61,7 @@ function Timer() {
     } else if (time === 0) {
       if (!isAnswerSelected) {
         setTimeout(() => {
-          endGame(navigate, dispatch, isNewGame, isStartTimer, "lost", pointsGame, questionNb, level, user);
+          endGame(navigate, dispatch, isNewGame, isStartTimer, "lost", pointsGame, questionNb, level, user,  isAskPublic, isCallHome, isHalfPossibility);
         }, 1500);
       }
     }

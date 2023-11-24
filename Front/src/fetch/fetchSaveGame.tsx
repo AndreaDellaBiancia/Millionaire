@@ -4,14 +4,18 @@ export async function saveGame(
   points: number,
   questionNb: number,
   user: User,
-  level: string
+  level: string,
+  isAskPublic: boolean, 
+  isCallHome: boolean, 
+  isHalfPossibility: boolean
 ) {
+
   const token = localStorage.getItem("token");
   try {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify({points, questionNb, user, level}),
+      body: JSON.stringify({points, questionNb, user, level,  isAskPublic, isCallHome, isHalfPossibility}),
       
     };
     const response = await fetch(

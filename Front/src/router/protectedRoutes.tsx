@@ -5,7 +5,6 @@ import { RootState } from "../store/store";
 import AdminQuestionsList from "../pages/AdminQuestionsList/AdminQuestionsList";
 import AdminRanking from "../pages/AdminRanking/AdminRanking";
 import AdminUserList from "../pages/AdminUserList/AdminUserList";
-import AdminMenu from "../components/AdminMenu/AdminMenu";
 
 const ProtectedRoute = (route: { route: string }) => {
   const role = useSelector((state: RootState) => state.user.user?.role?.name);
@@ -17,7 +16,7 @@ const ProtectedRoute = (route: { route: string }) => {
 
   const components: any = {
     SUPER_ADMIN: {
-      "admin/questions": <AdminQuestionsList />,
+      "admin/questions":<AdminQuestionsList />,
       "admin/classement": <AdminRanking />,
       "admin/utilisateurs": <AdminUserList />,
       "mon-profil": <Profile />,
@@ -40,7 +39,7 @@ const ProtectedRoute = (route: { route: string }) => {
     return <ErrorPage401 />;
   }
   if (components[role][route.route]) {
-    return <div><AdminMenu /> {components[role][route.route]}</div> 
+    return <div>{components[role][route.route]}</div> 
   }
   return <ErrorPage401 />;
 };

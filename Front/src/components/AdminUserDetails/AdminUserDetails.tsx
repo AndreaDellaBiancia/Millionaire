@@ -6,7 +6,6 @@ import { getRanking } from "../../fetch/fetchRanking";
 import { getGamesByUser } from "../../fetch/fetchGames";
 import { gameNormalize } from "../../outils/gameNormalize";
 import GameNormalize from "../../interfaces/GameNormalizeInterface";
-import Game from "../../interfaces/GameInterface";
 import User from "../../interfaces/UserInterface";
 import "./style.css";
 
@@ -71,6 +70,7 @@ function AdminUserDetails({
           <tr>
             <th>POINTS</th>
             <th>ARGENT GAGNÉ</th>
+            <th>AIDES UTILISEES</th>
             <th>NIVEAU</th>
             <th>DATE</th>
           </tr>
@@ -79,6 +79,31 @@ function AdminUserDetails({
             <tr key={game.id}>
               <td>{game.points}</td>
               <td>{game.questionAward} €</td>
+              <td>
+                {game.helps.length ?  game.helps.map((help) => {
+                  if (help.name === "call_home") {
+                    return (
+                      <div key={help.id} className="help-item">
+                        <i className="fa-sharp fa-solid fa-phone-volume"></i>
+                      </div>
+                    );
+                  }
+                  if (help.name === "50%") {
+                    return (
+                      <div key={help.id} className="help-item">
+                       <i className="fa-sharp fa-solid fa-star-half-stroke"></i>
+                      </div>
+                    );
+                  }
+                  if (help.name === "public_help") {
+                    return (
+                      <div key={help.id} className="help-item">
+                         <i className="fa-sharp fa-solid fa-people-group"></i>
+                      </div>
+                    );
+                  }
+                }) : <p>Aucune</p>}
+              </td>
               <td>{game.level}</td>
               <td>{game.created_at}</td>
             </tr>

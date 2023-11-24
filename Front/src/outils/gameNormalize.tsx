@@ -66,6 +66,7 @@ export function gameNormalize(games: Game[]):GameNormalize[] {
       created_at: dateNormalize(game.created_at),
       level: levelNormalize(game.levelDifficulty.level),
       questionAward: questionAwardNormalize(game.questionNb),
+      helps: game.helps,
     };
   });
 }
