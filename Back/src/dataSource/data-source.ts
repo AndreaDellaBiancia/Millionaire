@@ -7,6 +7,7 @@ import GoodAnswer from "../models/GoodAnswer";
 import BadAnswer from "../models/BadAnswer";
 import LevelDifficulty from "../models/LevelDifficulty";
 import Role from "../models/Role";
+import Help from "../models/Help";
 
 export const dataSource = new DataSource({
   type: "postgres",
@@ -24,7 +25,8 @@ export const dataSource = new DataSource({
     HomeHelp,
     GoodAnswer,
     BadAnswer,
-    Role
+    Role,
+    Help
   ],
   logging: ["query", "error"],
 });

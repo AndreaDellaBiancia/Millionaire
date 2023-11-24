@@ -12,6 +12,7 @@ import {
   RankingImg,
   TableTitle,
   NoGames,
+  HelpItem,
 } from "./CssProfile";
 import coin from "../../assets/images/gold-coin.svg";
 import rankingImg from "../../assets/images/ranking.png";
@@ -174,8 +175,9 @@ function Profile() {
                 className="fa-solid fa-sort"
               ></i>
             </ColTitle>
+            <ColTitle scope="col">Aides utilisées</ColTitle>
             <ColTitle scope="col">
-              Difficulté
+              Niveau
               <i
                 onClick={() => setIsSortByLevel(!isSortByLevel)}
                 className="fa-solid fa-sort"
@@ -193,6 +195,31 @@ function Profile() {
             <Ligne key={game.id}>
               <ColItem>{game.points}</ColItem>
               <ColItem>{game.questionAward} €</ColItem>
+              <ColItem>
+                {game.helps.length ?  game.helps.map((help) => {
+                  if (help.name === "call_home") {
+                    return (
+                      <HelpItem key={help.id}>
+                        <i className="fa-sharp fa-solid fa-phone-volume"></i>
+                      </HelpItem>
+                    );
+                  }
+                  if (help.name === "50%") {
+                    return (
+                      <HelpItem key={help.id}>
+                       <i className="fa-sharp fa-solid fa-star-half-stroke"></i>
+                      </HelpItem>
+                    );
+                  }
+                  if (help.name === "public_help") {
+                    return (
+                      <HelpItem key={help.id}>
+                         <i className="fa-sharp fa-solid fa-people-group"></i>
+                      </HelpItem>
+                    );
+                  }
+                }) : <p>Aucune</p>}
+              </ColItem>
               <ColItem>{game.level}</ColItem>
               <ColItem>{game.created_at}</ColItem>
             </Ligne>
