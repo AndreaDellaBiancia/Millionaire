@@ -95,8 +95,8 @@ export const RankingImg = styled.img`
 
 export const TableTitle = styled.h4`
   @media (min-width: 1000px) {
-    font-size: 1.5rem;
-    margin-top: 3rem;
+    font-size: 1.3rem;
+    margin-top: 2rem;
   }
   width: 100%;
   text-align: center;
@@ -105,6 +105,22 @@ export const TableTitle = styled.h4`
   font-weight: bold;
   margin-top: 1.5rem;
 `;
+export const ListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 45vh;
+
+  /* Masquer la barre de défilement pour les navigateurs WebKit (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 0.2em;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+`;
 
 export const Table = styled.table`
   display: flex;
@@ -112,12 +128,15 @@ export const Table = styled.table`
   justify-content: center;
   padding: 0;
   width: 100%;
- // margin-top: 1rem;
+  i{
+    cursor: pointer;
+  }
 `;
 
 export const Ligne = styled.tr`
   display: flex;
   justify-content: center;
+  text-align: center;
   padding: 0;
   width: 100%;
   margin: 0.3rem auto;

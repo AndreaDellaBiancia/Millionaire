@@ -12,7 +12,7 @@ function Awards() {
   return (
     <AwardsList>
       {reversedAwards.map((award: number, index: number) =>
-        ((awards[questionNb - 1] >= award) || (awards[questionNb] === 1000000 && isGoodAnswer )) ? (
+        ((awards[questionNb - 1] >= award) || (awards[questionNb] === award && isGoodAnswer) ) ? (
           <AwardItemWin key={index}>
             {award === 1000000 ? "1 MILLION" : award} €
           </AwardItemWin>
