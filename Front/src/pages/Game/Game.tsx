@@ -9,13 +9,14 @@ import { getQuestions } from "../../fetch/fetchQuestions";
 import QuestionsAnswers from "../../interfaces/QuestionsAnswersInterface";
 import GoodAnsw from "../../interfaces/GoodAnswInterface";
 import BadAnsw from "../../interfaces/BadAnswInterface";
-import { setIsStartTimer, setQuestionNb } from "../../store/gameReducer";
+import { setIsGoodAnswer, setIsStartTimer, setQuestionNb } from "../../store/gameReducer";
 import PointsGameCounter from "../../components/PointsGameCounter/PointsGameCounter";
 import HelpContainer from "../../components/HelpContainer/HelpContainer";
 import Timer from "../../components/Timer/Timer";
 import { setIsAskPublic, setIsCallHome, setIsHalfPossibility } from "../../store/helpReducer";
 import { setPointsGame } from "../../store/awardsReducer";
 import MoneyDrop from "../../components/MoneyDropAnimation/MoneyDrop";
+import { questionAwardNormalize } from "../../outils/gameNormalize";
 
 function Game() {
   const [questions, setQuestions] = useState<QuestionsAnswers[]>([]);
@@ -75,6 +76,7 @@ function Game() {
 
   function nextQuestion() {
     if (questionNb < 14) {
+      dispatch(setIsGoodAnswer(false));
       dispatch(setQuestionNb(questionNb + 1)); // Passer à la question suivante
       setQuestionToPlay(questions[questionNb + 1]);
     }
@@ -96,7 +98,7 @@ function Game() {
                 Question à{" "}
                 {awards[questionNb] === 1000000
                   ? "1 MILLION"
-                  : awards[questionNb]}{" "}
+                  : questionAwardNormalize(questionNb +1)}{" "}
                 €
               </p>
             </QuestionAward>
