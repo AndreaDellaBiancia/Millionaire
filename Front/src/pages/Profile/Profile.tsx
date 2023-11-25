@@ -54,11 +54,15 @@ function Profile() {
       const userData = await getUser(id);
       const rankingData = await getRanking();
       const gamesData = await getGamesByUser(id);
+      // On exlut les admin et super admin du ranking
+      const filteredRanking = rankingData.filter((user: User) =>
+          user.role?.name !== "ADMIN" && user.role?.name !== "SUPER_ADMIN"
+      )
       setGames(gamesData);
       //On utilise la fonction gameNormalize() pour exploiter au mieux les données récuperées
       setGamesNormalize(gameNormalize(gamesData));
       setUser(userData);
-      findMyPosition(rankingData, userData.username);
+      findMyPosition(filteredRanking, userData.username);
     }
     getData(userId);
   }, []);
@@ -81,7 +85,7 @@ function Profile() {
   }, [isSortByPoints]);
 
   useEffect(() => {
-    // Trier les parties par prix
+    // Trier les parties par gain
     if (games) {
       if (isSortByAward) {
         const awardSorted = gameNormalize(games).sort(function (a, b) {

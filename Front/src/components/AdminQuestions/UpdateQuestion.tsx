@@ -208,7 +208,7 @@ function UpdateQuestion({
             ></textarea>
           </div>
           <div className="select-award-container">
-            <label style={{fontSize:"1.2rem"}}>PRIX :</label>
+            <label style={{fontSize:"1.2rem"}}>GAIN :</label>
             <select
               className="select-award"
               onChange={(e) =>

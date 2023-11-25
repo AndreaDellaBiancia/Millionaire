@@ -150,7 +150,7 @@ function AdminQuestionsList() {
         />
         <Table>
           <LineTitle className="title-line">
-            <ColTitle className="col-admin-award">Prix</ColTitle>
+            <ColTitle className="col-admin-award">Gain</ColTitle>
             <ColTitle className="col-admin-question">Question</ColTitle>
             <ColTitle className="col-admin-level">Niveau</ColTitle>
             <ColTitle className="col-admin-view"></ColTitle>

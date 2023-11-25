@@ -122,8 +122,10 @@ function AnswerItem({ letter, answer }: AnswerItemProps) {
           if (questionNb === 14) {
             dispatch(setIsMillion(true));
             setTimeout(() => {
+              const finalsPoints = pointsGame + (15 * indexPoints);
+              const lastQuestionNb = 15;
               dispatch(setIsMillion(false));
-              endGame(navigate, dispatch, isNewGame, isStartTimer, "win", pointsGame, questionNb, level, user, isAskPublic, isCallHome, isHalfPossibility);
+              endGame(navigate, dispatch, isNewGame, isStartTimer, "win", finalsPoints, lastQuestionNb, level, user, isAskPublic, isCallHome, isHalfPossibility);
             }, 8000)
           }
           // Après 2 secondes, arrêter l'intervalle "bonne répnse(verte)" et définir "isGoodAnswer" sur true.
