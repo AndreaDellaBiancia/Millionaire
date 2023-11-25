@@ -67,7 +67,7 @@ function AdminRanking() {
         <input onChange={(e) => handleSearch(e)} type="text" />
       </SearchContainer>
       <Table>
-        <LineTitle className="title-line">
+        <LineTitle>
           <ColTitle>
             Position{" "}
             <i
@@ -83,11 +83,11 @@ function AdminRanking() {
           {(filteredUsers ? filteredUsers : users)?.map(
             (user: any, index: number) => (
               <Line key={user.user.id}>
-                <ColItem className="col-admin-award">{user.position}</ColItem>
-                <ColItem className="col-admin-question">
-                  {user.user.username}
+                <ColItem>{user.position}</ColItem>
+                <ColItem>
+                  {user.user.username.charAt(0).toUpperCase() + user.user.username.slice(1)}
                 </ColItem>
-                <ColItem className="col-admin-level">
+                <ColItem>
                   {user.user.points}
                 </ColItem>
               </Line>
