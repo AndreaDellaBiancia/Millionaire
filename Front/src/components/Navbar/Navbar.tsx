@@ -233,22 +233,21 @@ function Navbar() {
       }
     }
   });
-
   function handleLogout(): void {
-    const profileOptionHtml = document.querySelector(
-      "#profile-container-option"
-    );
+    const profileOptionHtml = document.querySelector("#profile-container-option");
     if (profileOptionHtml instanceof HTMLElement) {
       profileOptionHtml.style.display = "none";
     }
-    window.location.replace("/");
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     dispatch(setToken(""));
     dispatch(setUser({}));
     setClassProfile(profileClassClose);
+  
+    // Redirection vers la page d'accueil
+    navigate("/", { replace: true });
   }
-
+  
   const normalIcon = <i className="fa-solid fa-user fa-lg"></i>;
   const hoverIcon = <i className="fa-solid fa-user fa-bounce fa-lg"></i>;
 
@@ -380,12 +379,11 @@ function Navbar() {
       )}
 
       <ProfileOptionContainer
-        onClick={() => changePage("/mon-profil")}
         id="profile-container-option"
         style={{ display: "none" }}
         className={classProfile}
       >
-        <div>PROFIL</div>
+        <div   onClick={() => changePage("/mon-profil")}>PROFIL</div>
         <div onClick={handleLogout}>DÉCONNEXION</div>
       </ProfileOptionContainer>
     </Nav>
