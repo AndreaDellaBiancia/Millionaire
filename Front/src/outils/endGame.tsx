@@ -23,6 +23,13 @@ export function endGame(
   isCallHome: boolean, 
   isHalfPossibility: boolean,
 ) {
+
+  console.log('=end====pointsGame================');
+  console.log(pointsGame);
+  console.log('====================================');
+  console.log('=end====questionNb================');
+  console.log(questionNb);
+  console.log('====================================');
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",

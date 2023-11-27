@@ -39,7 +39,7 @@ const startGame = async (
       .createQueryBuilder("question")
       .leftJoinAndSelect("question.levelDifficulty", "levelDifficulty")
       .where("question.level_difficulty_id = :levelId", { levelId })
-      .orderBy("question.award, RANDOM()") // Ordonner par le prix puis aléatoirement
+      .orderBy("question.award, RANDOM()") // Ordonner par le gains puis aléatoirement
       .select("DISTINCT ON (question.award) question.*")
       .getRawMany();
 

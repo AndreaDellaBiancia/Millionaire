@@ -73,7 +73,7 @@ display: flex;
 flex-direction: column;
 align-tems: center;
 justify-content: center;
-width: 15rem;
+width: 30rem;
 text-align: center;
 
 label{

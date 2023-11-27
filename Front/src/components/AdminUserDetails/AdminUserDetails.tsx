@@ -25,9 +25,11 @@ function AdminUserDetails({
       const rankingData = await getRanking();
       const gamesData = await getGamesByUser(id);
       //On utilise la fonction gameNormalize() pour exploiter au mieux les données récuperées
+
+      const filteredRanking = rankingData.filter((user: User) => (user.role?.name !== "ADMIN" && user.role?.name !== "SUPER_ADMIN"))
       setGamesNormalize(gameNormalize(gamesData));
       setUser(userData);
-      findMyPosition(rankingData, userData.username);
+      findMyPosition(filteredRanking, userData.username);
     }
     if (userId) {
       getData(userId);

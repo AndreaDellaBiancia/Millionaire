@@ -8,6 +8,7 @@ import AdminUserList from "../pages/AdminUserList/AdminUserList";
 
 const ProtectedRoute = (route: { route: string }) => {
   const role = useSelector((state: RootState) => state.user.user?.role?.name);
+  const token = useSelector((state: RootState) => state.user.token);
 
   function isAuthenticated() {
     const token = localStorage.getItem("token");
@@ -16,7 +17,7 @@ const ProtectedRoute = (route: { route: string }) => {
 
   const components: any = {
     SUPER_ADMIN: {
-      "admin/questions":<AdminQuestionsList />,
+      "admin/questions": <AdminQuestionsList />,
       "admin/classement": <AdminRanking />,
       "admin/utilisateurs": <AdminUserList />,
       "mon-profil": <Profile />,
@@ -31,17 +32,12 @@ const ProtectedRoute = (route: { route: string }) => {
     },
   };
 
-  if (!isAuthenticated()) {
+  if (!token || !role) {
     return <ErrorPage401 />;
+  } else {
+    return <div>{components[role][route.route]}</div>;
   }
 
-  if (!role) {
-    return <ErrorPage401 />;
-  }
-  if (components[role][route.route]) {
-    return <div>{components[role][route.route]}</div> 
-  }
-  return <ErrorPage401 />;
 };
 
 export default ProtectedRoute;

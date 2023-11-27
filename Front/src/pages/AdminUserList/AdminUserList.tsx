@@ -72,7 +72,7 @@ function AdminUsers() {
           {(filteredUsers ? filteredUsers : users)?.map(
             (user: any, index: number) => (
               <Line key={user.id}>
-                <ColItem className="col-admin-award">{user.username}</ColItem>
+                <ColItem className="col-admin-award">{user.username.charAt(0).toUpperCase() + user.username.slice(1)}</ColItem>
                 <ColItem className="col-admin-question">{user.email}</ColItem>
                 <ColItem className="col-admin-level">{user.role.name}</ColItem>
                 <ColItem className="col-admin-level">{user.points}</ColItem>

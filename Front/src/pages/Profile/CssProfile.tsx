@@ -165,7 +165,7 @@ export const ColTitle = styled.th`
   justify-content: center;
   align-items: center;
   margin: 1rem 0;
-  width: 25%;
+  width: 20%;
   color: white;
 
   i{
