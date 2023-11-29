@@ -25,6 +25,9 @@ export default class User {
 
   @Column({ type: "int", nullable: true })
   points: number;
+  
+  @Column({ type: "varchar", nullable: true })
+  reset_password_token: string;
 
   @OneToMany(() => Game, (game) => game.user)
   games: Game[];

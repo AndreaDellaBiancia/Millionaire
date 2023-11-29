@@ -203,6 +203,7 @@ export const NoGames = styled.div`
   text-align: center;
   font-size: 1.3rem;
   font-weight: bold;
+  color: white;
 `;
 
 export const HelpItem = styled.div`

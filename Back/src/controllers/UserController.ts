@@ -5,6 +5,8 @@ import Role from "../models/Role";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+import crypto from "crypto";
+import { sendResetPassword } from "../middleware/sendResetPassword";
 
 const userRepository = dataSource.getRepository(User);
 
@@ -41,9 +43,13 @@ const getToken = async (
     //On genere le token et on le returne avec l'utilisateur
     return res.status(200).json({
       userId: user.id,
-      token: jwt.sign({ userId: user.id, roleUser: user.role}, process.env.TOKEN_SECRET, {
-        expiresIn: "24h",
-      }),
+      token: jwt.sign(
+        { userId: user.id, roleUser: user.role },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: "24h",
+        }
+      ),
     });
   } catch (error) {
     return res.status(500).json({
@@ -120,4 +126,9 @@ const getUser = async (
   }
 };
 
-export { getToken, registration, getUser };
+
+export {
+  getToken,
+  registration,
+  getUser
+};

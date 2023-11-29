@@ -3,6 +3,8 @@ const RankingController = require("../controllers/RankingController");
 const GameController = require("../controllers/GameController");
 const UserController = require("../controllers/UserController");
 const AdminController = require("../controllers/AdminController");
+const ResetPasswordController = require("../controllers/ResetPasswordController");
+
 // Authorizations
 const authUser = require("../middleware/authUser");
 const authAdmin = require("../middleware/authAdmin");
@@ -15,6 +17,11 @@ router.post("/registration", UserController.registration);
 router.post("/auth", UserController.getToken);
 router.get("/ranking", RankingController.getRanking);
 router.get("/game/:level", GameController.startGame);
+
+router.post("/forgot-password", ResetPasswordController.createTokenResetPassword);
+router.post("/update-password", ResetPasswordController.updatePassword);
+
+
 
 // Routes utilisateur connecté
 router.post("/game/save", authUser, GameController.saveGame);

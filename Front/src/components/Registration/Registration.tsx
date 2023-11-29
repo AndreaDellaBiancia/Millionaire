@@ -7,7 +7,7 @@ import "./style.css";
 import { registration } from "../../fetch/fetchRegistration";
 import { getToken } from "../../fetch/fetchToken";
 import { useDispatch } from "react-redux";
-import { setToken, setUser } from "../../store/userReducer";
+import { setToken } from "../../store/userReducer";
 
 function Registration(props: any) {
   const [email, setEmail] = useState<string>("");

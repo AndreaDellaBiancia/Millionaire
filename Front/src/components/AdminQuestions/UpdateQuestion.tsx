@@ -262,7 +262,7 @@ function UpdateQuestion({
         <div className="answers_container">
           <div className="good-answer">
             <div>
-              <p>BONNE REPONSE</p>
+              <p>BONNE RÉPONSE</p>
               <input
                 className="good-answer_title"
                 value={goodAnswer?.title}
@@ -272,7 +272,7 @@ function UpdateQuestion({
               />
               {goodAnswerTitleError && (
                 <span className="error-handle-question">
-                  Renseigner une reponse
+                  Renseigner une réponse
                 </span>
               )}
             </div>
@@ -297,7 +297,7 @@ function UpdateQuestion({
           </div>
           <div className="bad-answers">
             <div>
-              <p>MAUVAISES REPONSES</p>
+              <p>MAUVAISES RÉPONSES</p>
 
               <input
                 className="bad-answer_title"
@@ -384,7 +384,7 @@ function UpdateQuestion({
           </div>
         )}
         <div className="home_help">
-          AIDE TELEPHONE :{" "}
+          AIDE TÉLÉPHONE :{" "}
           <input
             value={homeHelp?.description}
             onChange={(e) =>

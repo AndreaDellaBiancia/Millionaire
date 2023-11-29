@@ -279,7 +279,7 @@ function Navbar() {
                 aria-current="page"
                 onClick={() => changePage("/")}
               >
-                Home
+                Accueil
               </div>
             </NavItem>
             <NavItem className="nav-item">
