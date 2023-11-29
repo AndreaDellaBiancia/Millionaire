@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import {
   Container,
+  ForgotPassword,
   FormLogin,
   PasswordContainer,
-  RegisterLink,
 } from "./CssLogin";
 import { getToken } from "../../fetch/fetchToken";
 import { useDispatch } from "react-redux";
@@ -12,9 +12,11 @@ import Registration from "../Registration/Registration";
 import LoginProps from "../../interfaces/LoginInterface";
 import openEye from "../../assets/images/openEye.png";
 import closeEye from "../../assets/images/closeEye.png";
+import ModalResetPassword from "../ModalResetPassword/ModalResetPassword";
 
 function LogIn({ classLogin, loginClassClose, setClassLogin }: LoginProps) {
-  const [modalShow, setModalShow] = useState(false);
+  const [modalRegisterShow, setModalRegisterShow] = useState(false);
+  const [modalResetPassword, setModalResetPassword] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -49,67 +51,91 @@ function LogIn({ classLogin, loginClassClose, setClassLogin }: LoginProps) {
 
   function handleRegisterLink() {
     // On affiche la modale avec le formulaire d'inscription
-    setModalShow(true);
+    setModalRegisterShow(true);
+    setClassLogin(loginClassClose);
+  }
+
+  function handleResetPassword() {
+    // On affiche la modale avec le formulaire d'inscription
+    setModalResetPassword(true);
     setClassLogin(loginClassClose);
   }
   return (
-    <Container id="loginContainer" className={classLogin}>
-      <FormLogin>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email
-          </label>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            type="email"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-          />
-        </div>
-        <PasswordContainer className="mb-3">
-          <label htmlFor="InputPassword1" className="form-label">
-            Password
-          </label>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            type={!isShowPassword ? "password" : "text"}
-            className="form-control"
-            id="InputPassword1"
-          />
-          <img
-            onClick={() => setIsShowPassword(!isShowPassword)}
-            src={isShowPassword ? openEye : closeEye}
-            alt=""
-          />
-        </PasswordContainer>
-        {errorConnexion && (
-          <small
-            style={{ color: "red", margin: "0.5rem 0", textAlign: "center" }}
-          >
-            {errorConnexion}
-          </small>
-        )}
+  
+      <Container id="loginContainer" className={classLogin}>
+        <FormLogin>
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Email
+            </label>
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              type="email"
+              className="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <PasswordContainer className="mb-3">
+            <label htmlFor="InputPassword1" className="form-label">
+              Password
+            </label>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              type={!isShowPassword ? "password" : "text"}
+              className="form-control"
+              id="InputPassword1"
+            />
+            <img
+              onClick={() => setIsShowPassword(!isShowPassword)}
+              src={isShowPassword ? openEye : closeEye}
+              alt=""
+            />
+          </PasswordContainer>
+          {errorConnexion && (
+            <small
+              style={{ color: "red", margin: "0.5rem 0", textAlign: "center" }}
+            >
+              {errorConnexion}
+            </small>
+          )}
+          <ForgotPassword onClick={handleResetPassword}>Mot de passe oublié</ForgotPassword>
 
-        <button
-          onClick={handleSubmit}
-          type="submit"
-          className="btn btn-outline-primary"
-        >
-          CONNEXION
-        </button>
-        <RegisterLink onClick={handleRegisterLink}>
-          Je veux m'inscrire
-        </RegisterLink>
-        <Registration
-          show={modalShow}
-          setModalShow={setModalShow}
-          onHide={() => setModalShow(false)}
-        />
-      </FormLogin>
-    </Container>
+          <ModalResetPassword show={modalResetPassword}
+            setModalShow={setModalResetPassword}
+            onHide={() => setModalResetPassword(false)}/>
+          <button
+            
+            type="submit"
+            className="btn btn-outline-primary"
+            onClick={handleSubmit}
+          >
+            CONNEXION
+          </button>
+          <hr
+            style={{
+              border: 0,
+              borderTop: "1px solid black",
+              margin: "1.5rem 0",
+            }}
+          />
+          <button
+            onClick={handleRegisterLink}
+            type="submit"
+            className="btn btn-outline-primary"
+          >
+            INSCRIPTION
+          </button>
+          <Registration
+            show={modalRegisterShow}
+            setModalShow={setModalRegisterShow}
+            onHide={() => setModalRegisterShow(false)}
+          />
+        </FormLogin>
+      </Container>
+    
   );
 }
 

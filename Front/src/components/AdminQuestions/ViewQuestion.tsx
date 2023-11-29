@@ -79,7 +79,7 @@ function ViewQuestion({
         <div className="answers_container">
           <div className="good-answer">
             <div>
-              <p>BONNE REPONSE</p> <p>{questionToHandle?.goodAnswer.title}</p>
+              <p>BONNE RÉPONSE</p> <p>{questionToHandle?.goodAnswer.title}</p>
             </div>
             <div>
               <p>AIDE DU PUBLIC</p>{" "}
@@ -88,7 +88,7 @@ function ViewQuestion({
           </div>
           <div className="bad-answers">
             <div>
-              <p>MAUVAISES REPONSES</p>{" "}
+              <p>MAUVAISES RÉPONSES</p>{" "}
               {questionToHandle?.badAnswers.map((answer: BadAnsw) => (
                 <p key={answer.id}>{answer.title}</p>
               ))}
@@ -102,7 +102,7 @@ function ViewQuestion({
           </div>
         </div>
         <p className="home_help">
-          AIDE TELEPHONE : {questionToHandle?.homeHelp.description}
+          AIDE TÉLÉPHONE : {questionToHandle?.homeHelp.description}
         </p>
       </Modal.Body>
       <Modal.Footer>

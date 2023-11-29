@@ -6,6 +6,7 @@ import Home from "../pages/Home/Home";
 import Ranking from "../pages/Ranking/Ranking";
 import ProtectedRoute from "./protectedRoutes";
 import AdminMenu from "../components/AdminMenu/AdminMenu";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "mon-profil",
         element: <ProtectedRoute route={"mon-profil"} />,
+      },
+      {
+        path: "reset-password/:token",
+        element: <ResetPassword />,
       },
       {
         path: "/admin",

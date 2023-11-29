@@ -45,3 +45,11 @@ export const RegisterLink = styled.p`
   text-decoration: underline;
   cursor: pointer;
 `;
+
+export const ForgotPassword = styled.p`
+width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  text-decoration: underline;
+  cursor: pointer;
+`;

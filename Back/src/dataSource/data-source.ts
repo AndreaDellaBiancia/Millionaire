@@ -8,14 +8,15 @@ import BadAnswer from "../models/BadAnswer";
 import LevelDifficulty from "../models/LevelDifficulty";
 import Role from "../models/Role";
 import Help from "../models/Help";
+require('dotenv').config();
 
 export const dataSource = new DataSource({
   type: "postgres",
   host: "db",
   port: 5432,
-  username: "milionaire",
-  password: "milionaire",
-  database: "milionaire",
+  username: "millionaire",
+  password: "millionaire",
+  database: "millionaire",
   synchronize: true,
   entities: [
     User,
@@ -26,7 +27,7 @@ export const dataSource = new DataSource({
     GoodAnswer,
     BadAnswer,
     Role,
-    Help
+    Help,
   ],
   logging: ["query", "error"],
 });
