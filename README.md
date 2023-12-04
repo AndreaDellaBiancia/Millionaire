@@ -1,10 +1,10 @@
 <div style="text-align:center;">
-    <img src="./Front/src/assets/images/milionLogo.png" width="300px" alt="Logo Le millionaire">
+    <img src="./Front/src/assets/images/milionLogo.png" width="300px" alt="Logo Le millionnaire">
 </div>
 
 ## Description
 
-LE MILLIONAIRE est un site web inspiré du célèbre jeu télévisé Qui veut gagner des millions ?.   
+LE MILLIONNAIRE est un site web inspiré du célèbre jeu télévisé Qui veut gagner des millions ?.   
 Les joueurs peuvent choisir entre deux niveaux de difficulté : Facile ou Difficile.   
 Les points attribués aux réponses correctes sont différents selon le niveau de difficulté choisi.    
   
@@ -16,7 +16,7 @@ Ces derniers peuvent gérer les questions et réponses, accéder au classement g
 
 ## Objectifs
 
-Les objectifs de Le Millionaire sont de :
+Les objectifs de Le Millionnaire sont de :
 
 * Proposer un jeu de quiz divertissant et éducatif
 * Permettre aux joueurs de tester leurs connaissances
@@ -24,7 +24,7 @@ Les objectifs de Le Millionaire sont de :
 
 ## Fonctionnalités
 
-Les principales fonctionnalités de Le Millionaire sont les suivantes :
+Les principales fonctionnalités de Le Millionnaire sont les suivantes :
 
 * Formulaire d’inscription
 * Formulaire de connexion
@@ -63,11 +63,11 @@ Les principales fonctionnalités de Le Millionaire sont les suivantes :
 6. Connectez-vous à Adminer avec les identifiants suivants :
 
 * System : `PostegreSQL`
-* Utilisateur : `millionaire`
-* Mot de passe : `millionaire`
+* Utilisateur : `millionnaire`
+* Mot de passe : `millionnaire`
 
-7. Importer le fichier `millionaireDatas.sql` dans la base de données
-[Utiliser le fichier SQL](./Back/millionaireDatas.sql)
+7. Importer le fichier `millionnaireDatas.sql` dans la base de données
+[Utiliser le fichier SQL](./Back/millionnaireDatas.sql)
 
 Pour se connecter à l'administration utiliser les identifiants suivants :
 

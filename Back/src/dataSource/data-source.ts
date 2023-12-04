@@ -14,9 +14,9 @@ export const dataSource = new DataSource({
   type: "postgres",
   host: "db",
   port: 5432,
-  username: "millionaire",
-  password: "millionaire",
-  database: "millionaire",
+  username: "millionnaire",
+  password: "millionnaire",
+  database: "millionnaire",
   synchronize: true,
   entities: [
     User,

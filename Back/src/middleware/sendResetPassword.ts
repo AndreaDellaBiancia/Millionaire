@@ -29,7 +29,7 @@ export const sendResetPassword = async ({ email, token }: resetPassword) => {
         {
           From: {
             Email: "lemillionaire23@gmail.com",
-            Name: "Le Millionaire",
+            Name: "Le Millionnaire",
           },
           To: [
             {
@@ -65,7 +65,7 @@ export const sendResetPassword = async ({ email, token }: resetPassword) => {
 
               <p>Merci</p>
               <p>L'équipe de support</p>
-              <p>Le Millionaire</p>
+              <p>Le Millionnaire</p>
 
           </div>
 

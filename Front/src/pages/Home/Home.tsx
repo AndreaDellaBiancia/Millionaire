@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function Home() {
   return (
     <HomeContainer>
-      <Title>Le Millionaire</Title>
+      <Title>Le Millionnaire</Title>
       <LogoContainer>
         <LogoHome className="animate__animated animate__flipInY" src={logo} alt="Qui veut gagner des milions" />
       </LogoContainer>
